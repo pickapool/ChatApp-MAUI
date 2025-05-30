@@ -2,6 +2,10 @@
 using ChatApp_MAUI.Shared.Services;
 using ChatApp_MAUI.Services;
 using MudBlazor.Services;
+using FirebaseAdmin;
+using Microsoft.Extensions.Options;
+using System.Net;
+using Google.Apis.Auth.OAuth2;
 
 namespace ChatApp_MAUI;
 
@@ -22,6 +26,10 @@ public static class MauiProgram
         builder.Services.AddMudServices();
 
         builder.Services.AddMauiBlazorWebView();
+        FirebaseApp.Create(new AppOptions
+        {
+           Credential = GoogleCredential.FromFile("firebaseconfig.json"),
+        });
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();

@@ -2,6 +2,8 @@ using ChatApp_MAUI.Web.Components;
 using ChatApp_MAUI.Shared.Services;
 using ChatApp_MAUI.Web.Services;
 using MudBlazor.Services;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,12 @@ builder.Services.AddRazorComponents()
 // Add device-specific services used by the ChatApp_MAUI.Shared project
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddMudServices();
+
+FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.FromFile("firebaseconfig.json"),
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
