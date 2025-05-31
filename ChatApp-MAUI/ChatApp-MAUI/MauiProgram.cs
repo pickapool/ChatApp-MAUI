@@ -5,10 +5,10 @@ using MudBlazor.Services;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.Extensions.Configuration;
-using ChatApp_MAUI.Services.AuthenticationServices;
 using Microsoft.AspNetCore.Components.Authorization;
 using Blazored.LocalStorage;
 using ChatApp_MAUI.AuthenticationProvider;
+using ChatApp_MAUI.Shared;
 namespace ChatApp_MAUI;
 
 public static class MauiProgram
@@ -34,6 +34,7 @@ public static class MauiProgram
 
         builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationState>();
         builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+        builder.Services.AddScoped<IRegistration, Registration>();
 
         //Firebase
 

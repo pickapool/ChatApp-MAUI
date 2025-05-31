@@ -1,8 +1,8 @@
 ﻿using ChatApp_MAUI.Models;
-using FirebaseAdmin.Auth;
+using ChatApp_MAUI.Shared;
 using System.Net.Http.Json;
 
-namespace ChatApp_MAUI.Services.AuthenticationServices
+namespace ChatApp_MAUI.Services
 {
     internal sealed class AuthenticationService : IAuthenticationService
     {

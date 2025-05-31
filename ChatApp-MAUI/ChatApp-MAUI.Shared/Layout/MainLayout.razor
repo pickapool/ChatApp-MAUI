@@ -92,14 +92,14 @@
         StateHasChanged();
         if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
         {
-            CommonExtension.ShowSnackbar("All fields are required", Variant.Filled, _snackBar, Severity.Error);
+            Extensions.ShowSnackbar("All fields are required", Variant.Filled, _snackBar, Severity.Error);
             isLoading = false;
             return;
         }
         await Task.Delay(500);
         try
         {
-
+            //Task<string> token =  
             // Task<AuthTokenResponseModel> token = _userAccountService.Authenticate(email, password);
             // await token;
             // if (token.Status == TaskStatus.RanToCompletion)
