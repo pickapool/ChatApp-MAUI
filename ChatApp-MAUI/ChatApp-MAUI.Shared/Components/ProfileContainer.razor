@@ -1,0 +1,51 @@
+﻿<div class="d-flex flex-row gap-2 align-items-center">
+    <MudAvatar Size="Size.Medium">
+        @* <MudImage Src="@(String.IsNullOrEmpty(UserAccount.Photo) ? DefaultPhoto : UserAccount.Photo)"></MudImage> *@
+    </MudAvatar>
+    <div class="d-flex flex-column pr-5">
+        @* <MudText Typo="Typo.caption">@UserAccount.Firstname @(String.IsNullOrEmpty(UserAccount.Middlename) ? "" : UserAccount.Middlename.Substring(0, 1) + ".") @UserAccount.Lastname</MudText> *@
+        @* <MudText Typo="Typo.caption">@UserAccount.Position</MudText> *@
+    </div>
+    <MudIconButton Class="navigation" Icon="@Icons.Material.Filled.Settings" Size="Size.Small" Variant="Variant.Text" OnClick="ToggleOpen"></MudIconButton>
+    <MudPopover Style="max-height: unset !important;" Open="@_open" Fixed="false" Class="pa-2 profile" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.CenterLeft">
+        <div class="d-flex flex-column" style="width : 200px;">
+            <MudText Typo="Typo.caption">Settings</MudText>
+            <hr style="margin: 4px;" />
+            <MudButton Class="d-flex justify-space-between" EndIcon="@Icons.Material.Filled.Logout" Size="Size.Small" Variant="Variant.Text" OnClick="Logout">
+                <MudText Typo="Typo.caption">Logout</MudText>
+            </MudButton>
+        </div>
+    </MudPopover>
+</div>
+
+@code {
+    [Parameter] public AccountModel Account { get; set; } = new();
+    private bool _open;
+    private string DefaultPhoto = "/images/blank-profile.webp";
+    private void ToggleOpen() => _open = !_open;
+    protected override void OnInitialized()
+    {
+        //Extensions.Log(UserAccount);
+    }
+    private async Task Logout()
+    {
+        await _localStorage.RemoveItemAsync("token");
+        ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserLogout();
+        _navigationManager.NavigateTo("/");
+    }
+    private void BackToHub()
+    {
+        _navigationManager.NavigateTo("/", true);
+    }
+}
+<style>
+    .profile.mud-popover.mud-popover-open {
+        left: unset !important;logout
+        top: 5% !important;
+        right: 1% !important
+    }
+
+    .mud-popover {
+        max-height: unset !important;
+    }
+</style>

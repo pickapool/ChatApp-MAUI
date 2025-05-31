@@ -17,7 +17,7 @@
             <MudAppBar Elevation="1">
                 <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
                 <MudSpacer />
-                <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="https://github.com/MudBlazor/MudBlazor" Target="_blank" />
+                <ProfileContainer></ProfileContainer>
             </MudAppBar>
             <MudDrawer @bind-Open="@_open" Breakpoint="Breakpoint.Sm" Elevation="1" Variant="@DrawerVariant.Responsive">
                 <MudDrawerHeader>

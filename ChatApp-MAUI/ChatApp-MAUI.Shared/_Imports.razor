@@ -15,9 +15,11 @@
 @using ChatApp_MAUI.Shared.Services.RegistrationServices
 @using ChatApp_MAUI.Shared.Models
 @using ChatApp_MAUI.AuthenticationProvider
+@using ChatApp_MAUI.Shared.Components
 
 
 @inject AuthenticationStateProvider _authenticationStateProvider
 @inject ISnackbar _snackBar
 @inject IRegistrationService _registrationService
 @inject ILocalStorageService _localStorage
+@inject NavigationManager _navigationManager
