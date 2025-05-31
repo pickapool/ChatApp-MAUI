@@ -11,18 +11,20 @@ namespace ChatApp_MAUI.Shared.Services.RegistrationServices
         {
             _firebaseAuthClient = firebaseAuthClient;
         }
-        public async Task<string> RegisterAsync(AccountModel account)
+        public async Task<string> SignInAsync(AccountModel account)
         {
-            var userArg = new UserRecordArgs
+            try
             {
-                Email = account.email,
-                Password = account.password,
-            };
-            var response = await FirebaseAuth.DefaultInstance.CreateUserAsync(userArg);
-
-            return response.Uid;
+                var response = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(account.email, account.password);
+                var token = await response.User.GetIdTokenAsync();
+                return token;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Firebase error: {ex.Message}");
+            }
         }
-        public async Task<string> MobileRegisterAsync(AccountModel account)
+        public async Task<string> RegisterAsync(AccountModel account)
         {
             try
             {

@@ -112,7 +112,7 @@
         account.password = password;
         try
         {
-            var uid = await _registrationService.MobileRegisterAsync(account);
+            var uid = await _registrationService.RegisterAsync(account);
             await _localStorage.SetItemAsync("token", uid);
             ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserAuthentication(uid);
             email = string.Empty;

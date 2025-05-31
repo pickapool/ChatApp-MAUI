@@ -43,14 +43,6 @@ public static class MauiProgram
 
         builder.Services.AddAuthorizationCore();
         builder.Services.AddCascadingAuthenticationState();
-#if WINDOWS || MACCATALYST
-
-        FirebaseApp.Create(new AppOptions
-        {
-           Credential = GoogleCredential.FromFile("firebaseconfig.json"),
-        });
-#endif
-#if ANDROID || IOS
         builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
         {
             ApiKey = "AIzaSyDA_IPMONTKeIr-7P8XvyMwQATA9Dpxb3A",
@@ -60,7 +52,14 @@ public static class MauiProgram
                 new EmailProvider()
             }
         }));
+#if WINDOWS || MACCATALYST
+
+        FirebaseApp.Create(new AppOptions
+        {
+           Credential = GoogleCredential.FromFile("firebaseconfig.json"),
+        });
 #endif
+
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
         builder.Logging.AddDebug();
