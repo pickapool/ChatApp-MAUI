@@ -21,7 +21,7 @@ namespace ChatApp_MAUI.Services.AuthenticationServices
             };
             var response = await _httpClient.PostAsJsonAsync("", request);
             var authToken = await response.Content.ReadFromJsonAsync<AuthTokenModel>();
-            return authToken.IdToken;
+            return authToken?.IdToken ?? string.Empty;
         }
     }
 }

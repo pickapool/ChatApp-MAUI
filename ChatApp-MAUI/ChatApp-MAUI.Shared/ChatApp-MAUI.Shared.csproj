@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Services\" />
+    <Folder Include="Common\" />
   </ItemGroup>
 
 </Project>

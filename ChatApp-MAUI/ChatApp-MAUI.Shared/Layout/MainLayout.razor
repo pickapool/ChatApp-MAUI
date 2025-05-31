@@ -33,14 +33,117 @@
         </MudLayout>
     </Authorized>
     <NotAuthorized>
-        Not authorized login
+        <MudPaper Class="d-flex flex-column pa-4 paper-opacity gap-4 mt-2 px-10" Elevation="3" Width="30vw" Height="auto">
+            <div class="d-flex flex-row align-items-center gap-2 mt-6">
+                @* <MudImage Class="logo" Src="/images/logo.png" Height="80" Width="80"></MudImage> *@
+                <div class="d-flex flex-column">
+                    <MudText Typo="Typo.h4">WELCOME</MudText>
+                    <MudText Typo="Typo.h4">Please sign in to continue.</MudText>
+                </div>
+            </div>
+            <MudTextField @onkeydown="HandleKeyDown" @bind-Value="email" Label="Username" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Lock" />
+            <MudTextField @onkeydown="HandleKeyDown" @bind-Value="password" Label="Password" Variant="Variant.Outlined"
+                            InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowPassword" AdornmentAriaLabel="Show Password" />
+            <MudButton Class="mb-5 color-main" Variant="Variant.Filled" OnClick="Login" Size="Size.Large" Color="Color.Primary">
+                <div class="d-flex flex-row gap-2">
+                    @if (isLoading)
+                    {
+                        <MudProgressCircular Class="align-self-start" Size="Size.Small" style="color: white;" Indeterminate></MudProgressCircular>
+                        <span>Signing in...</span>
+                    }
+                    else
+                    {
+                        <span>Sign in</span>
+                    }
+
+                </div>
+            </MudButton>
+        </MudPaper>
     </NotAuthorized>
 </AuthorizeView>
 @code{
+    private string email = string.Empty, password = string.Empty;
     private bool _open = false;
 
     private void ToggleDrawer()
     {
         _open = !_open;
+    }
+    bool isLoading, isShow;
+    InputType PasswordInput = InputType.Password;
+    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+    protected override void OnInitialized()
+    {
+
+    }
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+
+            await Login();
+        }
+    }
+    private async Task Login()
+    {
+        //Work ja ni cyrille
+        isLoading = true;
+        await Task.Delay(500);
+        StateHasChanged();
+        if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
+        {
+            CommonExtension.ShowSnackbar("All fields are required", Variant.Filled, _snackBar, Severity.Error);
+            isLoading = false;
+            return;
+        }
+        await Task.Delay(500);
+        try
+        {
+
+            // Task<AuthTokenResponseModel> token = _userAccountService.Authenticate(email, password);
+            // await token;
+            // if (token.Status == TaskStatus.RanToCompletion)
+            // {
+            //     if (token == null)
+            //     {
+            //         Extensions.ShowSnackbar("Invalid email or password", Variant.Filled, _snackBar, Severity.Error);
+            //         isLoading = false;
+            //         return;
+            //     }
+            //     if (token.Result == null)
+            //     {
+            //         Extensions.ShowSnackbar("Invalid email or password", Variant.Filled, _snackBar, Severity.Error);
+            //         isLoading = false;
+            //         return;
+            //     }
+            //     else
+            //     {
+            //         ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserAuthentication(token.Result.Token);
+            //         email = string.Empty;
+            //         password = string.Empty;
+            //         isLoading = false;
+            //     }
+            // }
+        }
+        catch (Exception ex)
+        {
+          //  Extensions.ShowSnackbar(ex.Message, Variant.Filled, _snackBar, Severity.Error);
+            isLoading = false;
+        }
+    }
+    void ShowPassword()
+    {
+        @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
     }
 }

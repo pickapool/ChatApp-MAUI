@@ -61,8 +61,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageReference Include="FirebaseAdmin" Version="3.2.0" />
     <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="9.0.5" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.5" />
     <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.70" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.70" />
@@ -72,6 +74,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ChatApp-MAUI.Shared\ChatApp-MAUI.Shared.csproj" />
+    <GoogleServicesJson Include="firebaseconfig.json" />
   </ItemGroup>
 
 </Project>
