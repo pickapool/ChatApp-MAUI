@@ -35,109 +35,22 @@
         </MudLayout>
     </Authorized>
     <NotAuthorized>
-        <div class="d-flex justify-content-center align-items-center ma-10" style="height: calc(100vh - 100px)">
-            <MudItem xs="12" sm="8" md="6" lg="4" xl="3" xxl="3">
-                <MudPaper Class="d-flex flex-column pa-4 paper-opacity gap-4 mt-2 px-10" Elevation="3" Width="100%" Height="auto">
-                    <div class="d-flex flex-row align-items-center gap-2 mt-6">
-                        @* <MudImage Class="logo" Src="/images/logo.png" Height="80" Width="80"></MudImage> *@
-                        <div class="d-flex flex-column">
-                            <MudText Typo="Typo.h4">WELCOME</MudText>
-                            <MudText Typo="Typo.h4">Please sign in to continue.</MudText>
-                        </div>
-                    </div>
-                    <MudTextField @onkeydown="HandleKeyDown" @bind-Value="email" Label="Username" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Lock" />
-                    <MudTextField @onkeydown="HandleKeyDown" @bind-Value="password" Label="Password" Variant="Variant.Outlined"
-                    InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowPassword" AdornmentAriaLabel="Show Password" />
-                    <MudButton Class="mb-5 color-main" Variant="Variant.Filled" OnClick="Login" Size="Size.Large" Color="Color.Primary">
-                        <div class="d-flex flex-row gap-2">
-                            @if (isLoading)
-                            {
-                                <MudProgressCircular Class="align-self-start" Size="Size.Small" style="color: white;" Indeterminate></MudProgressCircular>
-                                <span>Signing in...</span>
-                            }
-                            else
-                            {
-                                <span>Sign in</span>
-                            }
-
-                        </div>
-                    </MudButton>
-                </MudPaper>
-            </MudItem>
-        </div>
+        @if(isRegistration)
+        {
+            <AccountRegistration OnSignIn="()=> isRegistration = !isRegistration"></AccountRegistration>
+        } else
+        {
+            <LoginComponent OnRegistrationClick="()=> isRegistration = !isRegistration"></LoginComponent>
+        }
     </NotAuthorized>
 </AuthorizeView>
 @code{
     private string email = string.Empty, password = string.Empty;
-    private bool _open = false;
-    bool isLoading, isShow;
-    InputType PasswordInput = InputType.Password;
-    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-    private string factor => _formFactor.GetFormFactor();
-    private string platform => _formFactor.GetPlatform();
-
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        //await _localStorage.RemoveItemAsync("token");
-        //((CustomAuthenticationState)_authenticationStateProvider).NotifyUserLogout();
-        Console.WriteLine(factor);
-    }
+    private bool _open = false, isLoading = false, isShow = false, isRegistration = false;
+    
     private void ToggleDrawer()
     {
         _open = !_open;
     }
-    private async Task HandleKeyDown(KeyboardEventArgs e)
-    {
-        if (e.Key == "Enter")
-        {
-
-            await Login();
-        }
-    }
-    private async Task Login()
-    {
-        isLoading = true;
-        await Task.Delay(500);
-        StateHasChanged();
-        if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
-        {
-            Extensions.ShowSnackbar("All fields are required", Variant.Filled, _snackBar, Severity.Error);
-            isLoading = false;
-            return;
-        }
-        await Task.Delay(500);
-        var account = new AccountModel();
-        account.email = email;
-        account.password = password;
-        try
-        {
-            var uid = await _registrationService.RegisterAsync(account);
-            await _localStorage.SetItemAsync("token", uid);
-            ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserAuthentication(uid);
-            email = string.Empty;
-            password = string.Empty;
-            isLoading = false;
-        }
-        catch (Exception ex)
-        {
-            isLoading = false;
-			Extensions.ShowSnackbar(ex.Message, Variant.Filled, _snackBar, Severity.Error);
-        }
-    }
-    void ShowPassword()
-    {
-        @if (isShow)
-        {
-            isShow = false;
-            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-            PasswordInput = InputType.Password;
-        }
-        else
-        {
-            isShow = true;
-            PasswordInputIcon = Icons.Material.Filled.Visibility;
-            PasswordInput = InputType.Text;
-        }
-    }
+    
 }

@@ -26,6 +26,10 @@ namespace ChatApp_MAUI.Shared.Services.RegistrationServices
         }
         public async Task<string> RegisterAsync(AccountModel account)
         {
+            if (string.IsNullOrEmpty(account.email) || string.IsNullOrEmpty(account.password))
+            {
+                throw new ArgumentException("Email and password is required.");
+            }
             try
             {
                 var response = await _firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(account.email, account.password);
