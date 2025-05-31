@@ -17,22 +17,22 @@
             <hr/>
             <MudText Typo="Typo.button">Email</MudText>
             <MudTextField 
-                @bind-Value="accountModel.email" 
-                Variant="Variant.Outlined" 
-                Adornment="Adornment.End" 
-                AdornmentIcon="@Icons.Material.Filled.Person" 
-                Margin="Margin.Dense"/>
+            @bind-Value="accountModel.email" 
+            Variant="Variant.Outlined" 
+            Adornment="Adornment.End" 
+            AdornmentIcon="@Icons.Material.Filled.Person" 
+            Margin="Margin.Dense"/>
             <MudText Typo="Typo.button">Password</MudText>
             <MudTextField 
-                @bind-Value="accountModel.password" 
-                Variant="Variant.Outlined"
-                InputType="@PasswordInput" 
-                Adornment="Adornment.End" 
-                AdornmentIcon="@PasswordInputIcon" 
-                OnAdornmentClick="ShowPassword" 
-                AdornmentAriaLabel="Show Password" 
-                Margin="Margin.Dense"
-                Validation="@(new Func<string, string>(ValidatePassword))" />
+            @bind-Value="accountModel.password" 
+            Variant="Variant.Outlined"
+            InputType="@PasswordInput" 
+            Adornment="Adornment.End" 
+            AdornmentIcon="@PasswordInputIcon" 
+            OnAdornmentClick="ShowPassword" 
+            AdornmentAriaLabel="Show Password" 
+            Margin="Margin.Dense"
+            Validation="@(new Func<string, string>(ValidatePassword))" />
             <small class="text-muted mb-3">
                 Password must:
                 <ul style="margin: 0; padding-left: 1.25rem;">
@@ -44,29 +44,29 @@
             </small>
             <MudText Typo="Typo.button">Confirm Password</MudText>
             <MudTextField 
-                Class="mb-5" 
-                @bind-Value="confirmPassword" 
-                Variant="Variant.Outlined"
-                Margin="Margin.Dense"
-                InputType="@PasswordInput" 
-                Adornment="Adornment.End" />
+            Class="mb-5" 
+            @bind-Value="confirmPassword" 
+            Variant="Variant.Outlined"
+            Margin="Margin.Dense"
+            InputType="@PasswordInput" 
+            Adornment="Adornment.End" />
             <MudButton Class="mb-5 color-main"
-                OnClick="Register"
-                Variant="Variant.Filled"
-                Size="Size.Large"
-                Color="Color.Primary">
-                    <div class="d-flex flex-row gap-2">
-                        @if (isLoading)
-                        {
-                            <MudProgressCircular Class="align-self-start" Size="Size.Small" style="color: white;" Indeterminate></MudProgressCircular>
-                            <span>Creating account...</span>
-                        }
-                        else
-                        {
-                            <span>CREATE ACCOUNT</span>
-                        }
+            OnClick="Register"
+            Variant="Variant.Filled"
+            Size="Size.Large"
+            Color="Color.Primary">
+                <div class="d-flex flex-row gap-2">
+                    @if (isLoading)
+                    {
+                        <MudProgressCircular Class="align-self-start" Size="Size.Small" style="color: white;" Indeterminate></MudProgressCircular>
+                        <span>Creating account...</span>
+                    }
+                    else
+                    {
+                        <span>CREATE ACCOUNT</span>
+                    }
 
-                    </div>
+                </div>
             </MudButton>
             <small class="text-center mb-2">
                 <i>
@@ -92,10 +92,17 @@
     {
         isLoading = true;
         await Task.Delay(100);
+        if (String.IsNullOrEmpty(accountModel.email) || String.IsNullOrEmpty(accountModel.password) || String.IsNullOrEmpty(confirmPassword))
+        {
+            Extensions.ShowSnackbar("All fields are required.", Variant.Filled, _snackBar, Severity.Error);
+            isLoading = false;
+            return;
+        }
         if (accountModel.password != confirmPassword)
-		{
-			Extensions.ShowSnackbar("Passwords do not match.", Variant.Filled, _snackBar, Severity.Error);
-			return;
+        {
+            Extensions.ShowSnackbar("Passwords do not match.", Variant.Filled, _snackBar, Severity.Error);
+            isLoading = false;
+            return;
 		}
         try
         {
