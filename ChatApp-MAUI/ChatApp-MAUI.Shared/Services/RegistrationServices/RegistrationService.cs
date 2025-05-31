@@ -30,10 +30,6 @@ namespace ChatApp_MAUI.Shared.Services.RegistrationServices
                 var token = await response.User.GetIdTokenAsync();
                 return token;
             }
-            catch (Firebase.Auth.FirebaseAuthException ex)
-            {
-                throw new Exception($"Firebase error: {ex.Reason} - {ex.Message}");
-            }
             catch (Exception ex)
             {
                 throw new Exception($"Firebase error: {ex.Message}");

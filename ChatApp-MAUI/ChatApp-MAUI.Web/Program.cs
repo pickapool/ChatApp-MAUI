@@ -6,6 +6,11 @@ using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using ChatApp_MAUI.Shared.Services.RegistrationServices;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
+using Firebase.Auth.Providers;
+using Firebase.Auth;
+using Blazored.LocalStorage;
+using ChatApp_MAUI.AuthenticationProvider;
+using Microsoft.AspNetCore.Components.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,13 +23,24 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<ICustomAuthenticationService, CustomAuthenticationService>();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationState>();
 builder.Services.AddMudServices();
+builder.Services.AddBlazoredLocalStorage();
 //builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 FirebaseApp.Create(new AppOptions
 {
     Credential = GoogleCredential.FromFile("firebaseconfig.json"),
 });
+builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
+{
+    ApiKey = "AIzaSyDA_IPMONTKeIr-7P8XvyMwQATA9Dpxb3A",
+    AuthDomain = "maui-5e9d0.firebaseapp.com",
+    Providers = new FirebaseAuthProvider[]
+            {
+                new EmailProvider()
+            }
+}));
 
 var app = builder.Build();
 

@@ -36,7 +36,7 @@
     </Authorized>
     <NotAuthorized>
         <div class="d-flex justify-content-center align-items-center ma-10" style="height: calc(100vh - 100px)">
-            <MudItem xs="12" sm="8" md="6" lg="4" xl="2" xxl="2">
+            <MudItem xs="12" sm="8" md="6" lg="4" xl="3" xxl="3">
                 <MudPaper Class="d-flex flex-column pa-4 paper-opacity gap-4 mt-2 px-10" Elevation="3" Width="100%" Height="auto">
                     <div class="d-flex flex-row align-items-center gap-2 mt-6">
                         @* <MudImage Class="logo" Src="/images/logo.png" Height="80" Width="80"></MudImage> *@
@@ -112,15 +112,7 @@
         account.password = password;
         try
         {
-            var uid = string.Empty;
-            if (platform.Contains("android", StringComparison.OrdinalIgnoreCase) || platform.Contains("ios", StringComparison.OrdinalIgnoreCase))
-			{
-                uid =  await _registrationService.MobileRegisterAsync(account);
-			}
-			else
-			{
-                uid = await _registrationService.RegisterAsync(account);
-			}
+            var uid = await _registrationService.MobileRegisterAsync(account);
             await _localStorage.SetItemAsync("token", uid);
             ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserAuthentication(uid);
             email = string.Empty;

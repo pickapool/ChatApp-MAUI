@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.JSInterop;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -8,25 +9,41 @@ namespace ChatApp_MAUI.AuthenticationProvider
     public class CustomAuthenticationState : AuthenticationStateProvider
     {
         private readonly ILocalStorageService _localStorage;
+        private readonly IJSRuntime _jsRuntime;
 
-        public CustomAuthenticationState(ILocalStorageService localStorage)
+        public CustomAuthenticationState(ILocalStorageService localStorage, IJSRuntime jsRuntime)
         {
             _localStorage = localStorage;
+            _jsRuntime = jsRuntime;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            var token = await _localStorage.GetItemAsStringAsync("token");
-            var claimsIdentity = new ClaimsIdentity();
-
-            if (!string.IsNullOrEmpty(token))
+            if (_jsRuntime is IJSInProcessRuntime)
             {
-                var claims = ParseClaimsFromJwt(token);
-                claimsIdentity = new ClaimsIdentity(claims, "jwt");
+                // Safe to do JS interop sync calls
+            }
+            else if (_jsRuntime is null)
+            {
+ 
+                return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+            }
+            try
+            {
+                var token = await _localStorage.GetItemAsStringAsync("token");
+                if (!string.IsNullOrEmpty(token))
+                {
+                    var claims = ParseClaimsFromJwt(token);
+                    var identity = new ClaimsIdentity(claims, "jwt");
+                    return new AuthenticationState(new ClaimsPrincipal(identity));
+                }
+            }
+            catch
+            {
+                // swallow or log
             }
 
-            var userPrincipal = new ClaimsPrincipal(claimsIdentity);
-            return new AuthenticationState(userPrincipal);
+            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
         }
 
         private IEnumerable<Claim>? ParseClaimsFromJwt(string jwt)
