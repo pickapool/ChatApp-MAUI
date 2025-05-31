@@ -10,6 +10,8 @@ using Blazored.LocalStorage;
 using ChatApp_MAUI.AuthenticationProvider;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
 using ChatApp_MAUI.Shared.Services.RegistrationServices;
+using Firebase.Auth;
+using Firebase.Auth.Providers;
 namespace ChatApp_MAUI;
 
 public static class MauiProgram
@@ -48,7 +50,17 @@ public static class MauiProgram
            Credential = GoogleCredential.FromFile("firebaseconfig.json"),
         });
 #endif
-
+#if ANDROID || IOS
+        builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
+        {
+            ApiKey = "AIzaSyDA_IPMONTKeIr-7P8XvyMwQATA9Dpxb3A",
+            AuthDomain = "maui-5e9d0.firebaseapp.com",
+            Providers = new FirebaseAuthProvider[]
+            {
+                new EmailProvider()
+            }
+        }));
+#endif
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
         builder.Logging.AddDebug();

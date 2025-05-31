@@ -76,11 +76,13 @@
     private string factor => _formFactor.GetFormFactor();
     private string platform => _formFactor.GetPlatform();
 
-	protected override async Task OnInitializedAsync()
-	{
-		await base.OnInitializedAsync();
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        //await _localStorage.RemoveItemAsync("token");
+        //((CustomAuthenticationState)_authenticationStateProvider).NotifyUserLogout();
         Console.WriteLine(factor);
-	}
+    }
     private void ToggleDrawer()
     {
         _open = !_open;
@@ -95,7 +97,6 @@
     }
     private async Task Login()
     {
-        //Work ja ni cyrille
         isLoading = true;
         await Task.Delay(500);
         StateHasChanged();
@@ -106,67 +107,30 @@
             return;
         }
         await Task.Delay(500);
+        var account = new AccountModel();
+        account.email = email;
+        account.password = password;
         try
         {
-            var account = new AccountModel();
-            account.email = email;
-			account.password = password;
-			
-                Task<string> token = _registrationService.RegisterAsync(account);
-                await token;
-                if (token.Status == TaskStatus.RanToCompletion)
-                {
-                    if (token == null)
-                    {
-                        Extensions.ShowSnackbar("Failed", Variant.Filled, _snackBar, Severity.Error);
-                        isLoading = false;
-                        return;
-                    }
-                    if (string.IsNullOrEmpty(token.Result))
-                    {
-                        Extensions.ShowSnackbar("Success", Variant.Filled, _snackBar, Severity.Error);
-                        isLoading = false;
-                        return;
-                    }
-                    else
-                    {
-                        ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserAuthentication(token.Result);
-                        email = string.Empty;
-                        password = string.Empty;
-                        isLoading = false;
-                    }
-                }
-			
-            
-            // Task<AuthTokenResponseModel> token = _userAccountService.Authenticate(email, password);
-            // await token;
-            // if (token.Status == TaskStatus.RanToCompletion)
-            // {
-            //     if (token == null)
-            //     {
-            //         Extensions.ShowSnackbar("Invalid email or password", Variant.Filled, _snackBar, Severity.Error);
-            //         isLoading = false;
-            //         return;
-            //     }
-            //     if (token.Result == null)
-            //     {
-            //         Extensions.ShowSnackbar("Invalid email or password", Variant.Filled, _snackBar, Severity.Error);
-            //         isLoading = false;
-            //         return;
-            //     }
-            //     else
-            //     {
-            //         ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserAuthentication(token.Result.Token);
-            //         email = string.Empty;
-            //         password = string.Empty;
-            //         isLoading = false;
-            //     }
-            // }
+            var uid = string.Empty;
+            if (platform.Contains("android", StringComparison.OrdinalIgnoreCase) || platform.Contains("ios", StringComparison.OrdinalIgnoreCase))
+			{
+                uid =  await _registrationService.MobileRegisterAsync(account);
+			}
+			else
+			{
+                uid = await _registrationService.RegisterAsync(account);
+			}
+            await _localStorage.SetItemAsync("token", uid);
+            ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserAuthentication(uid);
+            email = string.Empty;
+            password = string.Empty;
+            isLoading = false;
         }
         catch (Exception ex)
         {
-           Extensions.ShowSnackbar(ex.Message, Variant.Filled, _snackBar, Severity.Error);
             isLoading = false;
+			Extensions.ShowSnackbar(ex.Message, Variant.Filled, _snackBar, Severity.Error);
         }
     }
     void ShowPassword()
