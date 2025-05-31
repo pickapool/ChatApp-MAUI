@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace ChatApp_MAUI.Models
+namespace ChatApp_MAUI.Shared.Models
 {
     public class AuthTokenModel
     {

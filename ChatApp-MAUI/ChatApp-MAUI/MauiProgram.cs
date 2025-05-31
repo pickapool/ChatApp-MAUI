@@ -34,7 +34,7 @@ public static class MauiProgram
 
         builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationState>();
         builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
-        builder.Services.AddScoped<IRegistration, Registration>();
+        builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 
         //Firebase
 

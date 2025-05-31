@@ -1,10 +1,10 @@
-﻿using ChatApp_MAUI.Models;
+﻿using ChatApp_MAUI.Shared.Models;
 using ChatApp_MAUI.Shared.Services;
 using FirebaseAdmin.Auth;
 
 namespace ChatApp_MAUI.Services
 {
-    public class Registration : IRegistration
+    public class RegistrationService : IRegistrationService
     {
         public async Task<string> RegisterAsync(AccountModel account)
         {

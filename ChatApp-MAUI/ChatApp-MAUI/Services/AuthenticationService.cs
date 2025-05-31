@@ -1,5 +1,5 @@
-﻿using ChatApp_MAUI.Models;
-using ChatApp_MAUI.Shared;
+﻿using ChatApp_MAUI.Shared;
+using ChatApp_MAUI.Shared.Models;
 using System.Net.Http.Json;
 
 namespace ChatApp_MAUI.Services

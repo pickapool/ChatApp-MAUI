@@ -43,7 +43,7 @@
             </div>
             <MudTextField @onkeydown="HandleKeyDown" @bind-Value="email" Label="Username" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Lock" />
             <MudTextField @onkeydown="HandleKeyDown" @bind-Value="password" Label="Password" Variant="Variant.Outlined"
-                            InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowPassword" AdornmentAriaLabel="Show Password" />
+            InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ShowPassword" AdornmentAriaLabel="Show Password" />
             <MudButton Class="mb-5 color-main" Variant="Variant.Filled" OnClick="Login" Size="Size.Large" Color="Color.Primary">
                 <div class="d-flex flex-row gap-2">
                     @if (isLoading)
@@ -99,7 +99,34 @@
         await Task.Delay(500);
         try
         {
-            //Task<string> token =  
+            var account = new AccountModel();
+            account.email = email;
+			account.password = password;
+
+            Task<string> token = _registrationService.RegisterAsync(account);
+            await token;
+			if (token.Status == TaskStatus.RanToCompletion)
+			{
+				if (token == null)
+				{
+					Extensions.ShowSnackbar("Invalid email or password", Variant.Filled, _snackBar, Severity.Error);
+					isLoading = false;
+					return;
+				}
+				if (string.IsNullOrEmpty(token.Result))
+				{
+					Extensions.ShowSnackbar("Invalid email or password", Variant.Filled, _snackBar, Severity.Error);
+					isLoading = false;
+					return;
+				}
+				else
+				{
+					((CustomAuthenticationState)_authenticationStateProvider).NotifyUserAuthentication(token.Result);
+					email = string.Empty;
+					password = string.Empty;
+					isLoading = false;
+				}
+			}
             // Task<AuthTokenResponseModel> token = _userAccountService.Authenticate(email, password);
             // await token;
             // if (token.Status == TaskStatus.RanToCompletion)

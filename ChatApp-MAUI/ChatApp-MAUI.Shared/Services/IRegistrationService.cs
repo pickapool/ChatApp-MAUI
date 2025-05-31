@@ -1,8 +1,9 @@
-﻿using ChatApp_MAUI.Models;
+﻿
+using ChatApp_MAUI.Shared.Models;
 
 namespace ChatApp_MAUI.Shared.Services
 {
-    public interface IRegistration
+    public interface IRegistrationService
     {
         Task<string> RegisterAsync(AccountModel account);
     }

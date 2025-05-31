@@ -10,5 +10,10 @@
 @using MudBlazor
 @using Microsoft.AspNetCore.Components.Authorization
 @using ChatApp_MAUI.Shared.Common
+@using ChatApp_MAUI.Shared.Services
+@using ChatApp_MAUI.Shared.Models
+@using ChatApp_MAUI.AuthenticationProvider
 
+@inject IAuthenticationService _authenticationStateProvider
 @inject ISnackbar _snackBar
+@inject IRegistrationService _registrationService
