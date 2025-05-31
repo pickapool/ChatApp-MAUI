@@ -4,6 +4,8 @@ using ChatApp_MAUI.Web.Services;
 using MudBlazor.Services;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
+using ChatApp_MAUI.Shared.Services.RegistrationServices;
+using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ builder.Services.AddRazorComponents()
 // Add device-specific services used by the ChatApp_MAUI.Shared project
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("Authetication:TokenUri")) });
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
+builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+builder.Services.AddScoped<ICustomAuthenticationService, CustomAuthenticationService>();
 builder.Services.AddMudServices();
 //builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 

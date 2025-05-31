@@ -109,13 +109,13 @@
 			{
 				if (token == null)
 				{
-					Extensions.ShowSnackbar("Invalid email or password", Variant.Filled, _snackBar, Severity.Error);
+					Extensions.ShowSnackbar("Failed", Variant.Filled, _snackBar, Severity.Error);
 					isLoading = false;
 					return;
 				}
 				if (string.IsNullOrEmpty(token.Result))
 				{
-					Extensions.ShowSnackbar("Invalid email or password", Variant.Filled, _snackBar, Severity.Error);
+					Extensions.ShowSnackbar("Success", Variant.Filled, _snackBar, Severity.Error);
 					isLoading = false;
 					return;
 				}

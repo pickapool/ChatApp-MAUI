@@ -1,13 +1,12 @@
-﻿using ChatApp_MAUI.Shared;
-using ChatApp_MAUI.Shared.Models;
+﻿using ChatApp_MAUI.Shared.Models;
 using System.Net.Http.Json;
 
-namespace ChatApp_MAUI.Services
+namespace ChatApp_MAUI.Shared.Services.CustomAuthenticationServices
 {
-    internal sealed class AuthenticationService : IAuthenticationService
+    public class CustomAuthenticationService : ICustomAuthenticationService
     {
         HttpClient _httpClient;
-        public AuthenticationService(HttpClient httpClient)
+        public CustomAuthenticationService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

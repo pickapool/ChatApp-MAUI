@@ -1,7 +1,6 @@
-﻿
-using ChatApp_MAUI.Shared.Models;
+﻿using ChatApp_MAUI.Shared.Models;
 
-namespace ChatApp_MAUI.Shared.Services
+namespace ChatApp_MAUI.Shared.Services.RegistrationServices
 {
     public interface IRegistrationService
     {

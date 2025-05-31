@@ -1,8 +1,7 @@
 ﻿using ChatApp_MAUI.Shared.Models;
-using ChatApp_MAUI.Shared.Services;
 using FirebaseAdmin.Auth;
 
-namespace ChatApp_MAUI.Services
+namespace ChatApp_MAUI.Shared.Services.RegistrationServices
 {
     public class RegistrationService : IRegistrationService
     {
