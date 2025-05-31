@@ -33,10 +33,6 @@
         ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserLogout();
         _navigationManager.NavigateTo("/");
     }
-    private void BackToHub()
-    {
-        _navigationManager.NavigateTo("/", true);
-    }
 }
 <style>
     .profile.mud-popover.mud-popover-open {
