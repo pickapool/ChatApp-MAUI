@@ -6,6 +6,8 @@ using FirebaseAdmin;
 using Microsoft.Extensions.Options;
 using System.Net;
 using Google.Apis.Auth.OAuth2;
+using Microsoft.Extensions.Configuration;
+using ChatApp_MAUI.Services.AuthenticationServices;
 
 namespace ChatApp_MAUI;
 
@@ -22,10 +24,16 @@ public static class MauiProgram
             });
 
         // Add device-specific services used by the ChatApp_MAUI.Shared project
+        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("Authetication:TokenUri")) });
+
         builder.Services.AddSingleton<IFormFactor, FormFactor>();
         builder.Services.AddMudServices();
 
         builder.Services.AddMauiBlazorWebView();
+
+        builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+        
+        //Firebase
         FirebaseApp.Create(new AppOptions
         {
            Credential = GoogleCredential.FromFile("firebaseconfig.json"),

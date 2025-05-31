@@ -9,30 +9,35 @@
 @* Needed for snackbars *@
 <MudSnackbarProvider />
 
-<MudLayout>
-
-    <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
-        <MudSpacer />
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="https://github.com/MudBlazor/MudBlazor" Target="_blank" />
-    </MudAppBar>
-    <MudDrawer @bind-Open="@_open" Breakpoint="Breakpoint.Sm" Elevation="1" Variant="@DrawerVariant.Responsive">
-        <MudDrawerHeader>
-            <MudText Typo="Typo.h6">My App</MudText>
-        </MudDrawerHeader>
-        <MudNavMenu>
-            <MudNavLink Match="NavLinkMatch.All">Store</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All">Library</MudNavLink>
-            <MudNavLink Match="NavLinkMatch.All">Community</MudNavLink>
-        </MudNavMenu>
-    </MudDrawer>
-    <MudMainContent Class="pt-16 px-16">
-        @Body
-    </MudMainContent>
-</MudLayout>
+<AuthorizeView>
+    <Authorized>
+        <MudLayout>
+            <MudAppBar Elevation="1">
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
+                <MudSpacer />
+                <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="https://github.com/MudBlazor/MudBlazor" Target="_blank" />
+            </MudAppBar>
+            <MudDrawer @bind-Open="@_open" Breakpoint="Breakpoint.Sm" Elevation="1" Variant="@DrawerVariant.Responsive">
+                <MudDrawerHeader>
+                    <MudText Typo="Typo.h6">My App</MudText>
+                </MudDrawerHeader>
+                <MudNavMenu>
+                    <MudNavLink Match="NavLinkMatch.All">Store</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All">Library</MudNavLink>
+                    <MudNavLink Match="NavLinkMatch.All">Community</MudNavLink>
+                </MudNavMenu>
+            </MudDrawer>
+            <MudMainContent Class="pt-16 px-16">
+                @Body
+            </MudMainContent>
+        </MudLayout>
+    </Authorized>
+    <NotAuthorized>
+        Not authorized login
+    </NotAuthorized>
+</AuthorizeView>
 @code{
     private bool _open = false;
-    private Breakpoint _breakpoint = Breakpoint.Lg;
 
     private void ToggleDrawer()
     {

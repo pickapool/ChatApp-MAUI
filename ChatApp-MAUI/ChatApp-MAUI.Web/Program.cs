@@ -12,8 +12,10 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 // Add device-specific services used by the ChatApp_MAUI.Shared project
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("Authetication:TokenUri")) });
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddMudServices();
+//builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 FirebaseApp.Create(new AppOptions
 {
