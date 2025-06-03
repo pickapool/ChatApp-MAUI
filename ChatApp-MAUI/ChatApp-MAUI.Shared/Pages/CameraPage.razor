@@ -15,7 +15,7 @@ else
     bool isAndroid = false;
     protected override async Task OnInitializedAsync()
     {
-        if (platform.ToLower().Contains("android"))
+        if (platform.ToLower().Contains("android") || platform.ToLower().Contains("ios"))
         {
             isAndroid = true;
             _navigationService.GoToCameraPage(new Microsoft.Maui.Controls.Page());
