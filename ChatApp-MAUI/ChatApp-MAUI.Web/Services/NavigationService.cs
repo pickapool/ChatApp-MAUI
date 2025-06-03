@@ -5,16 +5,12 @@ namespace ChatApp_MAUI.Services
 {
     public class NavigationService : INavigationService
     {
-        private readonly ICameraProvider cameraProvider;
-        public NavigationService(ICameraProvider _c) {
-            cameraProvider = _c;
-        }
-        public void GoToCameraPage()
+        public void GoToCameraPage(Page c)
         {
-            //Application.Current?.Dispatcher.Dispatch(() =>
-            //{
-            //    Application.Current.MainPage?.Navigation?.PushAsync(new CameraViewPage(cameraProvider));
-            //});
+            Application.Current?.Dispatcher.Dispatch(() =>
+            {
+                Application.Current.MainPage?.Navigation?.PushAsync(c);
+            });
         }
     }
 }

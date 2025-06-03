@@ -10,11 +10,12 @@ namespace ChatApp_MAUI.Services
         public NavigationService(ICameraProvider _c) {
             cameraProvider = _c;
         }
-        public void GoToCameraPage()
+        public void GoToCameraPage(Page c)
         {
+            c = new CameraViewPage(cameraProvider);
             Application.Current?.Dispatcher.Dispatch(() =>
             {
-                Application.Current.MainPage?.Navigation?.PushAsync(new CameraViewPage(cameraProvider));
+                Application.Current.MainPage?.Navigation?.PushAsync(c);
             });
         }
     }

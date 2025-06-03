@@ -8,6 +8,6 @@ namespace ChatApp_MAUI.Shared.Services.NavigationServices
 {
     public interface INavigationService
     {
-        void GoToCameraPage();
+        void GoToCameraPage(Page c);
     }
 }

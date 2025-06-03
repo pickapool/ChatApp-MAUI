@@ -18,7 +18,7 @@ else
         if (platform.ToLower().Contains("android"))
         {
             isAndroid = true;
-            _navigationService.GoToCameraPage();
+            _navigationService.GoToCameraPage(new Microsoft.Maui.Controls.Page());
         } else
         {
             isAndroid = false;
