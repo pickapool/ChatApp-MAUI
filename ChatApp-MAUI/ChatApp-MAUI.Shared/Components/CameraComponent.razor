@@ -1,13 +1,13 @@
 ﻿@using System.Drawing
 
 <CameraStreamer @ref="CameraStreamerReference"
-Width="1920"
-Height="1080"
-OnRendered="OnRenderedHandler"
-OnFrame="OnFrameHandler"
-Style="width: 480px; height: 270px;"
-CameraID="@cameraId"
-Autostart />
+    Width="1920"
+    Height="1080"
+    OnRendered="OnRenderedHandler"
+    OnFrame="OnFrameHandler"
+    Style="width: 480px; height: 270px;"
+    CameraID="@cameraId"
+    Autostart />
 
 @code {
     CameraStreamer CameraStreamerReference;

@@ -7,12 +7,7 @@ namespace ChatApp_MAUI
         public MainPage()
         {
             InitializeComponent();
-
-            blazorWebView.BlazorWebViewInitializing += BlazorWebViewInitializing;
-            blazorWebView.BlazorWebViewInitialized += BlazorWebViewInitialized;
         }
-        private void BlazorWebViewInitializing(object? sender, BlazorWebViewInitializingEventArgs e) { }
-        private void BlazorWebViewInitialized(object? sender, BlazorWebViewInitializedEventArgs e) { }
         protected override async void OnAppearing()
         {
             //Permission request
