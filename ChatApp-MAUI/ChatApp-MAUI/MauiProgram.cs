@@ -12,6 +12,9 @@ using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
 using ChatApp_MAUI.Shared.Services.RegistrationServices;
 using Firebase.Auth;
 using Firebase.Auth.Providers;
+using CommunityToolkit.Maui;
+using ChatApp_MAUI.Shared.Services.NavigationServices;
+using ChatApp_MAUI.Components;
 namespace ChatApp_MAUI;
 
 public static class MauiProgram
@@ -24,7 +27,7 @@ public static class MauiProgram
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-            });
+            }).UseMauiCommunityToolkitCamera();
 
         // Add device-specific services used by the ChatApp_MAUI.Shared project
         //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("Authetication:TokenUri")) });
@@ -35,9 +38,11 @@ public static class MauiProgram
         builder.Services.AddMauiBlazorWebView();
         builder.Services.AddBlazoredLocalStorage();
 
+        
         builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationState>();
         builder.Services.AddScoped<ICustomAuthenticationService, CustomAuthenticationService>();
         builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+        builder.Services.AddScoped<INavigationService, NavigationService>();
 
         //Firebase
 
@@ -52,6 +57,8 @@ public static class MauiProgram
                 new EmailProvider()
             }
         }));
+        
+
 #if WINDOWS || MACCATALYST
 
         FirebaseApp.Create(new AppOptions

@@ -20,6 +20,7 @@
 @using ChatApp_MAUI.Shared.Pages
 @using BlazorCameraStreamer
 @using ChatApp_MAUI.Shared.Services
+@using ChatApp_MAUI.Shared.Services.NavigationServices
 
 @inject AuthenticationStateProvider _authenticationStateProvider
 @inject ISnackbar _snackBar
@@ -27,3 +28,4 @@
 @inject ILocalStorageService _localStorage
 @inject NavigationManager _navigationManager
 @inject IFormFactor _formFactor
+@inject INavigationService _navigationService

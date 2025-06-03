@@ -11,6 +11,8 @@ using Firebase.Auth;
 using Blazored.LocalStorage;
 using ChatApp_MAUI.AuthenticationProvider;
 using Microsoft.AspNetCore.Components.Authorization;
+using ChatApp_MAUI.Shared.Services.NavigationServices;
+using ChatApp_MAUI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,7 @@ builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<ICustomAuthenticationService, CustomAuthenticationService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationState>();
+builder.Services.AddScoped<INavigationService, NavigationService>();
 builder.Services.AddMudServices();
 builder.Services.AddBlazoredLocalStorage();
 

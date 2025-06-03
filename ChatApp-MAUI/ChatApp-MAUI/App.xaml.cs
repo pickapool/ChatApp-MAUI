@@ -9,7 +9,10 @@
 
         protected override Window CreateWindow(IActivationState? activationState)
         {
-            return new Window(new MainPage()) { Title = "ChatApp-MAUI" };
+            return new Window(new NavigationPage(new MainPage()))
+            {
+                Title = "Chat App"
+            };
         }
     }
 }
