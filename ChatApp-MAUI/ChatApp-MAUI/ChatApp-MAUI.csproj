@@ -78,4 +78,10 @@
     <GoogleServicesJson Include="firebaseconfig.json" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(TargetFramework)' == 'net9.0-android'">
+    <PackageReference Include="Xamarin.AndroidX.WebKit">
+      <Version>1.13.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>

@@ -1,7 +1,5 @@
 ﻿@page "/"
-@using ChatApp_MAUI.Shared.Services
 
-@inject IFormFactor FormFactor
 
 <PageTitle>Home</PageTitle>
 
@@ -10,7 +8,9 @@
 <MudButton Color="Color.Primary" Variant="Variant.Filled">MudBlazor Button</MudButton>
 Welcome to your new app running on <em>@factor</em> using <em>@platform</em>.
 
+<CameraComponent></CameraComponent>
+
 @code {
-    private string factor => FormFactor.GetFormFactor();
-    private string platform => FormFactor.GetPlatform();
+    private string factor => _formFactor.GetFormFactor();
+    private string platform => _formFactor.GetPlatform();
 }

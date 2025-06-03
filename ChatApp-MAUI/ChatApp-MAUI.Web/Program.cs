@@ -17,7 +17,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
-
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddServerSideBlazor().AddCircuitOptions(e => e.DetailedErrors = true);
+}
+else
+{
+    builder.Services.AddServerSideBlazor(); // Register services without detailed errors in production
+}
 // Add device-specific services used by the ChatApp_MAUI.Shared project
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("Authetication:TokenUri")) });
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
@@ -26,6 +33,10 @@ builder.Services.AddScoped<ICustomAuthenticationService, CustomAuthenticationSer
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationState>();
 builder.Services.AddMudServices();
 builder.Services.AddBlazoredLocalStorage();
+
+builder.Services.AddServerSideBlazor()
+        .AddHubOptions(o => o.MaximumReceiveMessageSize = 100_000_000); // add this
+
 //builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 FirebaseApp.Create(new AppOptions
