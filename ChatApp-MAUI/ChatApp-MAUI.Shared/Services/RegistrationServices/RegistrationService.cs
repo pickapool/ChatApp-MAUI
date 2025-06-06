@@ -33,7 +33,9 @@ namespace ChatApp_MAUI.Shared.Services.RegistrationServices
             try
             {
                 var response = await _firebaseAuthClient.CreateUserWithEmailAndPasswordAsync(account.email, account.password);
+                await response.User.ChangeDisplayNameAsync(account.displayName);
                 var token = await response.User.GetIdTokenAsync();
+
                 return token;
             }
             catch (Exception ex)

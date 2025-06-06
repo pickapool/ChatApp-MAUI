@@ -114,7 +114,10 @@
         catch (Exception ex)
         {
             isLoading = false;
-            Extensions.ShowSnackbar(ex.Message, Variant.Filled, _snackBar, Severity.Error);
+            if(ex.Message.ToLower().Contains("invalid"))
+                Extensions.ShowSnackbar("Invalid email or password", Variant.Filled, _snackBar, Severity.Error);
+            else
+                Extensions.ShowSnackbar(ex.Message, Variant.Filled, _snackBar, Severity.Error);
         }
     }
     void ShowPassword()

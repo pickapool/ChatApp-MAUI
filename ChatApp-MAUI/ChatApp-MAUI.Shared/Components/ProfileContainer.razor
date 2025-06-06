@@ -3,8 +3,8 @@
         @* <MudImage Src="@(String.IsNullOrEmpty(UserAccount.Photo) ? DefaultPhoto : UserAccount.Photo)"></MudImage> *@
     </MudAvatar>
     <div class="d-flex flex-column pr-5">
-        @* <MudText Typo="Typo.caption">@UserAccount.Firstname @(String.IsNullOrEmpty(UserAccount.Middlename) ? "" : UserAccount.Middlename.Substring(0, 1) + ".") @UserAccount.Lastname</MudText> *@
-        @* <MudText Typo="Typo.caption">@UserAccount.Position</MudText> *@
+        <MudText Typo="Typo.caption">@_firebaseAuthClient.User.Info.DisplayName</MudText>
+        <MudText Typo="Typo.caption">@_firebaseAuthClient.User.Info.Email</MudText>
     </div>
     <MudIconButton Class="navigation" Icon="@Icons.Material.Filled.Settings" Size="Size.Small" Variant="Variant.Text" OnClick="ToggleOpen"></MudIconButton>
     <MudPopover Style="max-height: unset !important;" Open="@_open" Fixed="false" Class="pa-2 profile" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.CenterLeft">

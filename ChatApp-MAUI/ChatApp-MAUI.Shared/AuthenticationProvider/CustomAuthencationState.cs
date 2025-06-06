@@ -1,4 +1,6 @@
 ﻿using Blazored.LocalStorage;
+using Firebase.Auth;
+using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using System.Security.Claims;
@@ -10,11 +12,13 @@ namespace ChatApp_MAUI.AuthenticationProvider
     {
         private readonly ILocalStorageService _localStorage;
         private readonly IJSRuntime _jsRuntime;
+        private readonly FirebaseAuthClient _firebaseAuthClient;
 
-        public CustomAuthenticationState(ILocalStorageService localStorage, IJSRuntime jsRuntime)
+        public CustomAuthenticationState(ILocalStorageService localStorage, IJSRuntime jsRuntime, FirebaseAuthClient firebaseAuthClient)
         {
             _localStorage = localStorage;
             _jsRuntime = jsRuntime;
+            _firebaseAuthClient = firebaseAuthClient;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -25,12 +29,17 @@ namespace ChatApp_MAUI.AuthenticationProvider
             }
             else if (_jsRuntime is null)
             {
- 
                 return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
             }
             try
             {
                 var token = await _localStorage.GetItemAsStringAsync("token");
+                var user = _firebaseAuthClient.User;
+                if (user == null)
+                {
+                    await _localStorage.RemoveItemAsync("token");
+                    return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+                }
                 if (!string.IsNullOrEmpty(token))
                 {
                     var claims = ParseClaimsFromJwt(token);
