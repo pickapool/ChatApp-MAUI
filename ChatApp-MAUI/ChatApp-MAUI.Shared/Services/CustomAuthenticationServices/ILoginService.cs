@@ -1,6 +1,6 @@
 ﻿namespace ChatApp_MAUI.Shared.Services.CustomAuthenticationServices
 {
-    public interface ICustomAuthenticationService
+    public interface ILoginService
     {
         Task<string> Authenticate(string email, string password);
     }

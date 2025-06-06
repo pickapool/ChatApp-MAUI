@@ -3,14 +3,17 @@
         @* <MudImage Src="@(String.IsNullOrEmpty(UserAccount.Photo) ? DefaultPhoto : UserAccount.Photo)"></MudImage> *@
     </MudAvatar>
     <div class="d-flex flex-column pr-5">
-        <MudText Typo="Typo.caption">@_firebaseAuthClient.User.Info.DisplayName</MudText>
-        <MudText Typo="Typo.caption">@_firebaseAuthClient.User.Info.Email</MudText>
+        <MudText Typo="Typo.caption">@(_firebaseAuthClient.User == null ? "" : _firebaseAuthClient.User.Info.DisplayName)</MudText>
+        <MudText Typo="Typo.caption">@(_firebaseAuthClient.User == null ? "" :_firebaseAuthClient.User.Info.Email)</MudText>
     </div>
     <MudIconButton Class="navigation" Icon="@Icons.Material.Filled.Settings" Size="Size.Small" Variant="Variant.Text" OnClick="ToggleOpen"></MudIconButton>
     <MudPopover Style="max-height: unset !important;" Open="@_open" Fixed="false" Class="pa-2 profile" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.CenterLeft">
         <div class="d-flex flex-column" style="width : 200px;">
             <MudText Typo="Typo.caption">Settings</MudText>
             <hr style="margin: 4px;" />
+            <MudButton Class="d-flex justify-space-between" EndIcon="@Icons.Material.Filled.Person" Size="Size.Small" Variant="Variant.Text" OnClick="GoToProfile">
+                <MudText Typo="Typo.caption">Profile</MudText>
+            </MudButton>
             <MudButton Class="d-flex justify-space-between" EndIcon="@Icons.Material.Filled.Logout" Size="Size.Small" Variant="Variant.Text" OnClick="Logout">
                 <MudText Typo="Typo.caption">Logout</MudText>
             </MudButton>
@@ -32,6 +35,11 @@
         await _localStorage.RemoveItemAsync("token");
         ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserLogout();
         _navigationManager.NavigateTo("/");
+    }
+    private void GoToProfile()
+    {
+        _navigationManager.NavigateTo("/profile");
+        _open = false;
     }
 }
 <style>

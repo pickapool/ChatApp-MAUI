@@ -3,10 +3,10 @@ using System.Net.Http.Json;
 
 namespace ChatApp_MAUI.Shared.Services.CustomAuthenticationServices
 {
-    public class CustomAuthenticationService : ICustomAuthenticationService
+    public class LoginService : ILoginService
     {
         HttpClient _httpClient;
-        public CustomAuthenticationService(HttpClient httpClient)
+        public LoginService(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }

@@ -40,7 +40,7 @@ public static class MauiProgram
 
         
         builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationState>();
-        builder.Services.AddScoped<ICustomAuthenticationService, CustomAuthenticationService>();
+        builder.Services.AddScoped<ILoginService, LoginService>();
         builder.Services.AddScoped<IRegistrationService, RegistrationService>();
         builder.Services.AddScoped<INavigationService, NavigationService>();
 

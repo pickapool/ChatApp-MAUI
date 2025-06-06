@@ -14,11 +14,11 @@ namespace ChatApp_MAUI.AuthenticationProvider
         private readonly IJSRuntime _jsRuntime;
         private readonly FirebaseAuthClient _firebaseAuthClient;
 
-        public CustomAuthenticationState(ILocalStorageService localStorage, IJSRuntime jsRuntime, FirebaseAuthClient firebaseAuthClient)
+        public CustomAuthenticationState(ILocalStorageService localStorage, IJSRuntime jsRuntime, FirebaseAuthClient firebasAuthClient)
         {
             _localStorage = localStorage;
             _jsRuntime = jsRuntime;
-            _firebaseAuthClient = firebaseAuthClient;
+            _firebaseAuthClient = firebasAuthClient;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -33,16 +33,16 @@ namespace ChatApp_MAUI.AuthenticationProvider
             }
             try
             {
-                var token = await _localStorage.GetItemAsStringAsync("token");
-                var user = _firebaseAuthClient.User;
-                if (user == null)
+                var currentToken = await _localStorage.GetItemAsStringAsync("token");
+                if (currentToken != null)
                 {
-                    await _localStorage.RemoveItemAsync("token");
-                    return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+                    //await FirebaseAuth.DefaultInstance.RevokeRefreshTokensAsync(currentToken);
+                    //var user = await FirebaseAuth.DefaultInstance.GetUserAsync(currentToken);
+
                 }
-                if (!string.IsNullOrEmpty(token))
+                if (!string.IsNullOrEmpty(currentToken))
                 {
-                    var claims = ParseClaimsFromJwt(token);
+                    var claims = ParseClaimsFromJwt(currentToken);
                     var identity = new ClaimsIdentity(claims, "jwt");
                     return new AuthenticationState(new ClaimsPrincipal(identity));
                 }

@@ -1,4 +1,5 @@
-﻿using ChatApp_MAUI.Shared.Models;
+﻿using Blazored.LocalStorage;
+using ChatApp_MAUI.Shared.Models;
 using Firebase.Auth;
 using FirebaseAdmin.Auth;
 
@@ -7,9 +8,11 @@ namespace ChatApp_MAUI.Shared.Services.RegistrationServices
     public class RegistrationService : IRegistrationService
     {
         FirebaseAuthClient _firebaseAuthClient;
-        public RegistrationService(FirebaseAuthClient firebaseAuthClient)
+        ILocalStorageService _localStorage;
+        public RegistrationService(FirebaseAuthClient firebaseAuthClient, ILocalStorageService localStorageService)
         {
             _firebaseAuthClient = firebaseAuthClient;
+            _localStorage = localStorageService;
         }
         public async Task<string> SignInAsync(AccountModel account)
         {

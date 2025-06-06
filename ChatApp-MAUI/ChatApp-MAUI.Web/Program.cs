@@ -31,7 +31,7 @@ else
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("Authetication:TokenUri")) });
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
-builder.Services.AddScoped<ICustomAuthenticationService, CustomAuthenticationService>();
+builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationState>();
 builder.Services.AddScoped<INavigationService, NavigationService>();
 builder.Services.AddMudServices();
