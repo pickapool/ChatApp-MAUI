@@ -15,13 +15,14 @@ else
     bool isAndroid = false;
     protected override async Task OnInitializedAsync()
     {
+        _navigationService.GoToCameraPage(new Microsoft.Maui.Controls.Page());
         if (platform.ToLower().Contains("android") || platform.ToLower().Contains("ios"))
         {
-            isAndroid = true;
-            _navigationService.GoToCameraPage(new Microsoft.Maui.Controls.Page());
+           // isAndroid = true;
+            
         } else
         {
-            isAndroid = false;
+           // isAndroid = false;
         }
     }
     private string factor => _formFactor.GetFormFactor();

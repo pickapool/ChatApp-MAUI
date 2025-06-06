@@ -39,4 +39,8 @@ public partial class CameraViewPage : ContentPage
             cameraView.SelectedCamera = cameraProvider.AvailableCameras.Where(c => c.Position == CameraPosition.Rear).FirstOrDefault();
         isBack = !isBack;
     }
+    private void OnBack(object sender, EventArgs e)
+    {
+        Navigation.PopAsync();
+    }
 }

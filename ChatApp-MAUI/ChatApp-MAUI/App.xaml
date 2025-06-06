@@ -2,7 +2,10 @@
 <Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:ChatApp_MAUI"
-             x:Class="ChatApp_MAUI.App">
+             x:Class="ChatApp_MAUI.App"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
+             >
     <Application.Resources>
         <ResourceDictionary>
 

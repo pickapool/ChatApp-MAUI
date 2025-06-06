@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:ChatApp_MAUI"
              xmlns:shared="clr-namespace:ChatApp_MAUI.Shared;assembly=ChatApp-MAUI.Shared"
              x:Class="ChatApp_MAUI.MainPage"
+             Shell.NavBarIsVisible="False"
+             NavigationPage.HasNavigationBar="False"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
     <BlazorWebView x:Name="blazorWebView" HostPage="wwwroot/index.html">
