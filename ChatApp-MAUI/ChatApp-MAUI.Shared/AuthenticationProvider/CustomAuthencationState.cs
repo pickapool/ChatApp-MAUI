@@ -1,6 +1,4 @@
 ﻿using Blazored.LocalStorage;
-using Firebase.Auth;
-using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 using System.Security.Claims;
@@ -12,13 +10,11 @@ namespace ChatApp_MAUI.AuthenticationProvider
     {
         private readonly ILocalStorageService _localStorage;
         private readonly IJSRuntime _jsRuntime;
-        private readonly FirebaseAuthClient _firebaseAuthClient;
 
-        public CustomAuthenticationState(ILocalStorageService localStorage, IJSRuntime jsRuntime, FirebaseAuthClient firebasAuthClient)
+        public CustomAuthenticationState(ILocalStorageService localStorage, IJSRuntime jsRuntime)
         {
             _localStorage = localStorage;
             _jsRuntime = jsRuntime;
-            _firebaseAuthClient = firebasAuthClient;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()

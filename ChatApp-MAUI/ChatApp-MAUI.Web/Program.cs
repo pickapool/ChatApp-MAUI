@@ -41,21 +41,6 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddServerSideBlazor()
         .AddHubOptions(o => o.MaximumReceiveMessageSize = 100_000_000); // add this
 
-//builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-
-FirebaseApp.Create(new AppOptions
-{
-    Credential = GoogleCredential.FromFile("firebaseconfig.json"),
-});
-builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
-{
-    ApiKey = "AIzaSyDA_IPMONTKeIr-7P8XvyMwQATA9Dpxb3A",
-    AuthDomain = "maui-5e9d0.firebaseapp.com",
-    Providers = new FirebaseAuthProvider[]
-            {
-                new EmailProvider()
-            }
-}));
 
 var app = builder.Build();
 

@@ -45,20 +45,8 @@ public static class MauiProgram
         builder.Services.AddScoped<IRegistrationService, RegistrationService>();
         builder.Services.AddScoped<INavigationService, NavigationService>();
 
-        //Firebase
-
         builder.Services.AddAuthorizationCore();
         builder.Services.AddCascadingAuthenticationState();
-        builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
-        {
-            ApiKey = "AIzaSyDA_IPMONTKeIr-7P8XvyMwQATA9Dpxb3A",
-            AuthDomain = "maui-5e9d0.firebaseapp.com",
-            Providers = new FirebaseAuthProvider[]
-            {
-                new EmailProvider()
-            }
-        }));
-
 
 #if WINDOWS || MACCATALYST
         builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
