@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp-MAUI.Shared", "Chat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp-MAUI.Web", "ChatApp-MAUI\ChatApp-MAUI.Web\ChatApp-MAUI.Web.csproj", "{9C840AA8-1BC7-45B9-BB42-68B51E5E5596}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{0F94124B-F63C-471E-A4B8-C9154368A336}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +30,10 @@ Global
 		{9C840AA8-1BC7-45B9-BB42-68B51E5E5596}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C840AA8-1BC7-45B9-BB42-68B51E5E5596}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C840AA8-1BC7-45B9-BB42-68B51E5E5596}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F94124B-F63C-471E-A4B8-C9154368A336}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F94124B-F63C-471E-A4B8-C9154368A336}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F94124B-F63C-471E-A4B8-C9154368A336}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F94124B-F63C-471E-A4B8-C9154368A336}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
