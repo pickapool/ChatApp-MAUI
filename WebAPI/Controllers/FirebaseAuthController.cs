@@ -1,6 +1,7 @@
 ﻿using Firebase.Auth;
 using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
 
 namespace WebAPI.Controllers
 {
@@ -43,6 +44,27 @@ namespace WebAPI.Controllers
                 var response = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(args.Email, args.Password);
                 var token = await response.User.GetIdTokenAsync();
                 return Ok(token);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        [Route("getuser")]
+        public async Task<IActionResult> GetUserAsync([FromBody] string idToken)
+        {
+            try
+            {
+                idToken = idToken.Trim('"');
+                var verifiedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(idToken);
+                if(verifiedToken == null)
+                {
+                    return Unauthorized(new { Error = "UnAuthorized" });
+                }
+                UserRecord userRecord = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.GetUserAsync(verifiedToken.Uid);
+                return Ok(userRecord);
             }
             catch (Exception ex)
             {

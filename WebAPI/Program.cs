@@ -12,11 +12,23 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy",
+        builder =>
+        {
+            builder.WithOrigins("http://localhost:5110") // your frontend URLs
+                   .AllowAnyHeader()
+                   .AllowAnyMethod()
+                   .AllowCredentials();
+        });
+});
 //firebase admin
 FirebaseApp.Create(new AppOptions
 {
     Credential = GoogleCredential.FromFile("firebaseconfig.json"),
 });
+
 //firebaseauth client
 builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
 {
@@ -31,6 +43,8 @@ builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseCors("CorsPolicy");
+
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
