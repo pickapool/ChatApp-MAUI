@@ -15,6 +15,7 @@ using Firebase.Auth.Providers;
 using CommunityToolkit.Maui;
 using ChatApp_MAUI.Shared.Services.NavigationServices;
 using ChatApp_MAUI.Components;
+using System.Reflection;
 namespace ChatApp_MAUI;
 
 public static class MauiProgram
@@ -30,8 +31,7 @@ public static class MauiProgram
             }).UseMauiCommunityToolkitCamera();
 
         // Add device-specific services used by the ChatApp_MAUI.Shared project
-        builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("BaseAPI:Url")) });
+
         builder.Services.AddHttpClient();
         builder.Services.AddSingleton<IFormFactor, FormFactor>();
         builder.Services.AddMudServices();
@@ -58,15 +58,19 @@ public static class MauiProgram
                 new EmailProvider()
             }
         }));
-        
+
 
 #if WINDOWS || MACCATALYST
-
-        FirebaseApp.Create(new AppOptions
-        {
-           Credential = GoogleCredential.FromFile("firebaseconfig.json"),
-        });
+        builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+#else
+        var assembly = Assembly.GetExecutingAssembly();
+        using var stream = assembly.GetManifestResourceStream("ChatApp_MAUI.appsettings.mobile.json");
+        var config = new ConfigurationBuilder()
+            .AddJsonStream(stream)
+            .Build();
+        builder.Configuration.AddConfiguration(config);
 #endif
+        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("BaseAPI:Url")) });
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
