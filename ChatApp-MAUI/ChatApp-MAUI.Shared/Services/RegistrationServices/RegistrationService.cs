@@ -2,6 +2,7 @@
 using ChatApp_MAUI.Shared.Models;
 using FirebaseAdmin.Auth;
 using System.Net.Http.Json;
+using Extensions = ChatApp_MAUI.Shared.Common.Extensions;
 
 namespace ChatApp_MAUI.Shared.Services.RegistrationServices
 {
@@ -36,9 +37,14 @@ namespace ChatApp_MAUI.Shared.Services.RegistrationServices
             try
             {
                 var response = await _httpClient.PostAsJsonAsync("api/auth/register", args);
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"{Extensions.GetHttpError(error)}");
+                }
                 response.EnsureSuccessStatusCode();
             }
-            catch (Exception ex)
+            catch (FirebaseAuthException ex)
             {
                 throw new Exception($"Firebase error: {ex.Message}");
             }
