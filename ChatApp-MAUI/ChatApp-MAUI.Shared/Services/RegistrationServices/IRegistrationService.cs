@@ -1,4 +1,5 @@
 ﻿using ChatApp_MAUI.Shared.Models;
+using FirebaseAdmin.Auth;
 
 namespace ChatApp_MAUI.Shared.Services.RegistrationServices
 {
@@ -6,6 +7,6 @@ namespace ChatApp_MAUI.Shared.Services.RegistrationServices
     {
         Task<string> SignInAsync(AccountModel account);
 
-        Task<string> RegisterAsync(AccountModel account);
+        Task RegisterAsync(UserRecordArgs args);
     }
 }

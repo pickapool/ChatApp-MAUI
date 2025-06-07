@@ -30,8 +30,8 @@ public static class MauiProgram
             }).UseMauiCommunityToolkitCamera();
 
         // Add device-specific services used by the ChatApp_MAUI.Shared project
-        //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("Authetication:TokenUri")) });
-
+        builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("BaseAPI:Url")) });
+        builder.Services.AddHttpClient();
         builder.Services.AddSingleton<IFormFactor, FormFactor>();
         builder.Services.AddMudServices();
         builder.Services.AddHttpClient();

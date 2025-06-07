@@ -3,7 +3,7 @@
     <div class="position-absolute top-0" style="right: 0;">
         <small>Already have an account?</small>
         <MudButton 
-        OnClick="SignIn"
+        OnClick="GoToSignIn"
         Size="Size.Small"
         Variant="Variant.Filled"
         Color="Color.Primary">
@@ -16,22 +16,20 @@
             <MudText Typo="Typo.h6">Create an account</MudText>
             <hr/>
             <MudText Typo="Typo.button">Email</MudText>
-            <MudTextField 
-            @bind-Value="accountModel.email" 
-            Variant="Variant.Outlined" 
+            <MudTextField @bind-Value="userRecord.Email"
+                          Variant="Variant.Outlined" 
             Adornment="Adornment.End" 
             AdornmentIcon="@Icons.Material.Filled.Person" 
             Margin="Margin.Dense"/>
             <MudText Typo="Typo.button">Name</MudText>
-            <MudTextField @bind-Value="accountModel.displayName"
+            <MudTextField @bind-Value="userRecord.DisplayName"
             Variant="Variant.Outlined"
             Adornment="Adornment.End"
             AdornmentIcon="@Icons.Material.Filled.CreditCard"
             Margin="Margin.Dense" />
             <MudText Typo="Typo.button">Password</MudText>
-            <MudTextField 
-            @bind-Value="accountModel.password" 
-            Variant="Variant.Outlined"
+            <MudTextField @bind-Value="userRecord.Password"
+                          Variant="Variant.Outlined"
             InputType="@PasswordInput" 
             Adornment="Adornment.End" 
             AdornmentIcon="@PasswordInputIcon" 
@@ -88,7 +86,7 @@
 </div>
 @code {
     [Parameter] public EventCallback OnSignIn { get; set; }
-    AccountModel accountModel = new();
+    UserRecordArgs userRecord = new();
     string confirmPassword = string.Empty;
     private bool _open = false;
     bool isLoading, isShow;
@@ -98,13 +96,13 @@
     {
         isLoading = true;
         await Task.Delay(100);
-        if (String.IsNullOrEmpty(accountModel.email) || String.IsNullOrEmpty(accountModel.password) || String.IsNullOrEmpty(confirmPassword))
+        if (String.IsNullOrEmpty(userRecord.Email) || String.IsNullOrEmpty(userRecord.Password) || String.IsNullOrEmpty(confirmPassword))
         {
             Extensions.ShowSnackbar("All fields are required.", Variant.Filled, _snackBar, Severity.Error);
             isLoading = false;
             return;
         }
-        if (accountModel.password != confirmPassword)
+        if (userRecord.Password != confirmPassword)
         {
             Extensions.ShowSnackbar("Passwords do not match.", Variant.Filled, _snackBar, Severity.Error);
             isLoading = false;
@@ -112,17 +110,17 @@
         }
         try
         {
-            await _registrationService.RegisterAsync(accountModel);
+            await _registrationService.RegisterAsync(userRecord);
             isLoading = false;
 			Extensions.ShowSnackbar("Account created successfully, please login to continue.", Variant.Filled, _snackBar, Severity.Success);
-            await SignIn();
+            await GoToSignIn();
         }catch(Exception ee)
         {
             isLoading = false;
             Extensions.ShowSnackbar(ee.Message, Variant.Filled, _snackBar, Severity.Error);
         }
     }
-    private async Task SignIn()
+    private async Task GoToSignIn()
     {
         await OnSignIn.InvokeAsync();
     }
