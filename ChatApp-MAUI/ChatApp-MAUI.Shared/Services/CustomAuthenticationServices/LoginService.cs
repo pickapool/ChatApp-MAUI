@@ -3,6 +3,7 @@ using FirebaseAdmin.Auth;
 using System.Net.Http.Json;
 using ChatApp_MAUI.Shared.Common;
 using Extensions = ChatApp_MAUI.Shared.Common.Extensions;
+using System.Net.Http.Headers;
 
 namespace ChatApp_MAUI.Shared.Services.CustomAuthenticationServices
 {
@@ -26,6 +27,7 @@ namespace ChatApp_MAUI.Shared.Services.CustomAuthenticationServices
         }
         public async Task<AuthTokenModel> GetUserRecord(string token)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim('"'));
             var response = await _httpClient.PostAsJsonAsync("api/auth/getuser", token);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {

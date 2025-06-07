@@ -30,15 +30,20 @@ namespace ChatApp_MAUI.AuthenticationProvider
             try
             {
                 var currentToken = await _localStorage.GetItemAsStringAsync("token");
-                if (currentToken != null)
-                {
-                    //await FirebaseAuth.DefaultInstance.RevokeRefreshTokensAsync(currentToken);
-                    //var user = await FirebaseAuth.DefaultInstance.GetUserAsync(currentToken);
-
-                }
                 if (!string.IsNullOrEmpty(currentToken))
                 {
                     var claims = ParseClaimsFromJwt(currentToken);
+                    var expClaim = claims.FirstOrDefault(c => c.Type == "exp")?.Value;
+                    if (expClaim != null && long.TryParse(expClaim, out long exp))
+                    {
+                        var expirationTime = DateTimeOffset.FromUnixTimeSeconds(exp);
+                        if (expirationTime < DateTimeOffset.UtcNow)
+                        {
+                            // ❌ Token expired
+                            await _localStorage.RemoveItemAsync("token");
+                            return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+                        }
+                    }
                     var identity = new ClaimsIdentity(claims, "jwt");
                     return new AuthenticationState(new ClaimsPrincipal(identity));
                 }

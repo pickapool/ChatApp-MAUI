@@ -3,6 +3,8 @@ using Firebase.Auth;
 using FirebaseAdmin;
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,12 +19,27 @@ builder.Services.AddCors(options =>
     options.AddPolicy("CorsPolicy",
         builder =>
         {
-            builder.WithOrigins("http://localhost:5110") // your frontend URLs
+            builder.WithOrigins("http://localhost:5110")
                    .AllowAnyHeader()
                    .AllowAnyMethod()
                    .AllowCredentials();
         });
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.Authority = "https://securetoken.google.com/maui-5e9d0";
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = "https://securetoken.google.com/maui-5e9d0",
+        ValidateAudience = true,
+        ValidAudience = "maui-5e9d0",
+        ValidateLifetime = true
+    };
+});
+builder.Services.AddAuthorization();
+
 //firebase admin
 FirebaseApp.Create(new AppOptions
 {
@@ -54,10 +71,11 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
 
 app.MapControllers();
 

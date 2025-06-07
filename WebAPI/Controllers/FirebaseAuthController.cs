@@ -1,5 +1,6 @@
 ﻿using Firebase.Auth;
 using FirebaseAdmin.Auth;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
@@ -14,7 +15,7 @@ namespace WebAPI.Controllers
         {
             _firebaseAuthClient = firebaseAuthClient;
         }
-
+        [AllowAnonymous]
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> RegisterAsync([FromBody]UserRecordArgs args)
@@ -35,6 +36,7 @@ namespace WebAPI.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
+        [AllowAnonymous]
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> LoginAsync([FromBody]UserRecordArgs args)
@@ -50,7 +52,7 @@ namespace WebAPI.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
-
+        [Authorize]
         [HttpPost]
         [Route("getuser")]
         public async Task<IActionResult> GetUserAsync([FromBody] string idToken)
