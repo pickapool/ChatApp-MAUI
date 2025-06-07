@@ -17,23 +17,23 @@
             <hr/>
             <MudText Typo="Typo.button">Email</MudText>
             <MudTextField 
-                @onkeydown="HandleKeyDown" 
-                @bind-Value="email"  
-                Variant="Variant.Outlined" 
-                Adornment="Adornment.End" 
-                Margin="Margin.Dense"
-                AdornmentIcon="@Icons.Material.Filled.Lock" />
+            @onkeydown="HandleKeyDown" 
+            @bind-Value="email"  
+            Variant="Variant.Outlined" 
+            Adornment="Adornment.End" 
+            Margin="Margin.Dense"
+            AdornmentIcon="@Icons.Material.Filled.Lock" />
             <MudText Typo="Typo.button">Password</MudText>
             <MudTextField 
-                @onkeydown="HandleKeyDown" 
-                @bind-Value="password" 
-                Variant="Variant.Outlined"
-                InputType="@PasswordInput" 
-                Adornment="Adornment.End" 
-                AdornmentIcon="@PasswordInputIcon" 
-                Margin="Margin.Dense"
-                OnAdornmentClick="ShowPassword" 
-                AdornmentAriaLabel="Show Password" />
+            @onkeydown="HandleKeyDown" 
+            @bind-Value="password" 
+            Variant="Variant.Outlined"
+            InputType="@PasswordInput" 
+            Adornment="Adornment.End" 
+            AdornmentIcon="@PasswordInputIcon" 
+            Margin="Margin.Dense"
+            OnAdornmentClick="ShowPassword" 
+            AdornmentAriaLabel="Show Password" />
             <MudLink Class="mb-10"><i>Forgot Password?</i></MudLink>
 
             <MudText Class="text-center" Typo="Typo.caption">Don't have account yet?</MudText>
@@ -41,23 +41,23 @@
                 <MudLink OnClick="RegisterClick" Class="mud-typography mud-typography-caption text-center">Create Account</MudLink>
             </MudText>
             <MudButton 
-                Class="mb-5 color-main"
-                OnClick="Login"
-                Variant="Variant.Filled" 
-                Size="Size.Large" 
-                Color="Color.Primary">
-                    <div class="d-flex flex-row gap-2">
-                        @if (isLoading)
-                        {
-                            <MudProgressCircular Class="align-self-start" Size="Size.Small" style="color: white;" Indeterminate></MudProgressCircular>
-                            <span>Signing in...</span>
-                        }
-                        else
-                        {
-                            <span>Sign in</span>
-                        }
+            Class="mb-5 color-main"
+            OnClick="Login"
+            Variant="Variant.Filled" 
+            Size="Size.Large" 
+            Color="Color.Primary">
+                <div class="d-flex flex-row gap-2">
+                    @if (isLoading)
+                    {
+                        <MudProgressCircular Class="align-self-start" Size="Size.Small" style="color: white;" Indeterminate></MudProgressCircular>
+                        <span>Signing in...</span>
+                    }
+                    else
+                    {
+                        <span>Sign in</span>
+                    }
 
-                    </div>
+                </div>
             </MudButton>
         </MudPaper>
     </MudItem>
@@ -99,12 +99,14 @@
             return;
         }
         await Task.Delay(500);
-        var account = new AccountModel();
-        account.email = email;
-        account.password = password;
+        var account = new UserRecordArgs()
+            {
+                Email = email,
+                Password = password,
+            };
         try
         {
-            var uid = await _registrationService.SignInAsync(account);
+            var uid = await _loginService.Authenticate(account);
             await _localStorage.SetItemAsync("token", uid);
             ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserAuthentication(uid);
             email = string.Empty;

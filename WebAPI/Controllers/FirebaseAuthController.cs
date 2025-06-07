@@ -1,4 +1,5 @@
-﻿using FirebaseAdmin.Auth;
+﻿using Firebase.Auth;
+using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
@@ -7,6 +8,12 @@ namespace WebAPI.Controllers
     [Route("api/auth/")] 
     public class FirebaseAuthController : ControllerBase
     {
+        private readonly FirebaseAuthClient _firebaseAuthClient;
+        public FirebaseAuthController(FirebaseAuthClient firebaseAuthClient)
+        {
+            _firebaseAuthClient = firebaseAuthClient;
+        }
+
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> RegisterAsync([FromBody]UserRecordArgs args)
@@ -22,7 +29,22 @@ namespace WebAPI.Controllers
                 var userRecord = await FirebaseAuth.DefaultInstance.CreateUserAsync(userArg);
                 return Ok(userRecord);
             }
-            catch (FirebaseAuthException ex)
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> LoginAsync([FromBody]UserRecordArgs args)
+        {
+            try
+            {
+                var response = await _firebaseAuthClient.SignInWithEmailAndPasswordAsync(args.Email, args.Password);
+                var token = await response.User.GetIdTokenAsync();
+                return Ok(token);
+            }
+            catch (Exception ex)
             {
                 return BadRequest(new { Error = ex.Message });
             }
