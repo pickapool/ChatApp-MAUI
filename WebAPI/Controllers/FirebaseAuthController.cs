@@ -35,7 +35,7 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(new { Error = ex.Message });
             } 
-        }
+        } 
         [AllowAnonymous]
         [HttpPost]
         [Route("login")]
