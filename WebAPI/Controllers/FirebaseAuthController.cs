@@ -34,7 +34,7 @@ namespace WebAPI.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { Error = ex.Message });
-            }
+            } 
         }
         [AllowAnonymous]
         [HttpPost]
