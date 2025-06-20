@@ -1,0 +1,40 @@
+﻿@using System.Drawing
+
+<CameraStreamer @ref="CameraStreamerReference"
+    Width="1920"
+    Height="1080"
+    OnRendered="OnRenderedHandler"
+    OnFrame="OnFrameHandler"
+    Style="width: 480px; height: 270px;"
+    CameraID="@cameraId"
+    Autostart />
+
+@code {
+    CameraStreamer CameraStreamerReference;
+    string cameraId = null;
+
+    private async void OnRenderedHandler()
+    {
+
+        try{
+            if (await CameraStreamerReference.GetCameraAccessAsync())
+            {
+                await CameraStreamerReference.ReloadAsync();
+            }
+        } catch(Exception ee)
+        {
+            Console.WriteLine(ee.Message);
+        }
+    }
+
+    private void OnFrameHandler(string data)
+    {
+        // Remove the suffix added by javascript
+        data = data[(data.IndexOf(',') + 1)..];
+
+        // Convert the base64 string to a System.Drawing.Bitmap
+        Bitmap bmp = new(new MemoryStream(Convert.FromBase64String(data)));
+
+        // Do something with the bitmap
+    }
+}

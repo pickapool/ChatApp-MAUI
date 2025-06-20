@@ -1,0 +1,156 @@
+﻿<PageTitle>Account Registration</PageTitle>
+<div class="d-flex justify-content-center align-items-center ma-10 position-relative" style="height: calc(100vh - 100px)">
+    <div class="position-absolute top-0" style="right: 0;">
+        <small>Already have an account?</small>
+        <MudButton 
+        OnClick="GoToSignIn"
+        Size="Size.Small"
+        Variant="Variant.Filled"
+        Color="Color.Primary">
+            SIGN IN
+        </MudButton>
+    </div>
+
+    <MudItem xs="12" sm="8" md="6" lg="4" xl="3">
+        <MudPaper Class="d-flex flex-column pa-4 paper-opacity mt-2 px-10" Elevation="3" Height="Auto">
+            <MudText Typo="Typo.h6">Create an account</MudText>
+            <hr/>
+            <MudText Typo="Typo.button">Email</MudText>
+            <MudTextField @bind-Value="userRecord.Email"
+                          Variant="Variant.Outlined" 
+            Adornment="Adornment.End" 
+            AdornmentIcon="@Icons.Material.Filled.Person" 
+            Margin="Margin.Dense"/>
+            <MudText Typo="Typo.button">Name</MudText>
+            <MudTextField @bind-Value="userRecord.DisplayName"
+            Variant="Variant.Outlined"
+            Adornment="Adornment.End"
+            AdornmentIcon="@Icons.Material.Filled.CreditCard"
+            Margin="Margin.Dense" />
+            <MudText Typo="Typo.button">Password</MudText>
+            <MudTextField @bind-Value="userRecord.Password"
+                          Variant="Variant.Outlined"
+            InputType="@PasswordInput" 
+            Adornment="Adornment.End" 
+            AdornmentIcon="@PasswordInputIcon" 
+            OnAdornmentClick="ShowPassword" 
+            AdornmentAriaLabel="Show Password" 
+            Margin="Margin.Dense"
+            Validation="@(new Func<string, string>(ValidatePassword))" />
+            <small class="text-muted mb-3">
+                Password must:
+                <ul style="margin: 0; padding-left: 1.25rem;">
+                    <li>Be at least <strong>8 characters</strong> long</li>
+                    <li>Contain at least <strong>1 uppercase letter</strong></li>
+                    <li>Contain at least <strong>1 number</strong></li>
+                    <li>Contain at least <strong>1 special character</strong> (e.g., ! # $ %)</li>
+                </ul>
+            </small>
+            <MudText Typo="Typo.button">Confirm Password</MudText>
+            <MudTextField 
+            Class="mb-5" 
+            @bind-Value="confirmPassword" 
+            Variant="Variant.Outlined"
+            Margin="Margin.Dense"
+            InputType="@PasswordInput" 
+            Adornment="Adornment.End" />
+            <MudButton Class="mb-5 color-main"
+            OnClick="Register"
+            Variant="Variant.Filled"
+            Size="Size.Large"
+            Color="Color.Primary">
+                <div class="d-flex flex-row gap-2">
+                    @if (isLoading)
+                    {
+                        <MudProgressCircular Class="align-self-start" Size="Size.Small" style="color: white;" Indeterminate></MudProgressCircular>
+                        <span>Creating account...</span>
+                    }
+                    else
+                    {
+                        <span>CREATE ACCOUNT</span>
+                    }
+
+                </div>
+            </MudButton>
+            <small class="text-center mb-2">
+                <i>
+                    By clicking Create Account, you agree to our
+                    <br />
+                    <a style="color:blue">Terms</a>
+                    and have read and acknowledge our
+                    <a style="color:blue">Privacy Statement</a>
+                </i>
+            </small>
+        </MudPaper>
+    </MudItem>
+</div>
+@code {
+    [Parameter] public EventCallback OnSignIn { get; set; }
+    UserRecordArgs userRecord = new();
+    string confirmPassword = string.Empty;
+    private bool _open = false;
+    bool isLoading, isShow;
+    InputType PasswordInput = InputType.Password;
+    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+    private async Task Register()
+    {
+        isLoading = true;
+        await Task.Delay(100);
+        if (String.IsNullOrEmpty(userRecord.Email) || String.IsNullOrEmpty(userRecord.Password) || String.IsNullOrEmpty(confirmPassword))
+        {
+            Extensions.ShowSnackbar("All fields are required.", Variant.Filled, _snackBar, Severity.Error);
+            isLoading = false;
+            return;
+        }
+        if (userRecord.Password != confirmPassword)
+        {
+            Extensions.ShowSnackbar("Passwords do not match.", Variant.Filled, _snackBar, Severity.Error);
+            isLoading = false;
+            return;
+        }
+        try
+        {
+            await _registrationService.RegisterAsync(userRecord);
+            isLoading = false;
+			Extensions.ShowSnackbar("Account created successfully, please login to continue.", Variant.Filled, _snackBar, Severity.Success);
+            await GoToSignIn();
+        }catch(Exception ee)
+        {
+            isLoading = false;
+            Extensions.ShowSnackbar(ee.Message, Variant.Filled, _snackBar, Severity.Error);
+        }
+    }
+    private async Task GoToSignIn()
+    {
+        await OnSignIn.InvokeAsync();
+    }
+    void ShowPassword()
+    {
+        @if (isShow)
+        {
+            isShow = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
+        }
+        else
+        {
+            isShow = true;
+            PasswordInputIcon = Icons.Material.Filled.Visibility;
+            PasswordInput = InputType.Text;
+        }
+    }
+    private string ValidatePassword(string password)
+    {
+        if (string.IsNullOrWhiteSpace(password))
+            return "Password is required.";
+        if (password.Length < 8)
+            return "Password must be at least 8 characters long.";
+        if (!password.Any(char.IsUpper))
+            return "Password must contain at least one uppercase letter.";
+        if (!password.Any(char.IsDigit))
+            return "Password must contain at least one number.";
+        if (!password.Any(ch => !char.IsLetterOrDigit(ch)))
+            return "Password must contain at least one special character.";
+        return null; // Valid
+    }
+}

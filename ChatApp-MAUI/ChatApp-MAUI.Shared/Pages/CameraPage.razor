@@ -1,0 +1,29 @@
+﻿@page "/"
+
+<PageTitle>Home Page</PageTitle>
+
+@if (isAndroid)
+{
+
+}
+else
+{
+    <CameraComponent></CameraComponent>
+}
+
+@code {
+    bool isAndroid = false;
+    protected override async Task OnInitializedAsync()
+    {
+        if (platform.ToLower().Contains("android") || platform.ToLower().Contains("ios"))
+        {
+            isAndroid = true;
+            _navigationService.GoToCameraPage(new Microsoft.Maui.Controls.Page());
+        } else
+        {
+            isAndroid = false;
+        }
+    }
+    private string factor => _formFactor.GetFormFactor();
+    private string platform => _formFactor.GetPlatform();
+}
