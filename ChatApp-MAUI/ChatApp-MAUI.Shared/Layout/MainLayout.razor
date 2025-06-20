@@ -15,11 +15,12 @@
     <Authorized>
         <MudLayout>
             <MudAppBar Elevation="1">
-                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
+                <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer"
+                               ref="reference" />
                 <MudSpacer />
                 <ProfileContainer></ProfileContainer>
             </MudAppBar>
-            <MudDrawer @bind-Open="@_open" Breakpoint="Breakpoint.Sm" Elevation="1" Variant="@DrawerVariant.Responsive">
+            <MudDrawer @bind-Open="@_open" Breakpoint="Breakpoint.Sm" Elevation="1" Variant="@DrawerVariant.Temporary">
                 <MudDrawerHeader>
                     <MudText Typo="Typo.h6">My App</MudText>
                 </MudDrawerHeader>
@@ -45,6 +46,7 @@
     </NotAuthorized>
 </AuthorizeView>
 @code{
+    ElementReference reference;
     private string email = string.Empty, password = string.Empty;
     private bool _open = false, isLoading = false, isShow = false, isRegistration = false;
     private bool _isToggling = false;
