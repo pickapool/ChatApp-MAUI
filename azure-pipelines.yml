@@ -24,14 +24,13 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: 'build'
-    projects: 'WebAPI/WebAPI.csproj'
+    projects: '$(solution)'
     arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   inputs:
     azureSubscription: 'Azure subscription 1(3b7c6a11-821d-4be2-a166-b1e4948f7d06)'
     command: 'publish'
-    publishWebProjects: false
     projects: 'WebAPI/WebAPI.csproj'
     arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/publish'
 
@@ -47,6 +46,6 @@ steps:
   inputs:
     ConnectionType: 'AzureRM'
     azureSubscription: 'Azure subscription 1(3b7c6a11-821d-4be2-a166-b1e4948f7d06)'
-    appType: 'apiApp'
+    appType: 'webApp'
     WebAppName: 'chat-maui-web-api'
     packageForLinux: '$(Build.ArtifactStagingDirectory)/WebApp.zip'
