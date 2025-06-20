@@ -47,10 +47,17 @@
 @code{
     private string email = string.Empty, password = string.Empty;
     private bool _open = false, isLoading = false, isShow = false, isRegistration = false;
-    
-    private void ToggleDrawer()
+    private bool _isToggling = false;
+
+    private async Task ToggleDrawer()
     {
+        if (_isToggling) return;
+
+        _isToggling = true;
         _open = !_open;
+
+        await Task.Delay(300); // debounce delay
+        _isToggling = false;
     }
     
 }
