@@ -1,4 +1,6 @@
-﻿<AuthorizeView>
+﻿@inherits ProfileContainerBase
+
+<AuthorizeView>
     <Authorized>
         @if (!isLoading && user != null)
         {
