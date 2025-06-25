@@ -37,8 +37,7 @@
         @if(isRegistration)
         {
             <AccountRegistration OnSignIn="()=> isRegistration = !isRegistration"></AccountRegistration>
-        } else
-        {
+        } else {
             <LoginComponent OnRegistrationClick="()=> isRegistration = !isRegistration"></LoginComponent>
         }
     </NotAuthorized>
