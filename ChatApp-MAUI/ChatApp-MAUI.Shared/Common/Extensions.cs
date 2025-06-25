@@ -13,8 +13,10 @@ namespace ChatApp_MAUI.Shared.Common
         }
         public static string GetHttpError(string responseValue)
         {
-            if (responseValue.Contains("EMAIL_EXISTS"))
+            if (responseValue.ToLower().Contains("email_exist"))
                 return "Email already exist.";
+            if(responseValue.ToLower().Contains("invalid email"))
+                return "Invalid email address.";
             return responseValue;
         }
     }
