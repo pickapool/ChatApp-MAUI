@@ -1,7 +1,5 @@
-﻿@using ChatApp_MAUI.Shared.Services
-@inherits LayoutComponentBase
+﻿@inherits  MainLayoutBase
 
-@inject IFormFactor _formFactor
 <MudThemeProvider />
 <MudPopoverProvider />
 
@@ -45,21 +43,3 @@
         }
     </NotAuthorized>
 </AuthorizeView>
-@code{
-    ElementReference reference;
-    private string email = string.Empty, password = string.Empty;
-    private bool _open = false, isLoading = false, isShow = false, isRegistration = false;
-    private bool _isToggling = false;
-
-    private async Task ToggleDrawer()
-    {
-        if (_isToggling) return;
-
-        _isToggling = true;
-        _open = !_open;
-
-        await Task.Delay(300); // debounce delay
-        _isToggling = false;
-    }
-    
-}
