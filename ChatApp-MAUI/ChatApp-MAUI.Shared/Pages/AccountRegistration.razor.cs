@@ -19,34 +19,41 @@ namespace ChatApp_MAUI.Shared.Pages
         protected bool isLoading, isShow;
         protected InputType PasswordInput = InputType.Password;
         protected string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-       
+
         protected async Task Register()
         {
             isLoading = true;
+            var passwordValidation = ValidatePassword(userRecord.Password);
             await Task.Delay(100);
             if (String.IsNullOrEmpty(userRecord.Email) || String.IsNullOrEmpty(userRecord.Password) || String.IsNullOrEmpty(confirmPassword))
             {
                 Extensions.ShowSnackbar("All fields are required.", Variant.Filled, _snackBar, Severity.Error);
-                isLoading = false;
                 return;
             }
             if (userRecord.Password != confirmPassword)
             {
                 Extensions.ShowSnackbar("Passwords do not match.", Variant.Filled, _snackBar, Severity.Error);
-                isLoading = false;
+                return;
+            }
+            if (passwordValidation != null)
+            {
+                Extensions.ShowSnackbar(passwordValidation, Variant.Filled, _snackBar, Severity.Error);
                 return;
             }
             try
             {
                 await _registrationService.RegisterAsync(userRecord);
-                isLoading = false;
                 Extensions.ShowSnackbar("Account created successfully, please login to continue.", Variant.Filled, _snackBar, Severity.Success);
                 await GoToSignIn();
             }
             catch (Exception ee)
             {
-                isLoading = false;
+
                 Extensions.ShowSnackbar(ee.Message, Variant.Filled, _snackBar, Severity.Error);
+            }
+            finally
+            {
+                isLoading = false;
             }
         }
         protected async Task GoToSignIn()
