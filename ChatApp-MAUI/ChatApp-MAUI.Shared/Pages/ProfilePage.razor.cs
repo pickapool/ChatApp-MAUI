@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChatApp_MAUI.Shared.Pages
 {
-    partial class ProfilePageBase : ComponentBase
+    public partial class ProfilePageBase : ComponentBase
     {
 
     }
