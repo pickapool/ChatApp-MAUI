@@ -23,25 +23,26 @@ namespace ChatApp_MAUI.Shared.Pages
         protected async Task Register()
         {
             isLoading = true;
-            var passwordValidation = ValidatePassword(userRecord.Password);
             await Task.Delay(100);
-            if (String.IsNullOrEmpty(userRecord.Email) || String.IsNullOrEmpty(userRecord.Password) || String.IsNullOrEmpty(confirmPassword))
-            {
-                Extensions.ShowSnackbar("All fields are required.", Variant.Filled, _snackBar, Severity.Error);
-                return;
-            }
-            if (userRecord.Password != confirmPassword)
-            {
-                Extensions.ShowSnackbar("Passwords do not match.", Variant.Filled, _snackBar, Severity.Error);
-                return;
-            }
-            if (passwordValidation != null)
-            {
-                Extensions.ShowSnackbar(passwordValidation, Variant.Filled, _snackBar, Severity.Error);
-                return;
-            }
             try
             {
+                var passwordValidation = ValidatePassword(userRecord.Password);
+
+                if (String.IsNullOrEmpty(userRecord.Email) || String.IsNullOrEmpty(userRecord.Password) || String.IsNullOrEmpty(confirmPassword))
+                {
+                    Extensions.ShowSnackbar("All fields are required.", Variant.Filled, _snackBar, Severity.Error);
+                    return;
+                }
+                if (userRecord.Password != confirmPassword)
+                {
+                    Extensions.ShowSnackbar("Passwords do not match.", Variant.Filled, _snackBar, Severity.Error);
+                    return;
+                }
+                if (passwordValidation != null)
+                {
+                    Extensions.ShowSnackbar(passwordValidation, Variant.Filled, _snackBar, Severity.Error);
+                    return;
+                }
                 await _registrationService.RegisterAsync(userRecord);
                 Extensions.ShowSnackbar("Account created successfully, please login to continue.", Variant.Filled, _snackBar, Severity.Success);
                 await GoToSignIn();
