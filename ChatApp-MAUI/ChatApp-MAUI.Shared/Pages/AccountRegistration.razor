@@ -1,4 +1,6 @@
-﻿<PageTitle>Account Registration</PageTitle>
+﻿@inherits AccountRegistrationBase
+
+<PageTitle>Account Registration</PageTitle>
 <div class="d-flex justify-content-center align-items-center ma-10 position-relative" style="height: calc(100vh - 100px)">
     <div class="position-absolute top-0" style="right: 0;">
         <small>Already have an account?</small>
@@ -84,73 +86,3 @@
         </MudPaper>
     </MudItem>
 </div>
-@code {
-    [Parameter] public EventCallback OnSignIn { get; set; }
-    UserRecordArgs userRecord = new();
-    string confirmPassword = string.Empty;
-    private bool _open = false;
-    bool isLoading, isShow;
-    InputType PasswordInput = InputType.Password;
-    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-    private async Task Register()
-    {
-        isLoading = true;
-        await Task.Delay(100);
-        if (String.IsNullOrEmpty(userRecord.Email) || String.IsNullOrEmpty(userRecord.Password) || String.IsNullOrEmpty(confirmPassword))
-        {
-            Extensions.ShowSnackbar("All fields are required.", Variant.Filled, _snackBar, Severity.Error);
-            isLoading = false;
-            return;
-        }
-        if (userRecord.Password != confirmPassword)
-        {
-            Extensions.ShowSnackbar("Passwords do not match.", Variant.Filled, _snackBar, Severity.Error);
-            isLoading = false;
-            return;
-        }
-        try
-        {
-            await _registrationService.RegisterAsync(userRecord);
-            isLoading = false;
-			Extensions.ShowSnackbar("Account created successfully, please login to continue.", Variant.Filled, _snackBar, Severity.Success);
-            await GoToSignIn();
-        }catch(Exception ee)
-        {
-            isLoading = false;
-            Extensions.ShowSnackbar(ee.Message, Variant.Filled, _snackBar, Severity.Error);
-        }
-    }
-    private async Task GoToSignIn()
-    {
-        await OnSignIn.InvokeAsync();
-    }
-    void ShowPassword()
-    {
-        @if (isShow)
-        {
-            isShow = false;
-            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-            PasswordInput = InputType.Password;
-        }
-        else
-        {
-            isShow = true;
-            PasswordInputIcon = Icons.Material.Filled.Visibility;
-            PasswordInput = InputType.Text;
-        }
-    }
-    private string ValidatePassword(string password)
-    {
-        if (string.IsNullOrWhiteSpace(password))
-            return "Password is required.";
-        if (password.Length < 8)
-            return "Password must be at least 8 characters long.";
-        if (!password.Any(char.IsUpper))
-            return "Password must contain at least one uppercase letter.";
-        if (!password.Any(char.IsDigit))
-            return "Password must contain at least one number.";
-        if (!password.Any(ch => !char.IsLetterOrDigit(ch)))
-            return "Password must contain at least one special character.";
-        return null; // Valid
-    }
-}
