@@ -3,6 +3,7 @@ using ChatApp_MAUI.AuthenticationProvider;
 using ChatApp_MAUI.Shared.Models;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace ChatApp_MAUI.Shared.Components
     {
         [Inject] protected ILocalStorageService _localStorage { get; set; } = default!;
         [Inject] protected NavigationManager _navigationManager { get; set; } = default!;
-        [Inject] protected CustomAuthenticationState _authenticationStateProvider { get; set; } = default!;
+        [Inject] protected AuthenticationStateProvider _authenticationStateProvider { get; set; } = default!;
         [Inject] protected ILoginService _loginService { get; set; } = default!;
 
         protected AuthTokenModel user;

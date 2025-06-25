@@ -4,6 +4,7 @@ using ChatApp_MAUI.Shared.Services;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
 using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
 using Extensions = ChatApp_MAUI.Shared.Common.Extensions;
@@ -12,7 +13,7 @@ namespace ChatApp_MAUI.Shared.Components
     public partial class LoginComponentBase : ComponentBase
     {
         [Inject] protected ISnackbar _snackBar { get; set; } = default!;
-        [Inject] protected CustomAuthenticationState _authenticationStateProvider { get; set; } = default!;
+        [Inject] protected AuthenticationStateProvider _authenticationStateProvider { get; set; } = default!;
         [Inject] protected ILoginService _loginService { get; set; } = default!;
         [Inject] protected ILocalStorageService _localStorage { get; set; } = default!;
         [Inject] protected IFormFactor _formFactor { get; set; } = default!;
