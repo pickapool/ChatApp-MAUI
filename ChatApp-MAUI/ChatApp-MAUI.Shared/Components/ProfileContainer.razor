@@ -36,39 +36,3 @@
         }
     </Authorized>
 </AuthorizeView>
-@code {
-    AuthTokenModel user;
-    private bool _open;
-    private string DefaultPhoto = "/images/blank-profile.webp";
-    private void ToggleOpen() => _open = !_open;
-    private bool isLoading = true;
-    protected override async Task OnInitializedAsync()
-    {
-        isLoading = true;
-        string token = await _localStorage.GetItemAsStringAsync("token");
-        user = await _loginService.GetUserRecord(token);
-        isLoading = false;
-    }
-    private async Task Logout()
-    {
-        await _localStorage.RemoveItemAsync("token");
-        ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserLogout();
-        _navigationManager.NavigateTo("/");
-    }
-    private void GoToProfile()
-    {
-        _navigationManager.NavigateTo("/profile");
-        _open = false;
-    }
-}
-<style>
-    .profile.mud-popover.mud-popover-open {
-        left: unset !important;
-        top: 7% !important;
-        right: 1% !important
-    }
-
-    .mud-popover {
-        max-height: unset !important;
-    }
-</style>

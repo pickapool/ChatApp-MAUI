@@ -1,6 +1,4 @@
-﻿@using ChatApp_MAUI.Shared.Services
-
-@inject IFormFactor _formFactor
+﻿@inherits LoginComponentBase
 
 <PageTitle>Login</PageTitle>
 
@@ -56,85 +54,8 @@
                     {
                         <span>Sign in</span>
                     }
-
                 </div>
             </MudButton>
         </MudPaper>
     </MudItem>
 </div>
-
-@code {
-    [Parameter] public EventCallback OnRegistrationClick { get; set; }
-    private string email = string.Empty, password = string.Empty;
-    bool _open = false, isLoading = false, isShow = false;
-    InputType PasswordInput = InputType.Password;
-    string PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-    private string factor => _formFactor.GetFormFactor();
-    private string platform => _formFactor.GetPlatform();
-
-    private async void RegisterClick()
-    {
-        await OnRegistrationClick.InvokeAsync();
-    }
-    private void ToggleDrawer()
-    {
-        _open = !_open;
-    }
-    private async Task HandleKeyDown(KeyboardEventArgs e)
-    {
-        if (e.Key == "Enter")
-        {
-            await Login();
-        }
-    }
-    private async Task Login()
-    {
-        isLoading = true;
-        await Task.Delay(500);
-        StateHasChanged();
-        if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
-        {
-            Extensions.ShowSnackbar("All fields are required", Variant.Filled, _snackBar, Severity.Error);
-            isLoading = false;
-            return;
-        }
-        await Task.Delay(500);
-        var account = new UserRecordArgs()
-            {
-                Email = email,
-                Password = password,
-            };
-        try
-        {
-            var uid = await _loginService.Authenticate(account);
-            await _localStorage.SetItemAsync("token", uid);
-            ((CustomAuthenticationState)_authenticationStateProvider).NotifyUserAuthentication(uid);
-            email = string.Empty;
-            password = string.Empty;
-            isLoading = false;
-        }
-        catch (Exception ex)
-        {
-            isLoading = false;
-            if(ex.Message.ToLower().Contains("invalid"))
-                Extensions.ShowSnackbar("Invalid email or password", Variant.Filled, _snackBar, Severity.Error);
-            else
-                Extensions.ShowSnackbar(ex.Message, Variant.Filled, _snackBar, Severity.Error);
-        }
-    }
-    void ShowPassword()
-    {
-        @if (isShow)
-        {
-            isShow = false;
-            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
-            PasswordInput = InputType.Password;
-        }
-        else
-        {
-            isShow = true;
-            PasswordInputIcon = Icons.Material.Filled.Visibility;
-            PasswordInput = InputType.Text;
-        }
-    }
-}

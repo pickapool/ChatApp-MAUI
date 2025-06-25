@@ -1,0 +1,9 @@
+﻿.profile.mud-popover.mud-popover-open {
+    left: unset !important;
+    top: 7% !important;
+    right: 1% !important
+}
+
+.mud-popover {
+    max-height: unset !important;
+}
