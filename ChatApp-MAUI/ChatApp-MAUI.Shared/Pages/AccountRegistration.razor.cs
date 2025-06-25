@@ -45,14 +45,10 @@ namespace ChatApp_MAUI.Shared.Pages
                 await _registrationService.RegisterAsync(userRecord);
                 Extensions.ShowSnackbar("Account created successfully, please login to continue.", Variant.Filled, _snackBar, Severity.Success);
                 await GoToSignIn();
-            }
-            catch (Exception ee)
-            {
+            } catch (Exception ee) {
 
                 Extensions.ShowSnackbar(ee.Message, Variant.Filled, _snackBar, Severity.Error);
-            }
-            finally
-            {
+            } finally {
                 isLoading = false;
             }
         }
