@@ -6,7 +6,7 @@
         {
             <div class="d-flex flex-row gap-2 align-items-center">
                 <MudAvatar Size="Size.Medium">
-                    <MudImage Src="@(String.IsNullOrEmpty(user.PhotoUrl) ? DefaultPhoto : user.PhotoUrl)"></MudImage>
+                    <MudImage Src="@(String.IsNullOrEmpty(user.PhotoUrl) ? PhotoHelper._defaultPhoto : user.PhotoUrl)"></MudImage>
                 </MudAvatar>
                 <div class="d-flex flex-column pr-5">
                     <MudText Typo="Typo.caption">@user.DisplayName</MudText>
