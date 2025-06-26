@@ -13,11 +13,12 @@ namespace ChatApp_MAUI.Shared.Components
         [Parameter] public RenderFragment NotAuthorized { get; set; } = default!;
         [Parameter] public RenderFragment Authorized { get; set; } = default!;
         [Inject] protected AuthenticationStateProvider _authenticationStateProvider { get; set; } = default!;
-        protected bool isAuthenticated = false;
+        protected bool isAuthorizing = true, isAuthorized = false;
         protected override async Task OnInitializedAsync()
         {
             var user = await _authenticationStateProvider.GetAuthenticationStateAsync();
-            isAuthenticated = user != null && user.User.Identity.IsAuthenticated;
+            isAuthorized = user != null && user.User.Identity.IsAuthenticated;
+            isAuthorizing = false;
             StateHasChanged();
         }
     }

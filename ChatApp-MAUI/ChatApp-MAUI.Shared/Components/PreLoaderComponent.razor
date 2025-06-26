@@ -1,9 +1,10 @@
 ﻿@inherits PreLoaderComponentBase
 
-@if (isAuthenticated)
-{
-	@Authorized
-} else
+@if (isAuthorizing)
 {
 	<LoaderComponent></LoaderComponent>
+}
+else 
+{
+	@NotAuthorized
 }
