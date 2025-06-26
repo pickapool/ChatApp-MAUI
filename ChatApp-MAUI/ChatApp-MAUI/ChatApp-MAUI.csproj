@@ -68,7 +68,6 @@
 
   <ItemGroup>
     <Content Remove="appsettings.mobile.json" />
-    <Content Remove="wwwroot\images\blank_profile.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -97,12 +96,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ChatApp-MAUI.Shared\ChatApp-MAUI.Shared.csproj" />
     <GoogleServicesJson Include="firebaseconfig.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <MauiImage Include="wwwroot\images\blank_profile.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </MauiImage>
   </ItemGroup>
 
   <ItemGroup>
