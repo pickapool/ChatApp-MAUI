@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\blank_profile.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MauiImage Include="wwwroot\images\blank_profile.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </MauiImage>
+  </ItemGroup>
+
+  <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 

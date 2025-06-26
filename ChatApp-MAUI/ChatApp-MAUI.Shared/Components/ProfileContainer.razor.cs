@@ -21,7 +21,7 @@ namespace ChatApp_MAUI.Shared.Components
 
         protected AuthTokenModel user;
         protected bool _open;
-        protected string DefaultPhoto = "/images/blank-profile.webp";
+        protected string DefaultPhoto = "/images/blank-profile.png";
         protected void ToggleOpen() => _open = !_open;
         protected bool isLoading = true;
         protected override async Task OnInitializedAsync()
