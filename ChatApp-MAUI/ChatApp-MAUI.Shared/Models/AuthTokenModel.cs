@@ -25,6 +25,8 @@ namespace ChatApp_MAUI.Shared.Models
         public string? ExpiresIn { get; set; }
         [JsonPropertyName("registered")]
         public bool Registered { get; set; }
+        [JsonPropertyName("photourl")]
+        public string? PhotoUrl { get; set; }
 
     }
 }
