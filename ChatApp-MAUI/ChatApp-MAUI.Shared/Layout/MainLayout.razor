@@ -38,7 +38,7 @@
     </Authorized>
     <NotAuthorized>
         <PreLoaderComponent>
-            <NotAuthorized>
+            <ChildComponent>
                 @if (isRegistration)
                 {
                     <AccountRegistration OnSignIn="()=> isRegistration = !isRegistration"></AccountRegistration>
@@ -47,7 +47,7 @@
                 {
                     <LoginComponent OnRegistrationClick="()=> isRegistration = !isRegistration"></LoginComponent>
                 }
-            </NotAuthorized>
+            </ChildComponent>
         </PreLoaderComponent>
     </NotAuthorized>
 </AuthorizeView>

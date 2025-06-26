@@ -10,8 +10,7 @@ namespace ChatApp_MAUI.Shared.Components
 {
     public partial class PreLoaderComponentBase : ComponentBase
     {
-        [Parameter] public RenderFragment NotAuthorized { get; set; } = default!;
-        [Parameter] public RenderFragment Authorized { get; set; } = default!;
+        [Parameter] public RenderFragment ChildComponent { get; set; } = default!;
         [Inject] protected AuthenticationStateProvider _authenticationStateProvider { get; set; } = default!;
         protected bool isAuthorizing = true, isAuthorized = false;
         protected override async Task OnInitializedAsync()
