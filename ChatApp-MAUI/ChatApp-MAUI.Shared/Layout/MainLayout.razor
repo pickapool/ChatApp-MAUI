@@ -10,6 +10,15 @@
 <MudSnackbarProvider />
 
 <AuthorizeView>
+    <Authorizing>
+        <div class="height100vh d-flex justify-content-center align-items-center">
+		    <MudProgressCircular 
+                Color="Color.Primary" 
+                Size="Size.Medium" 
+                Indeterminate="true" 
+                Class="d-flex justify-center align-center"/>
+        </div>
+    </Authorizing>
     <Authorized>
         <MudLayout>
             <MudAppBar Elevation="1">
