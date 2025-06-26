@@ -11,13 +11,7 @@
 
 <AuthorizeView>
     <Authorizing>
-        <div class="height100vh d-flex justify-content-center align-items-center">
-		    <MudProgressCircular 
-                Color="Color.Primary" 
-                Size="Size.Medium" 
-                Indeterminate="true" 
-                Class="d-flex justify-center align-center"/>
-        </div>
+        <LoaderComponent></LoaderComponent>
     </Authorizing>
     <Authorized>
         <MudLayout>
@@ -43,11 +37,17 @@
         </MudLayout>
     </Authorized>
     <NotAuthorized>
-        @if(isRegistration)
-        {
-            <AccountRegistration OnSignIn="()=> isRegistration = !isRegistration"></AccountRegistration>
-        } else {
-            <LoginComponent OnRegistrationClick="()=> isRegistration = !isRegistration"></LoginComponent>
-        }
+        <PreLoaderComponent>
+            <NotAuthorized>
+                @if (isRegistration)
+                {
+                    <AccountRegistration OnSignIn="()=> isRegistration = !isRegistration"></AccountRegistration>
+                }
+                else
+                {
+                    <LoginComponent OnRegistrationClick="()=> isRegistration = !isRegistration"></LoginComponent>
+                }
+            </NotAuthorized>
+        </PreLoaderComponent>
     </NotAuthorized>
 </AuthorizeView>
