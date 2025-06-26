@@ -20,9 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\images\blank_profile.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
