@@ -13,12 +13,15 @@ namespace ChatApp_MAUI.Shared.Components
         [Parameter] public RenderFragment ChildComponent { get; set; } = default!;
         [Inject] protected AuthenticationStateProvider _authenticationStateProvider { get; set; } = default!;
         protected bool isAuthorizing = true, isAuthorized = false;
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool isFirstRender)
         {
-            var user = await _authenticationStateProvider.GetAuthenticationStateAsync();
-            isAuthorized = user != null && user.User.Identity.IsAuthenticated;
-            isAuthorizing = false;
-            StateHasChanged();
+            if (isFirstRender)
+            {
+                var user = await _authenticationStateProvider.GetAuthenticationStateAsync();
+                isAuthorized = user != null && user.User.Identity.IsAuthenticated;
+                isAuthorizing = false;
+                StateHasChanged();
+            }
         }
     }
 }
