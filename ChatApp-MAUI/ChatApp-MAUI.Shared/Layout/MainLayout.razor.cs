@@ -9,14 +9,14 @@ namespace ChatApp_MAUI.Shared.Layout
         protected bool _open = false, isLoading = false, isShow = false, isRegistration = false;
         protected bool _isToggling = false;
 
-        protected async Task ToggleDrawer()
+        protected async void ToggleDrawer()
         {
             if (_isToggling) return;
 
             _isToggling = true;
             _open = !_open;
 
-            await Task.Delay(300); // debounce delay
+            await Task.Delay(100); // debounce delay
             _isToggling = false;
         }
     }
