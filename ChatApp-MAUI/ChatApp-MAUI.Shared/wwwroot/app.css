@@ -52,3 +52,8 @@ h1:focus {
 hr:not([size]) {
     height: 2px;
 }
+.absolute-center {
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+}

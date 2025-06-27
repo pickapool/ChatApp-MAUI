@@ -6,9 +6,14 @@
 <MudContainer Class="d-flex justify-content-center my-2" Style="height: calc(100vh - 100px); max-width: unset !important">
 	<MudItem xs="12" sm="8" md="6" lg="4" xl="3">
 		<MudPaper Elevation="1" Class="d-flex flex-column pa-2 gap-2 align-items-center">
-			<MudAvatar Size="Size.Large">
-				<MudImage Src="@(String.IsNullOrEmpty(GlobalClass.User?.PhotoUrl) ? PhotoHelper._defaultPhoto : GlobalClass.User.PhotoUrl)"></MudImage>
-			</MudAvatar>
+			<MudAvatar Size="Size.Large" Class="position-relative" Style="border : 1px solid #d3d3d3;">
+				<MudImage Src="@(String.IsNullOrEmpty(GlobalClass.User?.PhotoUrl) ? PhotoHelper._defaultPhoto : GlobalClass.User.PhotoUrl)">
+				</MudImage>
+				@if (isUploading)
+				{
+					<MudProgressCircular Class="position-absolute" Indeterminate="true" Color="Color.Primary" Size="Size.Small"></MudProgressCircular>
+				}
+				</MudAvatar>
 			<MudGrid Spacing="3">
 				<MudItem xs="12" Class="d-flex flex-row gap-2 justify-content-center">
 					<MudButton Variant="Variant.Filled" Color="Color.Default" StartIcon="@Icons.Material.Filled.Camera">Camera</MudButton>
@@ -25,7 +30,6 @@
 				</MudItem>
 				<MudDivider Class="my-3"></MudDivider>
 				<MudItem xs="12">
-					
 					<MudTextField @bind-Value="GlobalClass.User.DisplayName" Variant="Variant.Filled" Margin="Margin.Dense" Label="Full name" ShrinkLabel></MudTextField>
 				</MudItem>
 			</MudGrid>

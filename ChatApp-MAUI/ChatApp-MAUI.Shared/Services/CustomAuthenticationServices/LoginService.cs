@@ -51,5 +51,18 @@ namespace ChatApp_MAUI.Shared.Services.CustomAuthenticationServices
 
             return record;
         }
+        public async Task<AuthTokenModel> UpdateProfile(string token, AuthTokenModel model)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim('"'));
+            var response = await _httpClient.PostAsJsonAsync("api/auth/updateprofile", model);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"{Extensions.GetHttpError(error)}");
+            }
+            var record = await response.Content.ReadFromJsonAsync<AuthTokenModel>();
+
+            return record;
+        }
     }
 }

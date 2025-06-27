@@ -16,6 +16,7 @@ using CommunityToolkit.Maui;
 using ChatApp_MAUI.Shared.Services.NavigationServices;
 using ChatApp_MAUI.Components;
 using System.Reflection;
+using ChatApp_MAUI.Shared.Services.FirebaseStorageServices;
 namespace ChatApp_MAUI;
 
 public static class MauiProgram
@@ -44,6 +45,7 @@ public static class MauiProgram
         builder.Services.AddScoped<ILoginService, LoginService>();
         builder.Services.AddScoped<IRegistrationService, RegistrationService>();
         builder.Services.AddScoped<INavigationService, NavigationService>();
+        builder.Services.AddScoped<IFirebaseStorageService, FirebaseStorageService>();
 
         builder.Services.AddAuthorizationCore();
         builder.Services.AddCascadingAuthenticationState();

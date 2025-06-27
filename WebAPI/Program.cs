@@ -43,7 +43,7 @@ builder.Services.AddAuthorization();
 //firebase admin
 FirebaseApp.Create(new AppOptions
 {
-    Credential = GoogleCredential.FromFile("firebaseconfig.json"),
+    Credential = GoogleCredential.FromFile("firebaseconfig.json")
 });
 
 //firebaseauth client

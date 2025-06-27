@@ -1,4 +1,5 @@
-﻿using Firebase.Auth;
+﻿using ChatApp_MAUI.Shared.Models;
+using Firebase.Auth;
 using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -82,6 +83,26 @@ namespace WebAPI.Controllers
                 var response = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.GenerateEmailVerificationLinkAsync(email);
                 return Ok(response.ToString());
             } catch(Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+        [Authorize]
+        [HttpPost]
+        [Route("updateprofile")]
+        public async Task<IActionResult> UpdateProfile([FromBody] AuthTokenModel record)
+        {
+            try
+            {
+                var response = await FirebaseAuth.DefaultInstance.UpdateUserAsync(new UserRecordArgs
+                {
+                    Uid = record.Uid,
+                    DisplayName = record.DisplayName,
+                    PhotoUrl = record.PhotoUrl
+                });
+                return Ok(response);
+            }
+            catch (Exception ex)
             {
                 return BadRequest(new { Error = ex.Message });
             }

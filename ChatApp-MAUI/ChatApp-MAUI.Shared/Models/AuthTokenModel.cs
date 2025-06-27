@@ -27,8 +27,10 @@ namespace ChatApp_MAUI.Shared.Models
         public bool Registered { get; set; }
         [JsonPropertyName("photourl")]
         public string? PhotoUrl { get; set; }
-        [JsonPropertyName("EmailVerified")]
+        [JsonPropertyName("emailverified")]
         public bool EmailVerified { get; set; }
+        [JsonPropertyName("uid")]
+        public string? Uid { get; set; }
 
     }
 }
