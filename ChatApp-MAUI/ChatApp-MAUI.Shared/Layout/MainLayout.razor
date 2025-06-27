@@ -19,14 +19,13 @@
                 <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer"
                 ref="reference" />
                 <MudSpacer />
-                <MudSwitch @bind-Value="_isDarkMode" Color="Color.Default" Class="ma-4" T="bool">
-                    @if (_isDarkMode)
-                    {
-                        <MudIcon Icon="@Icons.Material.Filled.DarkMode"></MudIcon>
-                    } else
-                    {
-                        <MudIcon Icon="@Icons.Material.Filled.WbSunny"></MudIcon>
-                    }
+                <MudSwitch 
+                    @bind-Value="_isDarkMode" 
+                    Size="Size.Large"
+                    ThumbIcon="@(_isDarkMode ? Icons.Material.Filled.DarkMode : Icons.Material.Filled.WbSunny)"
+                    Class="ma-4"
+                    ThumbIconColor="@(_isDarkMode ? Color.Dark : Color.Default)">
+                    
                 </MudSwitch>
                 <ProfileContainer></ProfileContainer>
             </MudAppBar>

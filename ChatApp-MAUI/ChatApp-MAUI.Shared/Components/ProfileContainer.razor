@@ -12,7 +12,7 @@
                     <MudText Typo="Typo.caption">@GlobalClass.User?.DisplayName</MudText>
                     <MudText Typo="Typo.caption">@GlobalClass.User?.Email</MudText>
                 </div>
-                <MudIconButton Class="navigation" Icon="@Icons.Material.Filled.Settings" Size="Size.Small" Variant="Variant.Text" OnClick="ToggleOpen"></MudIconButton>
+                <MudIconButton Class="navigation mr-1" Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Size="Size.Small" OnClick="ToggleOpen"></MudIconButton>
                 <MudPopover Style="max-height: unset !important;" Open="@_open" Fixed="false" Class="pa-2 profile" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.CenterLeft">
                     <div class="d-flex flex-column" style="width : 200px;">
                         <MudText Typo="Typo.caption">Settings</MudText>
