@@ -2,15 +2,15 @@
 
 <AuthorizeView>
     <Authorized>
-        @if (!isLoading && user != null)
+        @if (!isLoading && GlobalClass.User != null)
         {
             <div class="d-flex flex-row gap-2 align-items-center">
                 <MudAvatar Size="Size.Medium">
-                    <MudImage Src="@(String.IsNullOrEmpty(user.PhotoUrl) ? PhotoHelper._defaultPhoto : user.PhotoUrl)"></MudImage>
+                    <MudImage Src="@(String.IsNullOrEmpty(GlobalClass.User?.PhotoUrl) ? PhotoHelper._defaultPhoto : GlobalClass.User.PhotoUrl)"></MudImage>
                 </MudAvatar>
                 <div class="d-flex flex-column pr-5">
-                    <MudText Typo="Typo.caption">@user.DisplayName</MudText>
-                    <MudText Typo="Typo.caption">@user.Email</MudText>
+                    <MudText Typo="Typo.caption">@GlobalClass.User?.DisplayName</MudText>
+                    <MudText Typo="Typo.caption">@GlobalClass.User?.Email</MudText>
                 </div>
                 <MudIconButton Class="navigation" Icon="@Icons.Material.Filled.Settings" Size="Size.Small" Variant="Variant.Text" OnClick="ToggleOpen"></MudIconButton>
                 <MudPopover Style="max-height: unset !important;" Open="@_open" Fixed="false" Class="pa-2 profile" AnchorOrigin="Origin.BottomLeft" TransformOrigin="Origin.CenterLeft">

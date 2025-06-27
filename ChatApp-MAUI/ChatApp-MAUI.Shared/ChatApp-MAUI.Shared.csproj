@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <MauiCss Remove="Components\ProfileContainer.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="wwwroot\css\ProfileContainer.css" />
+  </ItemGroup>
+
+  <ItemGroup>
     <SupportedPlatform Include="browser" />
   </ItemGroup>
 
@@ -26,6 +34,11 @@
     <Content Update="wwwroot\images\blank_profile.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <MauiCss Include="wwwroot\css\MainLayout.css" />
+    <MauiCss Include="wwwroot\css\ProfilePage.css" />
   </ItemGroup>
 
 </Project>

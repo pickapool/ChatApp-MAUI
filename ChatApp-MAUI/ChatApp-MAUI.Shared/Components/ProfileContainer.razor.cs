@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using ChatApp_MAUI.AuthenticationProvider;
+using ChatApp_MAUI.Shared.Common;
 using ChatApp_MAUI.Shared.Models;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
 using Microsoft.AspNetCore.Components;
@@ -19,7 +20,6 @@ namespace ChatApp_MAUI.Shared.Components
         [Inject] protected AuthenticationStateProvider _authenticationStateProvider { get; set; } = default!;
         [Inject] protected ILoginService _loginService { get; set; } = default!;
 
-        protected AuthTokenModel user;
         protected bool _open;
         protected void ToggleOpen() => _open = !_open;
         protected bool isLoading = true;
@@ -32,7 +32,8 @@ namespace ChatApp_MAUI.Shared.Components
                 _navigationManager.NavigateTo("/", true);
                 return;
             }
-            user = await _loginService.GetUserRecord(token);
+            GlobalClass.User = await _loginService.GetUserRecord(token);
+            GlobalClass.User ??= new();
             isLoading = false;
         }
         protected async Task Logout()

@@ -3,10 +3,12 @@
 @inherits ProfilePageBase
 
 <PageTitle>Profile</PageTitle>
-<MudContainer Class="d-flex justify-content-center align-items-center ma-10" Style="height: calc(100vh - 100px)">
+<MudContainer Class="d-flex justify-content-center align-items-center" Style="height: calc(100vh - 100px); max-width: unset !important">
 	<MudItem xs="12" sm="8" md="6" lg="4" xl="3">
-		<MudPaper>
-			 
+		<MudPaper Elevation="1" Class="d-flex flex-column pa-4 gap-2" Height="100%">
+			<MudAvatar Size="Size.Large">
+				<MudImage Src="@(String.IsNullOrEmpty(GlobalClass.User?.PhotoUrl) ? PhotoHelper._defaultPhoto : GlobalClass.User.PhotoUrl)"></MudImage>
+			</MudAvatar>
 		</MudPaper>
 	</MudItem>
 </MudContainer>

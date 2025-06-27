@@ -10,5 +10,9 @@ namespace ChatApp_MAUI.Shared.Pages
     public partial class ProfilePageBase : ComponentBase
     {
 
+        protected override async Task OnInitializedAsync()
+        {
+
+        }
     }
 }
