@@ -13,8 +13,11 @@ namespace ChatApp_MAUI
             //Permission request
             var cameraStatus = await Permissions.RequestAsync<Permissions.Camera>();
             var micStatus = await Permissions.RequestAsync<Permissions.Microphone>();
+            var storageRead = await Permissions.RequestAsync<Permissions.StorageRead>();
+            var storageWrite = await Permissions.RequestAsync<Permissions.StorageWrite>();
 
-            if (cameraStatus != PermissionStatus.Granted || micStatus != PermissionStatus.Granted)
+            if (cameraStatus != PermissionStatus.Granted || micStatus != PermissionStatus.Granted ||
+                storageRead != PermissionStatus.Granted || storageWrite != PermissionStatus.Granted)
             {
                 await DisplayAlert("Permissions Required", "Camera and microphone access is needed.", "OK");
             }

@@ -2,6 +2,7 @@
 using ChatApp_MAUI.AuthenticationProvider;
 using ChatApp_MAUI.Shared.Common;
 using ChatApp_MAUI.Shared.Models;
+using ChatApp_MAUI.Shared.Services;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -19,6 +20,7 @@ namespace ChatApp_MAUI.Shared.Components
         [Inject] protected NavigationManager _navigationManager { get; set; } = default!;
         [Inject] protected AuthenticationStateProvider _authenticationStateProvider { get; set; } = default!;
         [Inject] protected ILoginService _loginService { get; set; } = default!;
+        [Inject] protected LayoutNotifierService _notifierService { get; set; } = default!;
 
         protected bool _open;
         protected void ToggleOpen() => _open = !_open;
@@ -34,7 +36,16 @@ namespace ChatApp_MAUI.Shared.Components
             }
             GlobalClass.User = await _loginService.GetUserRecord(GlobalClass.Token);
             GlobalClass.User ??= new();
+            _notifierService.OnChanged += HandleChange;
             isLoading = false;
+        }
+        private void HandleChange()
+        {
+            InvokeAsync(StateHasChanged);
+        }
+        public void Dispose()
+        {
+            _notifierService.OnChanged -= HandleChange;
         }
         protected async Task Logout()
         {

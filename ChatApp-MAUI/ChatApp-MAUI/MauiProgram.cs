@@ -40,7 +40,7 @@ public static class MauiProgram
         builder.Services.AddMauiBlazorWebView();
         builder.Services.AddBlazoredLocalStorage();
 
-        
+        builder.Services.AddSingleton<LayoutNotifierService>();
         builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationState>();
         builder.Services.AddScoped<ILoginService, LoginService>();
         builder.Services.AddScoped<IRegistrationService, RegistrationService>();
@@ -59,8 +59,18 @@ public static class MauiProgram
             .AddJsonStream(stream)
             .Build();
         builder.Configuration.AddConfiguration(config);
+
 #endif
         builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.Configuration.GetValue<string>("BaseAPI:Url")) });
+
+//Fix connection timeout in server
+#if ANDROID
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true
+        };
+        var httpClient = new HttpClient(handler);
+#endif
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
