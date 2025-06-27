@@ -1,0 +1,10 @@
+﻿@inherits PreLoaderComponentBase
+
+@if (isAuthorizing)
+{
+	<LoaderComponent></LoaderComponent>
+}
+else 
+{
+	@ChildComponent
+}
