@@ -1,6 +1,6 @@
 ﻿@inherits  MainLayoutBase
 
-<MudThemeProvider />
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="_theme" />
 <MudPopoverProvider />
 
 @* Needed for dialogs *@
@@ -17,8 +17,17 @@
         <MudLayout>
             <MudAppBar Elevation="1">
                 <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer"
-                               ref="reference" />
+                ref="reference" />
                 <MudSpacer />
+                <MudSwitch @bind-Value="_isDarkMode" Color="Color.Default" Class="ma-4" T="bool">
+                    @if (_isDarkMode)
+                    {
+                        <MudIcon Icon="@Icons.Material.Filled.DarkMode"></MudIcon>
+                    } else
+                    {
+                        <MudIcon Icon="@Icons.Material.Filled.WbSunny"></MudIcon>
+                    }
+                </MudSwitch>
                 <ProfileContainer></ProfileContainer>
             </MudAppBar>
             <MudDrawer @bind-Open="@_open" Breakpoint="Breakpoint.Sm" Elevation="1" Variant="@DrawerVariant.Temporary">
@@ -31,7 +40,7 @@
                     <MudNavLink Match="NavLinkMatch.All">Community</MudNavLink>
                 </MudNavMenu>
             </MudDrawer>
-            <MudMainContent Class="pt-16 px-16">
+            <MudMainContent Class="pt-16">
                 @Body
             </MudMainContent>
         </MudLayout>

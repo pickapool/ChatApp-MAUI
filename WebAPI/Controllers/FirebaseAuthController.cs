@@ -72,5 +72,19 @@ namespace WebAPI.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
+        [Authorize]
+        [HttpPost]
+        [Route("verifyemail")]
+        public async Task<IActionResult> VerifyAccount([FromBody] string email)
+        {
+            try
+            {
+                var response = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.GenerateEmailVerificationLinkAsync(email);
+                return Ok(response.ToString());
+            } catch(Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
     }
 }

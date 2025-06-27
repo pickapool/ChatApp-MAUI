@@ -10,5 +10,6 @@ namespace ChatApp_MAUI.Shared.Common
     public class GlobalClass
     {
         public static AuthTokenModel? User { get; set; } = new();
+        public static string Token { get; set; } = string.Empty;
     }
 }

@@ -7,5 +7,6 @@ namespace ChatApp_MAUI.Shared.Services.CustomAuthenticationServices
     {
         Task<string> Authenticate(UserRecordArgs args);
         Task<AuthTokenModel> GetUserRecord(string token);
+        Task<string> GetVerificationLink(string token, string email);
     }
 }

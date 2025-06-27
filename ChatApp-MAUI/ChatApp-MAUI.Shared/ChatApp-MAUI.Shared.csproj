@@ -41,4 +41,8 @@
     <MauiCss Include="wwwroot\css\ProfilePage.css" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

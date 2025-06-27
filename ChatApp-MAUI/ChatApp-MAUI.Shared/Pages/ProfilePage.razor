@@ -3,12 +3,32 @@
 @inherits ProfilePageBase
 
 <PageTitle>Profile</PageTitle>
-<MudContainer Class="d-flex justify-content-center align-items-center" Style="height: calc(100vh - 100px); max-width: unset !important">
+<MudContainer Class="d-flex justify-content-center my-2" Style="height: calc(100vh - 100px); max-width: unset !important">
 	<MudItem xs="12" sm="8" md="6" lg="4" xl="3">
-		<MudPaper Elevation="1" Class="d-flex flex-column pa-4 gap-2" Height="100%">
+		<MudPaper Elevation="1" Class="d-flex flex-column pa-2 gap-2 align-items-center">
 			<MudAvatar Size="Size.Large">
 				<MudImage Src="@(String.IsNullOrEmpty(GlobalClass.User?.PhotoUrl) ? PhotoHelper._defaultPhoto : GlobalClass.User.PhotoUrl)"></MudImage>
 			</MudAvatar>
+			<MudGrid Spacing="3">
+				<MudItem xs="12" Class="d-flex flex-row gap-2 justify-content-center">
+					<MudButton Variant="Variant.Filled" Color="Color.Default" StartIcon="@Icons.Material.Filled.Camera">Camera</MudButton>
+					<MudFileUpload T="IBrowserFile" Accept=".png, .jpg, .jpeg, .gif, .bmp, .webp, .svg, .tiff, .ico, .avif" @bind-File="selectedFile" FilesChanged="UploadFiles">
+						<ActivatorContent>
+							<MudButton StartIcon="@Icons.Material.Filled.Upload" Variant="Variant.Filled" Color="Color.Default">Upload</MudButton>
+						</ActivatorContent>
+					</MudFileUpload>
+				</MudItem>
+				<MudItem xs="12" Class="text-center">
+					<MudButton OnClick="GetVerificationEmailLink" Disabled="@(GlobalClass.User.EmailVerified)" Variant="Variant.Text" Color="Color.Primary">
+						@(GlobalClass.User.EmailVerified ? "The account has been verified" : "Verify Account")
+					</MudButton>
+				</MudItem>
+				<MudDivider Class="my-3"></MudDivider>
+				<MudItem xs="12">
+					
+					<MudTextField @bind-Value="GlobalClass.User.DisplayName" Variant="Variant.Filled" Margin="Margin.Dense" Label="Full name" ShrinkLabel></MudTextField>
+				</MudItem>
+			</MudGrid>
 		</MudPaper>
 	</MudItem>
 </MudContainer>

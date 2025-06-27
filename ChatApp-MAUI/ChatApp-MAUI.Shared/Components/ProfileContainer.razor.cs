@@ -26,13 +26,13 @@ namespace ChatApp_MAUI.Shared.Components
         protected override async Task OnInitializedAsync()
         {
             isLoading = true;
-            string token = await _localStorage.GetItemAsStringAsync("token")?? string.Empty;
-            if (string.IsNullOrEmpty(token))
+            GlobalClass.Token = await _localStorage.GetItemAsStringAsync("token")?? string.Empty;
+            if (string.IsNullOrEmpty(GlobalClass.Token))
             {
                 _navigationManager.NavigateTo("/", true);
                 return;
             }
-            GlobalClass.User = await _loginService.GetUserRecord(token);
+            GlobalClass.User = await _loginService.GetUserRecord(GlobalClass.Token);
             GlobalClass.User ??= new();
             isLoading = false;
         }
