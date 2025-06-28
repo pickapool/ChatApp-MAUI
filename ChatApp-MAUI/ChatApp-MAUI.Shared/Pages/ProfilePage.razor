@@ -28,7 +28,9 @@
 						@(GlobalClass.User.EmailVerified ? "The account has been verified" : "Verify Account")
 					</MudButton>
 				</MudItem>
-				<MudDivider Class="my-3"></MudDivider>
+				<MudItem xs="12">
+					<hr />
+				</MudItem>
 				<MudItem xs="12">
 					<MudTextField @bind-Value="GlobalClass.User.DisplayName" Variant="Variant.Filled" Margin="Margin.Dense" Label="Full name" ShrinkLabel></MudTextField>
 				</MudItem>

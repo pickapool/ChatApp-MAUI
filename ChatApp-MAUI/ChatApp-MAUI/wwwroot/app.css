@@ -54,10 +54,16 @@
     }
 }
 hr:not([size]) {
-    height: 2px;
+    height: 1px;
 }
 .absolute-center {
     position: absolute !important;
     top: 50%;
     left: 50%;
+}
+.bg-alice {
+    background-color: lightblue;
+}
+.height100vh {
+    height: 100vh;
 }

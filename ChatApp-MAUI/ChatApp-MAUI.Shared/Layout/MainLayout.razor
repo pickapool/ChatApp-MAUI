@@ -39,7 +39,7 @@
                     <MudNavLink Match="NavLinkMatch.All">Community</MudNavLink>
                 </MudNavMenu>
             </MudDrawer>
-            <MudMainContent Class="pt-16">
+            <MudMainContent Class='@($"pt-16 height100vh {(_isDarkMode ? "" : "bg-alice")}")'>
                 @Body
             </MudMainContent>
         </MudLayout>
