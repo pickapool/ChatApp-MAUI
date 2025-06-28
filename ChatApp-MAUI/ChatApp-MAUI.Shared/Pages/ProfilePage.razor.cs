@@ -2,11 +2,14 @@
 using ChatApp_MAUI.Shared.Services;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
 using ChatApp_MAUI.Shared.Services.FirebaseStorageServices;
+using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using MudBlazor;
+using System.ComponentModel.DataAnnotations;
 using Extensions = ChatApp_MAUI.Shared.Common.Extensions;
+using Severity = MudBlazor.Severity;
 
 namespace ChatApp_MAUI.Shared.Pages
 {
@@ -18,10 +21,15 @@ namespace ChatApp_MAUI.Shared.Pages
         [Inject] protected ISnackbar _snackBar { get; set; } = default!;
         [Inject] protected LayoutNotifierService _notifierService { get; set; } = default!;
         protected IBrowserFile? selectedFile;
-        protected bool isUploading = false;
-        protected override async Task OnInitializedAsync()
+        protected bool isUploading = false, isLoading = false;
+        protected string code = string.Empty;
+        protected  FluentValueValidator<string> ccValidator = new FluentValueValidator<string>(x => x.NotEmpty().MinimumLength(10).MaximumLength(10));
+        protected override void OnInitialized()
         {
-
+            if(!String.IsNullOrEmpty(GlobalClass.User.PhoneNumber))
+            {
+                FormatCodeAndPhone();
+            }
         }
         protected async Task UploadFiles(IBrowserFile file)
         {
@@ -47,6 +55,34 @@ namespace ChatApp_MAUI.Shared.Pages
         {
             var response = await _loginService.GetVerificationLink(GlobalClass.Token, GlobalClass.User.Email);
             await _jsRuntime.InvokeVoidAsync("open", response, "_blank");
+        }
+        protected async Task UpdateProfile()
+        {
+            isLoading = true;
+            try
+            {
+                if (!ccValidator.Validate(GlobalClass.User.PhoneNumber).IsValid)
+                {
+                    Extensions.ShowSnackbar("Please enter a valid phone number", Variant.Filled, _snackBar, Severity.Error);
+                    return;
+                }
+                
+                GlobalClass.User.PhoneNumber = String.Format("+{0}{1}", code, GlobalClass.User.PhoneNumber);
+                await _loginService.UpdateProfile(GlobalClass.Token, GlobalClass.User);
+                Extensions.ShowSnackbar("Profile successfully saved.", Variant.Filled, _snackBar, Severity.Success);
+                FormatCodeAndPhone();
+            } catch( Exception ee )
+            {
+                Extensions.ShowSnackbar(ee.Message, Variant.Filled, _snackBar, Severity.Error);
+            } finally
+            {
+                isLoading = false;
+            }
+        }
+        private void FormatCodeAndPhone()
+        {
+            code = GlobalClass.User.PhoneNumber.Clone().ToString()?.Substring(1, 2) ?? string.Empty;
+            GlobalClass.User.PhoneNumber = GlobalClass.User.PhoneNumber.Remove(0, 3);
         }
     }
 }

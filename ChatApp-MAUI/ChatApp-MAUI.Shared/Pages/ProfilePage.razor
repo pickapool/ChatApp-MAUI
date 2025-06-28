@@ -3,9 +3,9 @@
 @inherits ProfilePageBase
 
 <PageTitle>Profile</PageTitle>
-<MudContainer Class="d-flex justify-content-center my-2" Style="height: calc(100vh - 100px); max-width: unset !important">
+<MudContainer Class="d-flex justify-content-center my-4" Style="height: calc(100vh - 100px); max-width: unset !important">
 	<MudItem xs="12" sm="8" md="6" lg="4" xl="3">
-		<MudPaper Elevation="1" Class="d-flex flex-column pa-2 gap-2 align-items-center">
+		<MudPaper Elevation="1" Class="d-flex flex-column px-2 py-4 gap-2 align-items-center">
 			<MudAvatar Size="Size.Large" Class="position-relative" Style="border : 1px solid #d3d3d3;">
 				<MudImage Src="@(String.IsNullOrEmpty(GlobalClass.User?.PhotoUrl) ? PhotoHelper._defaultPhoto : GlobalClass.User.PhotoUrl)">
 				</MudImage>
@@ -13,7 +13,7 @@
 				{
 					<MudProgressCircular Class="position-absolute" Indeterminate="true" Color="Color.Primary" Size="Size.Small"></MudProgressCircular>
 				}
-				</MudAvatar>
+			</MudAvatar>
 			<MudGrid Spacing="3">
 				<MudItem xs="12" Class="d-flex flex-row gap-2 justify-content-center">
 					<MudButton Variant="Variant.Filled" Color="Color.Default" StartIcon="@Icons.Material.Filled.Camera">Camera</MudButton>
@@ -32,7 +32,59 @@
 					<hr />
 				</MudItem>
 				<MudItem xs="12">
-					<MudTextField @bind-Value="GlobalClass.User.DisplayName" Variant="Variant.Filled" Margin="Margin.Dense" Label="Full name" ShrinkLabel></MudTextField>
+					<MudTextField 
+					@bind-Value="GlobalClass.User.Email" 
+					Variant="Variant.Filled" 
+					Margin="Margin.Dense"
+					Adornment="Adornment.End"
+					AdornmentIcon="@Icons.Material.Filled.Email"
+					Label="Full name" ShrinkLabel ReadOnly></MudTextField>
+				</MudItem>
+				<MudItem xs="12">
+					<MudTextField 
+					@bind-Value="GlobalClass.User.DisplayName" 
+					Variant="Variant.Filled" 
+					Margin="Margin.Dense"
+					Label="Full name"
+					Adornment="Adornment.End"
+					AdornmentIcon="@Icons.Material.Filled.Person"
+					ShrinkLabel></MudTextField>
+				</MudItem>
+				<MudItem xs="2">
+					<MudTextField @bind-Value="code"
+								  Variant="Variant.Filled"
+								  Margin="Margin.Dense"
+								  Label="Country Code"
+								  IconSize="Size.Small"
+								  Adornment="Adornment.Start"
+								  AdornmentIcon="@Icons.Material.Filled.Add"
+								  ShrinkLabel></MudTextField>
+				</MudItem>
+				<MudItem xs="10">
+					<MudTextField @bind-Value="GlobalClass.User.PhoneNumber" 
+									Variant="Variant.Filled" 
+									Margin="Margin.Dense" 
+									Label="Phone Number"
+									IconSize="Size.Small"
+									Adornment="Adornment.End"
+									AdornmentIcon="@Icons.Material.Filled.Phone"
+									Validation="ccValidator.Validation"
+									ShrinkLabel></MudTextField>
+				</MudItem>
+				<MudItem xs="12" Class="d-flex justify-content-end">
+					<MudButton OnClick="UpdateProfile" Variant="Variant.Filled" Size="Size.Medium" Color="Color.Primary">
+						<div class="d-flex flex-row gap-2">
+							@if (isLoading)
+							{
+								<MudProgressCircular Class="align-self-start" Size="Size.Small" style="color: white;" Indeterminate></MudProgressCircular>
+								<span>Saving...</span>
+							}
+							else
+							{
+								<span>Save Changes</span>
+							}
+						</div>
+					</MudButton>
 				</MudItem>
 			</MudGrid>
 		</MudPaper>

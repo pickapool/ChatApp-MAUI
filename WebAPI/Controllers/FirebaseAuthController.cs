@@ -98,7 +98,8 @@ namespace WebAPI.Controllers
                 {
                     Uid = record.Uid,
                     DisplayName = record.DisplayName,
-                    PhotoUrl = record.PhotoUrl
+                    PhotoUrl = record.PhotoUrl,
+                    PhoneNumber = record.PhoneNumber
                 });
                 return Ok(response);
             }

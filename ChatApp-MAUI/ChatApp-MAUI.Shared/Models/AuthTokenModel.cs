@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -27,10 +28,13 @@ namespace ChatApp_MAUI.Shared.Models
         public bool Registered { get; set; }
         [JsonPropertyName("photourl")]
         public string? PhotoUrl { get; set; }
-        [JsonPropertyName("emailverified")]
+        [JsonPropertyName("emailVerified")]
         public bool EmailVerified { get; set; }
         [JsonPropertyName("uid")]
         public string? Uid { get; set; }
+        [JsonPropertyName("phoneNumber")]
+        [MinLength(10)]
+        public string? PhoneNumber { get; set; }
 
     }
 }
