@@ -14,18 +14,6 @@ namespace ChatApp_MAUI.Shared.Dialogs
         [Parameter] public ICameraService _cameraInterface { get; set; } = default!;
         protected bool isAndroid = false;
         private Stream? stream;
-        protected override void OnInitialized()
-        {
-            if (platform.ToLower().Contains("android") || platform.ToLower().Contains("ios"))
-            {
-                isAndroid = true;
-                _navigationService.GoToCameraPage(new Microsoft.Maui.Controls.Page());
-            }
-            else
-            {
-                isAndroid = false;
-            }
-        }
         protected void Capture(Stream s)
         {
             stream = s;

@@ -57,7 +57,7 @@ namespace ChatApp_MAUI.Shared.Pages
         {
             await selectedFile.OpenReadStream(209715200).CopyToAsync(stream);
             stream.Position = 0;
-            var url = await _firebaseStorageService.UploadPhoto(stream, selectedFile.Name, "ProfilePicture");
+            var url = await _firebaseStorageService.UploadPhoto(stream, GlobalClass.User.Uid, "ProfilePicture");
             GlobalClass.User.PhotoUrl = url;
             await _loginService.UpdatePhoto(GlobalClass.Token, GlobalClass.User);
             isUploading = false;
@@ -101,7 +101,7 @@ namespace ChatApp_MAUI.Shared.Pages
         {
             if (platform.ToLower().Contains("android") || platform.ToLower().Contains("ios"))
             {
-                _navigationService.GoToCameraPage(new Microsoft.Maui.Controls.Page());
+                _navigationService.GoToCameraPage(new Microsoft.Maui.Controls.Page(), this);
             }
             else
             {
@@ -118,15 +118,18 @@ namespace ChatApp_MAUI.Shared.Pages
 
         public async Task OnCapture(Stream stream)
         {
-            isUploading = true;
-            StateHasChanged();
-            var url = await _firebaseStorageService.UploadPhoto(stream, GlobalClass.User.Uid, "ProfilePicture");
-            GlobalClass.User.PhotoUrl = url;
-            await _loginService.UpdatePhoto(GlobalClass.Token, GlobalClass.User);
-            isUploading = false;
-            Extensions.ShowSnackbar("Profile picture has been uploaded", Variant.Filled, _snackBar, Severity.Success);
-            _notifierService.NotifyChanged();
-            StateHasChanged();
+            await InvokeAsync(async () =>
+            {
+                isUploading = true;
+                StateHasChanged();
+                var url = await _firebaseStorageService.UploadPhoto(stream, GlobalClass.User.Uid, "ProfilePicture");
+                GlobalClass.User.PhotoUrl = url;
+                //await _loginService.UpdatePhoto(GlobalClass.Token, GlobalClass.User);
+                isUploading = false;
+                Extensions.ShowSnackbar("Profile picture has been uploaded", Variant.Filled, _snackBar, Severity.Success);
+                _notifierService.NotifyChanged();
+                StateHasChanged();
+            });
         }
     }
 }
