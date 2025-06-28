@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Components.Authorization;
 using ChatApp_MAUI.Shared.Services.NavigationServices;
 using ChatApp_MAUI.Services;
 using ChatApp_MAUI.Shared.Services.FirebaseStorageServices;
+using ChatApp_MAUI.Shared.Components;
+using ChatApp_MAUI.Shared.Services.CameraServices;
 
 var builder = WebApplication.CreateBuilder(args);
 

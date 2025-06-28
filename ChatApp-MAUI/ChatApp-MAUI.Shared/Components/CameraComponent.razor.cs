@@ -1,4 +1,5 @@
 ﻿using BlazorCameraStreamer;
+using ChatApp_MAUI.Shared.Services;
 using Microsoft.AspNetCore.Components;
 using System.Drawing;
 
@@ -6,15 +7,16 @@ namespace ChatApp_MAUI.Shared.Components
 {
     public partial class CameraComponentBase : ComponentBase
     {
-        protected CameraStreamer CameraStreamerReference;
-        protected string cameraId = null;
-
+        protected CameraStreamer? CameraStreamerReference;
+        protected string? cameraId;
+        [Parameter] public EventCallback<Stream> OnCapture { get; set; }
+        //Bitmap? bmp;
         protected async void OnRenderedHandler()
         {
 
             try
             {
-                if (await CameraStreamerReference.GetCameraAccessAsync())
+                if (await CameraStreamerReference?.GetCameraAccessAsync())
                 {
                     await CameraStreamerReference.ReloadAsync();
                 }
@@ -25,15 +27,11 @@ namespace ChatApp_MAUI.Shared.Components
             }
         }
 
-        protected void OnFrameHandler(string data)
+        protected async Task OnFrameHandler(string data)
         {
-            // Remove the suffix added by javascript
             data = data[(data.IndexOf(',') + 1)..];
-
-            // Convert the base64 string to a System.Drawing.Bitmap
             Bitmap bmp = new(new MemoryStream(Convert.FromBase64String(data)));
-
-            // Do something with the bitmap
+            await OnCapture.InvokeAsync(new MemoryStream(Convert.FromBase64String(data)));
         }
     }
 }

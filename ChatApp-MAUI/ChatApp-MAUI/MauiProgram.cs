@@ -17,6 +17,7 @@ using ChatApp_MAUI.Shared.Services.NavigationServices;
 using ChatApp_MAUI.Components;
 using System.Reflection;
 using ChatApp_MAUI.Shared.Services.FirebaseStorageServices;
+using ChatApp_MAUI.Shared.Services.CameraServices;
 namespace ChatApp_MAUI;
 
 public static class MauiProgram

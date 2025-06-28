@@ -1,10 +1,10 @@
 ﻿@inherits CameraComponentBase
 
 <CameraStreamer @ref="CameraStreamerReference"
-    Width="1920"
-    Height="1080"
-    OnRendered="OnRenderedHandler"
-    OnFrame="OnFrameHandler"
-    Style="width: 100%;"
-    CameraID="@cameraId"
-    Autostart />
+                Width="600"
+                Height="480"
+                OnRendered="OnRenderedHandler"
+                OnFrame="OnFrameHandler"
+                Style="width: 100%; height: 100%;object-fit: cover;"
+                CameraID="@cameraId"
+                Autostart />
