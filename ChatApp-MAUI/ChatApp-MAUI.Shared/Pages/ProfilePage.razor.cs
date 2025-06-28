@@ -1,4 +1,5 @@
 ﻿using ChatApp_MAUI.Shared.Common;
+using ChatApp_MAUI.Shared.Dialogs;
 using ChatApp_MAUI.Shared.Models;
 using ChatApp_MAUI.Shared.Services;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
@@ -10,6 +11,7 @@ using Microsoft.JSInterop;
 using MudBlazor;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using static MudBlazor.Defaults.Classes;
 using Extensions = ChatApp_MAUI.Shared.Common.Extensions;
 using Severity = MudBlazor.Severity;
 
@@ -22,6 +24,7 @@ namespace ChatApp_MAUI.Shared.Pages
         [Inject] protected IFirebaseStorageService _firebaseStorageService { get; set; } = default!;
         [Inject] protected ISnackbar _snackBar { get; set; } = default!;
         [Inject] protected LayoutNotifierService _notifierService { get; set; } = default!;
+        [Inject] protected IDialogService _dialogService { get; set; } = default!;
         protected IBrowserFile? selectedFile;
         protected bool isUploading = false, isLoading = false;
         protected string code = string.Empty;
@@ -84,6 +87,15 @@ namespace ChatApp_MAUI.Shared.Pages
         {
             code = GlobalClass.User.PhoneNumber.Clone().ToString()?.Substring(1, 2) ?? string.Empty;
             GlobalClass.User.PhoneNumber = GlobalClass.User.PhoneNumber.Remove(0, 3);
+        }
+        protected async Task OpenCameraDialog()
+        {
+            var options = new DialogOptions() { CloseButton = true, MaxWidth = MaxWidth.Medium, BackdropClick = false };
+            var resultDialog = await _dialogService.Show<CameraDialog>("Delete", options).Result;
+            if (resultDialog != null)
+            {
+                
+            }
         }
     }
 }

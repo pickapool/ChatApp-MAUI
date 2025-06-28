@@ -16,7 +16,7 @@
 			</MudAvatar>
 			<MudGrid Spacing="3">
 				<MudItem xs="12" Class="d-flex flex-row gap-2 justify-content-center">
-					<MudButton Variant="Variant.Filled" Color="Color.Default" StartIcon="@Icons.Material.Filled.Camera">Camera</MudButton>
+					<MudButton OnClick="OpenCameraDialog" Variant="Variant.Filled" Color="Color.Default" StartIcon="@Icons.Material.Filled.Camera">Camera</MudButton>
 					<MudFileUpload T="IBrowserFile" Accept="*" @bind-File="selectedFile" FilesChanged="UploadFiles">
 						<ActivatorContent>
 							<MudButton StartIcon="@Icons.Material.Filled.Upload" Variant="Variant.Filled" Color="Color.Default">Upload</MudButton>

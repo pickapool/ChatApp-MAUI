@@ -1,1 +1,20 @@
-﻿
+﻿<MudDialog>
+    <TitleContent>
+        <MudText style="color: white;" Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Camera" Class="navigation mb-1" />
+            CAMERA
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <CameraComponent></CameraComponent>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="Submit">Capture</MudButton>
+        <MudButton OnClick="Cancel" Variant="Variant.Text">Cancel</MudButton>
+    </DialogActions>
+</MudDialog>
+@code {
+    [CascadingParameter] IMudDialogInstance? MudDialog { get; set; }
+    void Submit() => MudDialog?.Close(DialogResult.Ok(true));
+    void Cancel() => MudDialog?.Cancel();
+}
