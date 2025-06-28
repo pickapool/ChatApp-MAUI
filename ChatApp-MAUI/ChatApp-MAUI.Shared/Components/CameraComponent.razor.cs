@@ -30,7 +30,7 @@ namespace ChatApp_MAUI.Shared.Components
         protected async Task OnFrameHandler(string data)
         {
             data = data[(data.IndexOf(',') + 1)..];
-            Bitmap bmp = new(new MemoryStream(Convert.FromBase64String(data)));
+            //Bitmap bmp = new(new MemoryStream(Convert.FromBase64String(data)));
             await OnCapture.InvokeAsync(new MemoryStream(Convert.FromBase64String(data)));
         }
     }
