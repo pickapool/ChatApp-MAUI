@@ -9,5 +9,6 @@ namespace ChatApp_MAUI.Shared.Services.CustomAuthenticationServices
         Task<AuthTokenModel> GetUserRecord(string token);
         Task<string> GetVerificationLink(string token, string email);
         Task<AuthTokenModel> UpdateProfile(string token, AuthTokenModel model);
+        Task<AuthTokenModel> UpdatePhoto(string token, AuthTokenModel model);
     }
 }

@@ -60,9 +60,22 @@ namespace ChatApp_MAUI.Shared.Services.CustomAuthenticationServices
                 var error = await response.Content.ReadAsStringAsync();
                 throw new Exception($"{Extensions.GetHttpError(error)}");
             }
-            var record = await response.Content.ReadFromJsonAsync<AuthTokenModel>();
+            var content = await response.Content.ReadFromJsonAsync<AuthTokenModel>();
 
-            return record;
+            return content;
+        }
+        public async Task<AuthTokenModel> UpdatePhoto(string token, AuthTokenModel model)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim('"'));
+            var response = await _httpClient.PostAsJsonAsync("api/auth/updatephoto", model);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                throw new Exception($"{Extensions.GetHttpError(error)}");
+            }
+            var content = await response.Content.ReadFromJsonAsync<AuthTokenModel>();
+
+            return content;
         }
     }
 }

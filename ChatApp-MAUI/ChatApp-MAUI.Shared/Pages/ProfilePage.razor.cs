@@ -1,4 +1,5 @@
 ﻿using ChatApp_MAUI.Shared.Common;
+using ChatApp_MAUI.Shared.Models;
 using ChatApp_MAUI.Shared.Services;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
 using ChatApp_MAUI.Shared.Services.FirebaseStorageServices;
@@ -8,6 +9,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using MudBlazor;
 using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using Extensions = ChatApp_MAUI.Shared.Common.Extensions;
 using Severity = MudBlazor.Severity;
 
@@ -43,7 +45,7 @@ namespace ChatApp_MAUI.Shared.Pages
                     memoryStream.Position = 0;
                     var url = await _firebaseStorageService.UploadPhoto(memoryStream, selectedFile.Name, "ProfilePicture");
                     GlobalClass.User.PhotoUrl = url;
-                    await _loginService.UpdateProfile(GlobalClass.Token, GlobalClass.User);
+                    await _loginService.UpdatePhoto(GlobalClass.Token, GlobalClass.User);
                     isUploading = false;
                     Extensions.ShowSnackbar("Profile picture has been uploaded", Variant.Filled, _snackBar, Severity.Success);
                     _notifierService.NotifyChanged();
@@ -66,11 +68,10 @@ namespace ChatApp_MAUI.Shared.Pages
                     Extensions.ShowSnackbar("Please enter a valid phone number", Variant.Filled, _snackBar, Severity.Error);
                     return;
                 }
-                
-                GlobalClass.User.PhoneNumber = String.Format("+{0}{1}", code, GlobalClass.User.PhoneNumber);
-                await _loginService.UpdateProfile(GlobalClass.Token, GlobalClass.User);
+                AuthTokenModel record = GlobalClass.User.Clone();
+                record.PhoneNumber = String.Format("+{0}{1}", code, record.PhoneNumber);
+                await _loginService.UpdateProfile(GlobalClass.Token, record);
                 Extensions.ShowSnackbar("Profile successfully saved.", Variant.Filled, _snackBar, Severity.Success);
-                FormatCodeAndPhone();
             } catch( Exception ee )
             {
                 Extensions.ShowSnackbar(ee.Message, Variant.Filled, _snackBar, Severity.Error);

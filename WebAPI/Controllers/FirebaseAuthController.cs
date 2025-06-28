@@ -89,6 +89,25 @@ namespace WebAPI.Controllers
         }
         [Authorize]
         [HttpPost]
+        [Route("updatephoto")]
+        public async Task<IActionResult> UpdatePhoto([FromBody] AuthTokenModel record)
+        {
+            try
+            {
+                var response = await FirebaseAuth.DefaultInstance.UpdateUserAsync(new UserRecordArgs
+                {
+                    Uid = record.Uid,
+                    PhotoUrl = record.PhotoUrl,
+                });
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+        [Authorize]
+        [HttpPost]
         [Route("updateprofile")]
         public async Task<IActionResult> UpdateProfile([FromBody] AuthTokenModel record)
         {
