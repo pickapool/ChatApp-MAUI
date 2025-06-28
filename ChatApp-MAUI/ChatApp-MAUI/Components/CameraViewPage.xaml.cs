@@ -1,46 +1,61 @@
-using ChatApp_MAUI.Shared.Pages;
-using ChatApp_MAUI.Shared.Services.NavigationServices;
+﻿using ChatApp_MAUI.Shared.Common;
+using ChatApp_MAUI.Shared.Services.CameraServices;
+using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
+using ChatApp_MAUI.Shared.Services.FirebaseStorageServices;
 using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Maui.Core.Primitives;
-using CommunityToolkit.Maui.Views;
+using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
 namespace ChatApp_MAUI.Components;
 
 public partial class CameraViewPage : ContentPage
 {
-    private readonly ICameraProvider cameraProvider;
+    private readonly ICameraProvider _cameraProvider;
+    private readonly ICameraService _cameraService;
     bool isBack = true;
-	public CameraViewPage(ICameraProvider _c)
+	public CameraViewPage(ICameraProvider cameraProvider, ICameraService cameraService)
 	{
 		InitializeComponent();
-        cameraProvider = _c;
+        _cameraService = cameraService;
+        _cameraProvider = cameraProvider;
     }
 
-    private void OnMediaCapture(object sender, CommunityToolkit.Maui.Views.MediaCapturedEventArgs e)
+    private async void OnMediaCapture(object sender, CommunityToolkit.Maui.Views.MediaCapturedEventArgs e)
     {
-		if(Dispatcher.IsDispatchRequired)
-		{
-			Dispatcher.Dispatch(() => Photo.Source = ImageSource.FromStream(()=> e.Media));
-            return;
+        if (Dispatcher.IsDispatchRequired)
+        {
+            try
+            {
+                await _cameraService.OnCapture(e.Media);
+
+                await MainThread.InvokeOnMainThreadAsync(async () =>
+                {
+                    await Navigation.PopAsync();
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in OnMediaCapture: {ex.Message}");
+            }
         }
-		Photo.Source = ImageSource.FromStream(() => e.Media);
+        //Photo.Source = ImageSource.FromStream(() => e.Media);
     }
-	private void OnCaptureClicked(object sender, EventArgs e)
+    private void OnCaptureClicked(object sender, EventArgs e)
     {
         cameraView.CaptureImage(CancellationToken.None);
     }
     private async void BackCamera(object sender, EventArgs e)
     {
-        await cameraProvider.RefreshAvailableCameras(CancellationToken.None);
+        await _cameraProvider.RefreshAvailableCameras(CancellationToken.None);
         if(isBack)
-            cameraView.SelectedCamera = cameraProvider.AvailableCameras.Where(c => c.Position == CameraPosition.Front).FirstOrDefault();
+            cameraView.SelectedCamera = _cameraProvider.AvailableCameras.Where(c => c.Position == CameraPosition.Front).FirstOrDefault();
         else
-            cameraView.SelectedCamera = cameraProvider.AvailableCameras.Where(c => c.Position == CameraPosition.Rear).FirstOrDefault();
+            cameraView.SelectedCamera = _cameraProvider.AvailableCameras.Where(c => c.Position == CameraPosition.Rear).FirstOrDefault();
         isBack = !isBack;
     }
-    private void OnBack(object sender, EventArgs e)
+    private async void OnBack(object sender, EventArgs e)
     {
-        Navigation.PopAsync();
+        await Navigation.PopAsync();
     }
 }

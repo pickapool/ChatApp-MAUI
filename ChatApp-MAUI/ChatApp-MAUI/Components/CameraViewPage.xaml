@@ -3,20 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"  
             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"  
             x:Class="ChatApp_MAUI.Components.CameraViewPage">  
-   <StackLayout>  
+   <StackLayout
+        HorizontalOptions="Center"
+        VerticalOptions="Center"
+        Spacing="20">  
        <toolkit:CameraView x:Name="cameraView"  
                            MediaCaptured="OnMediaCapture"  
                            WidthRequest="300" 
                            HeightRequest="400" />  
-        <Image x:Name="Photo"  
-              Aspect="AspectFit"  
-              HeightRequest="185"  
-              WidthRequest="185" />  
-        <Button Text="Capture"  
+        <Button Text="Capture"
+               WidthRequest="100"
                Clicked="OnCaptureClicked" />
         <Button Text="Switch"  
-            Clicked="BackCamera" />
-        <Button Text="Back"  
-            Clicked="OnBack" />
+                WidthRequest="100"
+                Clicked="BackCamera" />
     </StackLayout>  
 </ContentPage>
