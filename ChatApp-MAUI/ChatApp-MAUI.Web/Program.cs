@@ -37,7 +37,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<LayoutNotifierService>();
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
-builder.Services.AddScoped<INotificationService, NotificationService>();
 builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 builder.Services.AddScoped<ILoginService, LoginService>();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationState>();

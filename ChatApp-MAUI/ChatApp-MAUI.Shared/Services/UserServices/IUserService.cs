@@ -10,5 +10,6 @@ namespace ChatApp_MAUI.Shared.Services.UserServices
     public interface IUserService
     {
         Task<List<AuthTokenModel>> SearchUsers(FilterParameterModel param);
+        Task<string> SendFriendRequest(FriendsModel model, string token);
     }
 }

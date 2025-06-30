@@ -8,5 +8,5 @@
 		<MudText Typo="Typo.caption">@GlobalClass.User?.DisplayName</MudText>
 		<MudText Typo="Typo.caption">@GlobalClass.User?.Email</MudText>
 	</div>
-	<MudIconButton Icon="@Icons.Material.Filled.PersonAdd"></MudIconButton>
+	<MudIconButton OnClick="()=> SendFriendRequest(User)" Icon="@Icons.Material.Filled.PersonAdd"></MudIconButton>
 </div>

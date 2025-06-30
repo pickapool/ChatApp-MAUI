@@ -5,9 +5,8 @@ namespace WebAPI.SignalRHub
 {
     public class NotificationHub : Hub
     {
-        public async Task Notify(FriendsModel model)
+        public async Task NotifyAsync(FriendsModel model)
         {
-            // Send the message to all connected clients
             await Clients.All.SendAsync("NotifyFriendRequest", model);
         }
     }

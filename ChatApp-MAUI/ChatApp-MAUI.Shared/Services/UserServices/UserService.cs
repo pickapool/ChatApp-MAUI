@@ -1,4 +1,5 @@
-﻿using ChatApp_MAUI.Shared.Models;
+﻿using ChatApp_MAUI.Shared.Common;
+using ChatApp_MAUI.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,17 @@ namespace ChatApp_MAUI.Shared.Services.UserServices
                 throw new Exception($"Error fetching users: {error}");
             }
             return response.Result.Content.ReadFromJsonAsync<List<AuthTokenModel>>();
+        }
+        public async Task<string> SendFriendRequest(FriendsModel model, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim('"'));
+            var response = _httpClient.PostAsJsonAsync("api/friends/addfriend", model);
+            if (response.Result.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var error = response.Result.Content.ReadAsStringAsync().Result;
+                throw new Exception(error);
+            }
+            return await response.Result.Content.ReadAsStringAsync();
         }
     }
 }

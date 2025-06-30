@@ -2,12 +2,13 @@
 using ChatApp_MAUI.Shared.Models;
 using ChatApp_MAUI.Shared.Services;
 using ChatApp_MAUI.Shared.Services.INotificationServices;
-using ChatApp_MAUI.Shared.Services.NavigationServices;
 using ChatApp_MAUI.Shared.Services.UserServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Configuration;
 using MudBlazor;
+using Newtonsoft.Json;
+using Extensions = ChatApp_MAUI.Shared.Common.Extensions;
 
 namespace ChatApp_MAUI.Shared.Layout
 {
@@ -15,7 +16,9 @@ namespace ChatApp_MAUI.Shared.Layout
     {
         [Inject] protected LayoutNotifierService _notifierService { get; set; } = default!;
         [Inject] protected IUserService _userService { get; set; } = default!;
-        [Inject] protected INotificationService _notificationService { get; set; } = default!;
+        [Inject] protected ISnackbar _snackBar { get; set; } = default!;
+        [Inject] protected IConfiguration _configuration { get; set; } = default!;
+
         protected ElementReference reference;
         protected string email = string.Empty, password = string.Empty;
         protected bool _open = false, isLoading = false, isShow = false, isRegistration = false;
@@ -23,12 +26,18 @@ namespace ChatApp_MAUI.Shared.Layout
         protected MudTheme _theme = new();
         protected bool _isDarkMode;
         protected AuthTokenModel? user;
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            _notificationService.CreateNotificationBuilder().StartAsync();
-            _notificationService.CreateNotificationBuilder().On<FriendsModel>("NotifyFriendRequest", model => {
-                Console.WriteLine("Hello");
+            var hubConnection = NotificationService.GetConnection($"{_configuration["BaseAPI:Url"]}/NotificationHub");
+            hubConnection.On<FriendsModel>("NotifyFriendRequest", model =>
+            {
+                if (model.From == GlobalClass.User.Uid)
+                {
+                    Extensions.ShowSnackbar("Friend request i comming", Variant.Filled, _snackBar, Severity.Success);
+                }
             });
+
+            await hubConnection.StartAsync();
             _notifierService.OnChanged += HandleChange;
         }
         protected async Task<IEnumerable<AuthTokenModel>> GetUsers(string name, CancellationToken t)

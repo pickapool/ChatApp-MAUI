@@ -6,6 +6,9 @@ using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using WebAPI.SignalRHub;
+using Google.Cloud.Firestore.V1;
+using Google.Cloud.Firestore;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,7 +49,17 @@ FirebaseApp.Create(new AppOptions
 {
     Credential = GoogleCredential.FromFile("firebaseconfig.json")
 });
-
+//Fire store
+builder.Services.AddSingleton(provider =>
+{
+    var credential = GoogleCredential.FromFile("firebaseconfig.json");
+    var builderFirestore = new FirestoreClientBuilder
+    {
+        Credential = credential
+    };
+    var db = FirestoreDb.Create("maui-5e9d0", builderFirestore.Build());
+    return db;
+});
 //firebaseauth client
 builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
 {
@@ -57,6 +70,8 @@ builder.Services.AddSingleton(new FirebaseAuthClient(new FirebaseAuthConfig()
                 new EmailProvider()
             }
 }));
+
+
 
 var app = builder.Build();
 
