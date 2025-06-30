@@ -6,6 +6,7 @@ using ChatApp_MAUI.Shared.Services.CameraServices;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
 using ChatApp_MAUI.Shared.Services.FirebaseStorageServices;
 using ChatApp_MAUI.Shared.Services.NavigationServices;
+using ChatApp_MAUI.Shared.Services.UserServices;
 using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -26,7 +27,9 @@ namespace ChatApp_MAUI.Shared.Pages
         [Inject] protected LayoutNotifierService _notifierService { get; set; } = default!;
         [Inject] protected IDialogService _dialogService { get; set; } = default!;
         [Inject] protected INavigationService _navigationService { get; set; } = default!;
-        [Inject] protected IFormFactor _formFactor { get; set; } = default!;        
+        [Inject] protected IFormFactor _formFactor { get; set; } = default!;
+        [Inject] protected IUserService _userService { get; set; } = default!;
+
         protected IBrowserFile? selectedFile;
         protected bool isUploading = false, isLoading = false;
         protected string code = string.Empty;
@@ -130,6 +133,15 @@ namespace ChatApp_MAUI.Shared.Pages
                 _notifierService.NotifyChanged();
                 StateHasChanged();
             });
+        }
+        protected async Task<List<AuthTokenModel>> GetUsers(string name)
+        {
+            FilterParameterModel param = new();
+            param.IsName = true;
+            param.Name = name;
+            param.Token = GlobalClass.Token;
+
+            return await _userService.SearchUsers(param);
         }
     }
 }

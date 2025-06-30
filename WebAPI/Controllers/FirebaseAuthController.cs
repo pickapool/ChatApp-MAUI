@@ -126,33 +126,33 @@ namespace WebAPI.Controllers
         }
         [HttpPost]
         [Route("getusers")]
-        public async Task<IActionResult> GetUsersAsync([FromBody] string idToken)
+        public async Task<IActionResult> GetUsersAsync([FromBody] FilterParameterModel param)
         {
             try
             {
-                var verifiedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(idToken);
+                var verifiedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(param.Token);
                 if (verifiedToken == null)
                 {
                     return Unauthorized(new { Error = "UnAuthorized" });
                 }
 
-                var pagedEnumerable = FirebaseAuth.DefaultInstance.ListUsersAsync(null);
-                var users = new List<object>();
-
-                await foreach (var user in pagedEnumerable)
+                var listOfUsers = FirebaseAuth.DefaultInstance.ListUsersAsync(null);
+                var UserRecords = new List<ExportedUserRecord>();
+                await foreach (var user in listOfUsers)
                 {
-                    users.Add(new AuthTokenModel
+                    if (param.IsName &&
+                        !string.IsNullOrWhiteSpace(user.DisplayName) &&
+                        user.DisplayName.ToLower().Contains(param.Name.ToLower()))
                     {
-                        Uid = user.Uid,
-                        Email = user.Email,
-                        DisplayName = user.DisplayName,
-                        PhoneNumber = user.PhoneNumber,
-                        PhotoUrl = user.PhotoUrl,
-                        EmailVerified = user.EmailVerified
-                    });
+                        UserRecords.Add(user);
+                    }
+                    else if (!param.IsName) // if no filter, add all users
+                    {
+                        UserRecords.Add(user);
+                    }
                 }
 
-                return Ok(users);
+                return Ok(UserRecords);
             }
             catch (Exception ex)
             {
