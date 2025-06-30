@@ -1,0 +1,12 @@
+﻿@inherits AcceptFriendComponent
+
+@typeparam T
+
+<div class="d-flex flex-row align-items-center">
+	<MudAvatar Size="Size.Small">
+		<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User?.PhotoUrl)"></MudImage>
+	</MudAvatar>
+	<MudText Typo="Typo.caption">@User?.DisplayName Sent you a friend request.</MudText>
+	<MudIconButton OnClick="AcceptFriendRequest" Icon="@Icons.Material.Rounded.CheckCircle" Color="Color.Success" Size="Size.Small"></MudIconButton>
+	<MudIconButton OnClick="CloseNotification" Icon="@Icons.Material.Rounded.Close" Color="Color.Success" Size="Size.Small"></MudIconButton>
+</div>

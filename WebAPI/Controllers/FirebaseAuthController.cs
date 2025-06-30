@@ -126,7 +126,7 @@ namespace WebAPI.Controllers
         }
         [HttpPost]
         [Route("searchuser")]
-        public async Task<IActionResult> GetUsersAsync([FromBody] FilterParameterModel param)
+        public async Task<IActionResult> SearchUserAsync([FromBody] FilterParameterModel param)
         {
             try
             {

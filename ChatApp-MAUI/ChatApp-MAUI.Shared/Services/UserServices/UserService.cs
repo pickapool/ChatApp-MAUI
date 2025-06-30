@@ -18,27 +18,38 @@ namespace ChatApp_MAUI.Shared.Services.UserServices
             _httpClient = httpClient;
         }
 
-        public Task<List<AuthTokenModel>> SearchUsers(FilterParameterModel param)
+        public async Task<List<AuthTokenModel>> SearchUsers(FilterParameterModel param)
         {
            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", param.Token?.Trim('"'));
-            var response = _httpClient.PostAsJsonAsync("api/auth/searchuser", param);
-            if (response.Result.StatusCode != System.Net.HttpStatusCode.OK)
+            var response = await _httpClient.PostAsJsonAsync("api/auth/searchuser", param);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                var error = response.Result.Content.ReadAsStringAsync().Result;
+                var error = response.Content.ReadAsStringAsync().Result;
                 throw new Exception($"Error fetching users: {error}");
             }
-            return response.Result.Content.ReadFromJsonAsync<List<AuthTokenModel>>();
+            return await response.Content.ReadFromJsonAsync<List<AuthTokenModel>>();
         }
         public async Task<string> SendFriendRequest(FriendsModel model, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim('"'));
-            var response = _httpClient.PostAsJsonAsync("api/friends/addfriend", model);
-            if (response.Result.StatusCode != System.Net.HttpStatusCode.OK)
+            var response = await  _httpClient.PostAsJsonAsync("api/friends/addfriend", model);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
-                var error = response.Result.Content.ReadAsStringAsync().Result;
+                var error = response.Content.ReadAsStringAsync().Result;
                 throw new Exception(error);
             }
-            return await response.Result.Content.ReadAsStringAsync();
+            return await response.Content.ReadAsStringAsync();
+        }
+        public async Task<AuthTokenModel> GetUserAccount(FilterParameterModel param)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", param.Token?.Trim('"'));
+            var response = await _httpClient.PostAsJsonAsync("api/auth/getuseraccount", param);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var error = response.Content.ReadAsStringAsync().Result;
+                throw new Exception(error);
+            }
+            return await response.Content.ReadFromJsonAsync<AuthTokenModel>();
         }
     }
 }
