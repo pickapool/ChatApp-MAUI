@@ -48,6 +48,7 @@ namespace ChatApp_MAUI.Shared.Layout
             param.IsName = true;
             param.Name = name;
             param.Token = GlobalClass.Token;
+            param.Uid = GlobalClass.User.Uid;
 
             return await _userService.SearchUsers(param);
         }
