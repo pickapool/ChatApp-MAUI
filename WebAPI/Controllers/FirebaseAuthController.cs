@@ -130,7 +130,7 @@ namespace WebAPI.Controllers
         {
             try
             {
-                var verifiedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(param.Token);
+                var verifiedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(param.Token.Trim('"'));
                 if (verifiedToken == null)
                 {
                     return Unauthorized(new { Error = "UnAuthorized" });

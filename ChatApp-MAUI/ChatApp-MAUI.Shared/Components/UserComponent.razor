@@ -1,0 +1,12 @@
+﻿@inherits UserComponentBase
+
+<div class="d-flex flex-row justify-content-center gap-2">
+	<MudAvatar Size="Size.Medium">
+		<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User.PhotoUrl)"></MudImage>
+	</MudAvatar>
+	<div class="d-flex flex-column flex-grow-1">
+		<MudText Typo="Typo.caption">@GlobalClass.User?.DisplayName</MudText>
+		<MudText Typo="Typo.caption">@GlobalClass.User?.Email</MudText>
+	</div>
+	<MudIconButton Icon="@Icons.Material.Filled.PersonAdd"></MudIconButton>
+</div>

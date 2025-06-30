@@ -19,13 +19,34 @@
                 <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer"
                 ref="reference" />
                 <MudSpacer />
+                <MudAutocomplete 
+                    Context="user" 
+                    Label="Search Users" 
+                    @bind-Value="user" 
+                    SearchFunc="@GetUsers" 
+                    OpenIcon="@Icons.Material.Filled.Search" 
+                    Variant="Variant.Outlined" 
+                    ShowProgressIndicator
+                    DebounceInterval="500"
+                    MinCharacters="1"
+                    Dense>
+                    <ProgressIndicatorInPopoverTemplate>
+                        <MudList T="AuthTokenModel" ReadOnly>
+                            <MudListItem>
+                                Loading...
+                            </MudListItem>
+                        </MudList>
+                    </ProgressIndicatorInPopoverTemplate>
+                    <ItemTemplate>
+                        <UserComponent User="user"></UserComponent>
+                    </ItemTemplate>
+                </MudAutocomplete>
                 <MudSwitch 
                     @bind-Value="_isDarkMode" 
                     Size="Size.Large"
                     ThumbIcon="@(_isDarkMode ? Icons.Material.Filled.DarkMode : Icons.Material.Filled.WbSunny)"
-                    Class="ma-4"
+                    Class=""
                     ThumbIconColor="@(_isDarkMode ? Color.Dark : Color.Default)">
-                    
                 </MudSwitch>
                 <ProfileContainer></ProfileContainer>
             </MudAppBar>

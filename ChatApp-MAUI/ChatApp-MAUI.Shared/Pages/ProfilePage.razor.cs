@@ -28,7 +28,6 @@ namespace ChatApp_MAUI.Shared.Pages
         [Inject] protected IDialogService _dialogService { get; set; } = default!;
         [Inject] protected INavigationService _navigationService { get; set; } = default!;
         [Inject] protected IFormFactor _formFactor { get; set; } = default!;
-        [Inject] protected IUserService _userService { get; set; } = default!;
 
         protected IBrowserFile? selectedFile;
         protected bool isUploading = false, isLoading = false;
@@ -134,14 +133,5 @@ namespace ChatApp_MAUI.Shared.Pages
                 StateHasChanged();
             });
         }
-        protected async Task<List<AuthTokenModel>> GetUsers(string name)
-        {
-            FilterParameterModel param = new();
-            param.IsName = true;
-            param.Name = name;
-            param.Token = GlobalClass.Token;
-
-            return await _userService.SearchUsers(param);
-        }
-    }
+    } 
 }
