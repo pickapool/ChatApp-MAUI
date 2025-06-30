@@ -49,10 +49,42 @@ namespace WebAPI.Controllers
         {
             try
             {
+                var query = _firestoreDb.Collection("Friends")
+                            .WhereEqualTo("From", friendsModel.From)
+                            .WhereEqualTo("To", friendsModel.To)
+                            .Limit(1);
+
+                var snapshot = await query.GetSnapshotAsync();
+                if (snapshot.Count > 0)
+                {
+                    var existing = snapshot.First().ConvertTo<FriendsModel>();
+                    if (existing.IsAccepted)
+                        return Conflict("You are already friends.");
+
+                    return Conflict("Friend request already sent.");
+                }
+
+                var reverseQuery = _firestoreDb.Collection("Friends")
+                    .WhereEqualTo("From", friendsModel.To)
+                    .WhereEqualTo("To", friendsModel.From)
+                    .Limit(1);
+
+                var reverseSnapshot = await reverseQuery.GetSnapshotAsync();
+                if (reverseSnapshot.Count > 0)
+                {
+                    var existing = reverseSnapshot.First().ConvertTo<FriendsModel>();
+                    if (existing.IsAccepted)
+                        return Conflict("You are already friends.");
+
+                    return Conflict("User has already sent you a request.");
+                }
+
                 var docRef = _firestoreDb.Collection("Friends").Document();
                 friendsModel.Id = docRef.Id;
                 await docRef.SetAsync(friendsModel);
+
                 await NotificationExtensions.NotifyAsync(_hubContext, friendsModel);
+
                 return Ok("Friend request sent successfully.");
             }
             catch (Exception ex)
