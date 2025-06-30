@@ -31,6 +31,7 @@ namespace WebAPI.Controllers
             {
                 var query = _firestoreDb.Collection("Friends")
                           .WhereEqualTo("From", uid)
+                          .WhereEqualTo("To", uid)
                           .WhereEqualTo("IsAccepted", true);
                 var snapshot = await query.GetSnapshotAsync();
                 var friendsList = snapshot.Documents
