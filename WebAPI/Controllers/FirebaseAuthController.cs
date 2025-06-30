@@ -140,6 +140,8 @@ namespace WebAPI.Controllers
                 var UserRecords = new List<ExportedUserRecord>();
                 await foreach (var user in listOfUsers)
                 {
+                    if (param.Uid == user.Uid)
+                        continue;
                     if (param.IsName &&
                         !string.IsNullOrWhiteSpace(user.DisplayName) &&
                         user.DisplayName.ToLower().Contains(param.Name.ToLower()))
