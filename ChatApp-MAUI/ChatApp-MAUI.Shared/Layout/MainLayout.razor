@@ -25,18 +25,18 @@
                     @bind-Value="user" 
                     SearchFunc="@GetUsers" 
                     OpenIcon="@Icons.Material.Filled.Search" 
-                    Variant="Variant.Outlined" 
-                    ShowProgressIndicator
+                    Variant="Variant.Outlined"
                     DebounceInterval="500"
                     MinCharacters="1"
-                    Dense>
+                    Margin="Margin.Dense"
+                    ToStringFunc="(e) => null">
                     <ProgressIndicatorInPopoverTemplate>
                         <MudList T="AuthTokenModel" ReadOnly>
                             <MudListItem>
                                 Loading...
                             </MudListItem>
                         </MudList>
-                    </ProgressIndicatorInPopoverTemplate>
+					</ProgressIndicatorInPopoverTemplate>
                     <ItemTemplate>
                         <UserComponent User="user"></UserComponent>
                     </ItemTemplate>
@@ -80,3 +80,35 @@
         </PreLoaderComponent>
     </NotAuthorized>
 </AuthorizeView>
+<style>
+    .mud-input-outlined-border {
+        border-color: inherit !important;
+    }
+
+    .mud-input-control > .mud-input-control-input-container > .mud-input-label-outlined.mud-input-label-inputcontrol {
+        color: inherit !important;
+    }
+
+    .mud-input-outlined .mud-input-outlined-border {
+        border-color: white !important;
+        border-radius: 20px !important;
+    }
+
+    .mud-input svg,.progress-indicator-circular {
+        color:white !important;
+    }
+
+    .mud-input-outlined input:focus {
+        outline: none;
+        border-color: white !important;
+        box-shadow: none !important;
+    }
+
+    .mud-input:after {
+        border-bottom: 2px solid white !important;
+    }
+
+    .mud-input > input.mud-input-root-outlined.mud-input-root-adorned-end, div.mud-input-slot.mud-input-root-outlined.mud-input-root-adorned-end {
+        color: white;
+    }
+</style>
