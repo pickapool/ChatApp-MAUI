@@ -42,13 +42,11 @@
                         <UserComponent User="user"></UserComponent>
                     </ItemTemplate>
                 </MudAutocomplete>
-                <MudSwitch 
-                    @bind-Value="_isDarkMode" 
+                <MudIconButton OnClick="()=> _isDarkMode = !_isDarkMode"
                     Size="Size.Large"
-                    ThumbIcon="@(_isDarkMode ? Icons.Material.Filled.DarkMode : Icons.Material.Filled.WbSunny)"
-                    Class=""
-                    ThumbIconColor="@(_isDarkMode ? Color.Dark : Color.Default)">
-                </MudSwitch>
+                    Icon="@(_isDarkMode ? Icons.Material.Filled.DarkMode : Icons.Material.Filled.WbSunny)"
+                    Class="">
+                </MudIconButton>
                 <ProfileContainer></ProfileContainer>
             </MudAppBar>
             <MudDrawer @bind-Open="@_open" Breakpoint="Breakpoint.Sm" Elevation="1" Variant="@DrawerVariant.Temporary">

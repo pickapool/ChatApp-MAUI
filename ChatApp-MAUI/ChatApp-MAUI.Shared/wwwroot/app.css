@@ -63,3 +63,7 @@ hr:not([size]) {
 .height100vh {
     height : 100vh;
 }
+.mud-toolbar-gutters {
+    padding-right: unset !important;
+    padding-left: unset !important;
+}
