@@ -20,8 +20,9 @@
                 ref="reference" />
                 <MudSpacer />
                 <MudAutocomplete 
-                    Context="user" 
-                    Label="Search Users" 
+                    Class="@($"{(_isDarkMode ? "app-search-dark" : "app-search")}")"
+                    Context="user"
+                                 Placeholder="Search Users"
                     @bind-Value="user" 
                     SearchFunc="@GetUsers" 
                     OpenIcon="@Icons.Material.Filled.Search" 
@@ -81,34 +82,26 @@
     </NotAuthorized>
 </AuthorizeView>
 <style>
-    .mud-input-outlined-border {
-        border-color: inherit !important;
+    .app-search-dark .mud-input-control-input-container {
+        border-radius: 25px !important;
     }
 
-    .mud-input-control > .mud-input-control-input-container > .mud-input-label-outlined.mud-input-label-inputcontrol {
-        color: inherit !important;
+    .app-search-dark .mud-input-outlined .mud-input-outlined-border {
+        border-radius: 25px !important;
     }
 
-    .mud-input-outlined .mud-input-outlined-border {
+    .app-search .mud-input-control-input-container {
+        border-radius: 25px !important;
+        background-color: white;
+    }
+
+    .app-search .mud-input-outlined .mud-input-outlined-border {
         border-color: white !important;
-        border-radius: 20px !important;
+        border-radius: 25px !important;
     }
 
-    .mud-input svg,.progress-indicator-circular {
-        color:white !important;
-    }
-
-    .mud-input-outlined input:focus {
-        outline: none;
-        border-color: white !important;
-        box-shadow: none !important;
-    }
-
-    .mud-input:after {
+    
+    .app-search .mud-input:after {
         border-bottom: 2px solid white !important;
-    }
-
-    .mud-input > input.mud-input-root-outlined.mud-input-root-adorned-end, div.mud-input-slot.mud-input-root-outlined.mud-input-root-adorned-end {
-        color: white;
     }
 </style>
