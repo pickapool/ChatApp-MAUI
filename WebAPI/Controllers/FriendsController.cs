@@ -2,6 +2,7 @@
 using Google.Cloud.Firestore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.SignalRHub;
 
 namespace WebAPI.Controllers
 {
@@ -12,6 +13,7 @@ namespace WebAPI.Controllers
     {
         private readonly FirestoreDb _firestoreDb;
         private readonly IConfiguration _configuration;
+        private readonly NotificationHub hub = new();
         public FriendsController(IConfiguration config)
         {
             _configuration = config;
@@ -47,6 +49,7 @@ namespace WebAPI.Controllers
                 var docRef = _firestoreDb.Collection("Friends").Document();
                 friendsModel.Id = docRef.Id;
                 await docRef.SetAsync(friendsModel);
+                await hub.Notify(friendsModel);
                 return Ok(new { Message = "Friend request sent successfully." });
             }
             catch (Exception ex)

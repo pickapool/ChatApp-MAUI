@@ -11,5 +11,7 @@ namespace ChatApp_MAUI.Shared.Models
         public string? Token { get; set; }
         public bool IsName { get; set; }
         public string? Name { get; set; }
+        public bool IsUid { get; set; }
+        public string? Uid { get; set; }
     }
 }

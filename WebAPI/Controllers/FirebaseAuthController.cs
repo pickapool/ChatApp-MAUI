@@ -125,7 +125,7 @@ namespace WebAPI.Controllers
             }
         }
         [HttpPost]
-        [Route("getusers")]
+        [Route("searchuser")]
         public async Task<IActionResult> GetUsersAsync([FromBody] FilterParameterModel param)
         {
             try
@@ -153,6 +153,26 @@ namespace WebAPI.Controllers
                 }
 
                 return Ok(UserRecords);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [Route("getuseraccount")]
+        public async Task<IActionResult> GetCurrentUserASync([FromBody] FilterParameterModel param)
+        {
+            try
+            {
+                var verifiedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(param.Token.Trim('"'));
+                if (verifiedToken == null)
+                {
+                    return Unauthorized(new { Error = "UnAuthorized" });
+                }
+                var listOfUsers = FirebaseAuth.DefaultInstance.ListUsersAsync(null);
+                var currentUser = await listOfUsers.Where(e => e.Uid == param.Uid).FirstOrDefaultAsync();
+                return Ok(currentUser);
             }
             catch (Exception ex)
             {

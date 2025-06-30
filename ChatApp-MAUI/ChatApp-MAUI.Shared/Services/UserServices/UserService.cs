@@ -20,7 +20,7 @@ namespace ChatApp_MAUI.Shared.Services.UserServices
         public Task<List<AuthTokenModel>> SearchUsers(FilterParameterModel param)
         {
            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", param.Token?.Trim('"'));
-            var response = _httpClient.PostAsJsonAsync("api/auth/getusers", param);
+            var response = _httpClient.PostAsJsonAsync("api/auth/searchuser", param);
             if (response.Result.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 var error = response.Result.Content.ReadAsStringAsync().Result;

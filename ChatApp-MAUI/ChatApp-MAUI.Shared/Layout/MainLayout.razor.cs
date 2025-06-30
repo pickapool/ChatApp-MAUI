@@ -1,8 +1,12 @@
 ﻿using ChatApp_MAUI.Shared.Common;
 using ChatApp_MAUI.Shared.Models;
 using ChatApp_MAUI.Shared.Services;
+using ChatApp_MAUI.Shared.Services.INotificationServices;
+using ChatApp_MAUI.Shared.Services.NavigationServices;
 using ChatApp_MAUI.Shared.Services.UserServices;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Extensions.Configuration;
 using MudBlazor;
 
 namespace ChatApp_MAUI.Shared.Layout
@@ -11,7 +15,7 @@ namespace ChatApp_MAUI.Shared.Layout
     {
         [Inject] protected LayoutNotifierService _notifierService { get; set; } = default!;
         [Inject] protected IUserService _userService { get; set; } = default!;
-        
+        [Inject] protected INotificationService _notificationService { get; set; } = default!;
         protected ElementReference reference;
         protected string email = string.Empty, password = string.Empty;
         protected bool _open = false, isLoading = false, isShow = false, isRegistration = false;
@@ -21,6 +25,10 @@ namespace ChatApp_MAUI.Shared.Layout
         protected AuthTokenModel? user;
         protected override void OnInitialized()
         {
+            _notificationService.CreateNotificationBuilder().StartAsync();
+            _notificationService.CreateNotificationBuilder().On<FriendsModel>("NotifyFriendRequest", model => {
+                Console.WriteLine("Hello");
+            });
             _notifierService.OnChanged += HandleChange;
         }
         protected async Task<IEnumerable<AuthTokenModel>> GetUsers(string name, CancellationToken t)
