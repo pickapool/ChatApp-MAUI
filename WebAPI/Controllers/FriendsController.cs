@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/friends/")]
     public class FriendsController : ControllerBase
@@ -16,6 +17,7 @@ namespace WebAPI.Controllers
             _configuration = config;
             _firestoreDb = FirestoreDb.Create(_configuration["FireStoreDbProjectId"]);
         }
+        [AllowAnonymous]
         [HttpGet]
         [Route("getfriends")]
         public async Task<IActionResult> GetFriendsAsync([FromQuery] string uid)
@@ -36,7 +38,6 @@ namespace WebAPI.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
-        [Authorize]
         [HttpPost]
         [Route("addfriend")]
         public async Task<IActionResult> AddFriendAsync([FromBody] FriendsModel friendsModel)
@@ -53,9 +54,8 @@ namespace WebAPI.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
-        [Authorize]
-        [HttpDelete]
-        [Route("adfriend")]
+        [HttpPost]
+        [Route("deletefriend")]
         public async Task<IActionResult> DeleteFriendAsync([FromBody] FriendsModel friendsModel)
         {
             try

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/auth/")] 
     public class FirebaseAuthController : ControllerBase
@@ -52,7 +53,6 @@ namespace WebAPI.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
-        [Authorize]
         [HttpPost]
         [Route("getuser")]
         public async Task<IActionResult> GetUserAsync([FromBody] string idToken)
@@ -73,7 +73,6 @@ namespace WebAPI.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
-        [Authorize]
         [HttpPost]
         [Route("verifyemail")]
         public async Task<IActionResult> VerifyAccount([FromBody] string email)
@@ -87,7 +86,6 @@ namespace WebAPI.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
-        [Authorize]
         [HttpPost]
         [Route("updatephoto")]
         public async Task<IActionResult> UpdatePhoto([FromBody] AuthTokenModel record)
@@ -106,7 +104,6 @@ namespace WebAPI.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
-        [Authorize]
         [HttpPost]
         [Route("updateprofile")]
         public async Task<IActionResult> UpdateProfile([FromBody] AuthTokenModel record)
@@ -121,6 +118,41 @@ namespace WebAPI.Controllers
                     PhoneNumber = record.PhoneNumber
                 });
                 return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
+        [HttpPost]
+        [Route("getusers")]
+        public async Task<IActionResult> GetUsersAsync([FromBody] string idToken)
+        {
+            try
+            {
+                var verifiedToken = await FirebaseAuth.DefaultInstance.VerifyIdTokenAsync(idToken);
+                if (verifiedToken == null)
+                {
+                    return Unauthorized(new { Error = "UnAuthorized" });
+                }
+
+                var pagedEnumerable = FirebaseAuth.DefaultInstance.ListUsersAsync(null);
+                var users = new List<object>();
+
+                await foreach (var user in pagedEnumerable)
+                {
+                    users.Add(new AuthTokenModel
+                    {
+                        Uid = user.Uid,
+                        Email = user.Email,
+                        DisplayName = user.DisplayName,
+                        PhoneNumber = user.PhoneNumber,
+                        PhotoUrl = user.PhotoUrl,
+                        EmailVerified = user.EmailVerified
+                    });
+                }
+
+                return Ok(users);
             }
             catch (Exception ex)
             {

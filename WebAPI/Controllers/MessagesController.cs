@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/message/")]
     public class MessagesController : ControllerBase
@@ -16,8 +17,7 @@ namespace WebAPI.Controllers
             _configuration = config;
             _firestoreDb = FirestoreDb.Create(_configuration["FireStoreDbProjectId"]);
         }
-        [Authorize]
-        [HttpHead]
+        [HttpPost]
         [Route("getchatroom")]
         public async Task<IActionResult> GetMessageAsync([FromQuery] string uid)
         {
