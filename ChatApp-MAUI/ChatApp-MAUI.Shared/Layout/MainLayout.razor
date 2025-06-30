@@ -22,7 +22,7 @@
                 <MudAutocomplete 
                     Class="@($"{(_isDarkMode ? "app-search-dark" : "app-search")}")"
                     Context="user"
-                                 Placeholder="Search Users"
+                    Placeholder="Search Users"
                     @bind-Value="user" 
                     SearchFunc="@GetUsers" 
                     OpenIcon="@Icons.Material.Filled.Search" 

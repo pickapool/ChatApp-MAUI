@@ -43,7 +43,7 @@ namespace ChatApp_MAUI.Shared.Layout
         protected async Task<IEnumerable<AuthTokenModel>> GetUsers(string name, CancellationToken t)
         {
             //Show progreee indicator
-            await Task.Delay(1000);
+            await Task.Delay(500);
             FilterParameterModel param = new();
             param.IsName = true;
             param.Name = name;
