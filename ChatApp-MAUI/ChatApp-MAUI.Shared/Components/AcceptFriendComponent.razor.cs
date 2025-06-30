@@ -1,5 +1,6 @@
 ﻿using ChatApp_MAUI.Shared.Common;
 using ChatApp_MAUI.Shared.Models;
+using ChatApp_MAUI.Shared.Services.FriendServices;
 using ChatApp_MAUI.Shared.Services.UserServices;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -14,7 +15,8 @@ namespace ChatApp_MAUI.Shared.Components
     public partial class AcceptFriendComponent : ComponentBase
     {
         [Inject] protected IUserService _userService { get; set; } = default!;
-        [Inject] protected ISnackbar _snackBar { get; set; } = default!'
+        [Inject] protected IFriendService _friendService { get; set; } = default!;
+        [Inject] protected ISnackbar _snackBar { get; set; } = default!;
         [Parameter] public FriendsModel? FriendRequestModel { get; set; }
         protected AuthTokenModel? User { get; set; }
         protected override async Task OnInitializedAsync()
@@ -33,7 +35,8 @@ namespace ChatApp_MAUI.Shared.Components
 
         protected async Task AcceptFriendRequest()
         {
-
+            await _friendService.AccepFriendRequest(FriendRequestModel, GlobalClass.Token);
+            _snackBar.Clear();
         }
     }
 }

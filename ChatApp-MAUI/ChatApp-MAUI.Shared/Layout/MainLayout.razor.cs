@@ -31,7 +31,10 @@ namespace ChatApp_MAUI.Shared.Layout
             var hubConnection = NotificationService.GetConnection($"{_configuration["BaseAPI:Url"]}/NotificationHub");
             hubConnection.On<FriendsModel>("NotifyFriendRequest", model =>
             {
-                SnackBarHelper.ShowFriendRequestNotification(_snackBar, model);
+                if (model.To == GlobalClass.User.Uid)
+                {
+                    SnackBarHelper.ShowFriendRequestNotification(_snackBar, model);
+                }
             });
 
             await hubConnection.StartAsync();

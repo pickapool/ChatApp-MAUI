@@ -20,6 +20,7 @@ using ChatApp_MAUI.Shared.Services.FirebaseStorageServices;
 using ChatApp_MAUI.Shared.Services.CameraServices;
 using ChatApp_MAUI.Shared.Services.UserServices;
 using ChatApp_MAUI.Shared.Services.INotificationServices;
+using ChatApp_MAUI.Shared.Services.FriendServices;
 namespace ChatApp_MAUI;
 
 public static class MauiProgram
@@ -50,6 +51,7 @@ public static class MauiProgram
         builder.Services.AddScoped<INavigationService, NavigationService>();
         builder.Services.AddScoped<IFirebaseStorageService, FirebaseStorageService>();
         builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IFriendService, FriendService>();
 
         builder.Services.AddAuthorizationCore();
         builder.Services.AddCascadingAuthenticationState();

@@ -75,5 +75,24 @@ namespace WebAPI.Controllers
                 return BadRequest(new { Error = ex.Message });
             }
         }
+        [HttpPost]
+        [Route("acceptfriend")]
+        public async Task<IActionResult> AcceptFriendRequest([FromBody] FriendsModel friendsModel)
+        {
+            try
+            {
+                var docRef = _firestoreDb.Collection("Friends").Document(friendsModel.Id);
+                await docRef.UpdateAsync(
+                    new Dictionary<string, object>
+                    {
+                        { "IsAccepted", true }
+                    });
+                return Ok(new { Message = "Friend request sent accepted." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Error = ex.Message });
+            }
+        }
     }
 }

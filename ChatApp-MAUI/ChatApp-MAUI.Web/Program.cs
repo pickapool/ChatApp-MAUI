@@ -18,6 +18,7 @@ using ChatApp_MAUI.Shared.Components;
 using ChatApp_MAUI.Shared.Services.CameraServices;
 using ChatApp_MAUI.Shared.Services.UserServices;
 using ChatApp_MAUI.Shared.Services.INotificationServices;
+using ChatApp_MAUI.Shared.Services.FriendServices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStat
 builder.Services.AddScoped<INavigationService, NavigationService>();
 builder.Services.AddScoped<IFirebaseStorageService, FirebaseStorageService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IFriendService, FriendService>();
 builder.Services.AddMudServices();
 builder.Services.AddBlazoredLocalStorage();
 
