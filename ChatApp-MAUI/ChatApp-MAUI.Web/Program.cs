@@ -24,12 +24,17 @@ using ChatApp_MAUI.Shared.Services.CallBackServices.ConversationsCallback;
 using ChatApp_MAUI.Shared.Services.MessageServices;
 using ChatApp_MAUI.Shared.Services.CallBackServices.ChatRoomCallback;
 using ChatApp_MAUI.Shared.Common;
+using Microsoft.AspNetCore.Components.Server;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.Configure<CircuitOptions>(options =>
+{
+    options.DetailedErrors = true;
+});
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddServerSideBlazor().AddCircuitOptions(e => e.DetailedErrors = true);
