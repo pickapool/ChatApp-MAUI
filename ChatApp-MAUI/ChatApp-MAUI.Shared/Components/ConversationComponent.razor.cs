@@ -6,6 +6,7 @@ using ChatApp_MAUI.Shared.Services.MessageServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Configuration;
+using Microsoft.JSInterop;
 
 namespace ChatApp_MAUI.Shared.Components
 {
@@ -15,6 +16,7 @@ namespace ChatApp_MAUI.Shared.Components
         [Inject] protected IConversationCallback _conversationCallback { get; set; } = default!;
         [Inject] protected IMessageService _messageService { get; set; } = default!;
         [Inject] protected IConfiguration _configuration { get; set; } = default!;
+        [Inject] protected IJSRuntime _jsRuntime { get; set; } = default!;
 
         protected List<MessageModel> messages = new();
         protected List<MessageGroup> groupMessages = new();
@@ -24,13 +26,13 @@ namespace ChatApp_MAUI.Shared.Components
         protected override async Task OnInitializedAsync()
         {
             var hubConnection = NotificationService.GetConnection($"{_configuration["BaseAPI:Url"]}/NotificationHub");
-            hubConnection.On<MessageModel>("NotifyMessage", model =>
+            hubConnection.On<MessageModel>("NotifyMessage", async (model) =>
             {
-                if (model.To == User.Uid)
+                if ((GlobalClass.User.Uid == model.To || GlobalClass.User.Uid == model.From) &&
+                    (model.From == User.Uid || model.To == User.Uid))
                 {
                     messages.Add(model);
-                    GroupMessages();
-                    StateHasChanged();
+                    await InvokeAsync(GroupMessages);
                 }
             });
 
@@ -50,11 +52,11 @@ namespace ChatApp_MAUI.Shared.Components
             chatRoomId = await _messageService.GetChatRoomId(param);
             param.ChatRoomId = chatRoomId;
             messages = await _messageService.GetMessages(param);
-            GroupMessages();
-            IsLoading = false;
-            StateHasChanged();
+            await GroupMessages();
+            
+            
         }
-        private void GroupMessages()
+        private async Task GroupMessages()
         {
             groupMessages.Clear();
             foreach (var msg in messages)
@@ -84,6 +86,10 @@ namespace ChatApp_MAUI.Shared.Components
                     });
                 }
             }
+            IsLoading = false;
+            StateHasChanged();
+            await Task.Delay(100);
+            await _jsRuntime.InvokeVoidAsync("scrollToBottom");
         }
         public void RegisterCallBack(IConversationCallback callback)
         {
