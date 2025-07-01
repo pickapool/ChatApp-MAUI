@@ -71,3 +71,23 @@ hr:not([size]) {
     padding-right: unset !important;
     padding-left: unset !important;
 }
+.app-search-dark .mud-input-control-input-container {
+    border-radius: 25px !important;
+}
+
+.app-search-dark .mud-input-outlined .mud-input-outlined-border {
+    border-radius: 25px !important;
+}
+
+.app-search .mud-input-control-input-container {
+    border-radius: 25px !important;
+    background-color: white;
+}
+
+.app-search .mud-input-outlined .mud-input-outlined-border {
+    border-color: white !important;
+    border-radius: 25px !important;
+}
+.app-search .mud-input:after {
+    border-bottom: 2px solid white !important;
+}

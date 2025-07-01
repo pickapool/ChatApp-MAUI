@@ -3,11 +3,25 @@
 @inherits HomePageBase
 
 <PageTitle>Home Page</PageTitle>
-<MudGrid Spacing="1" Style="height: calc(100vh - 60px);">
-	<MudItem xs="4" Style="border-right: 1px solid #cacaca">
-
+<MudGrid Spacing="1">
+	@* Style="height: calc(100vh - 60px);" *@
+	<MudItem Class="overflow-auto pa-2" xs="12" sm="4" md="4" Style="border-right: 1px solid #cacaca">
+        <MudAutocomplete Class="@($"{(GlobalClass.IsDarkMode ? "app-search-dark" : "app-search")}")"
+				T="MessageModel"
+				Context="user"
+				Placeholder="Search Conversation"   
+				OpenIcon="@Icons.Material.Filled.Search"
+				Variant="Variant.Outlined"
+				DebounceInterval="500"
+				MinCharacters="1"
+				Margin="Margin.Dense"
+				ToStringFunc="(e) => null">
+            <ItemTemplate>
+                @* <UserComponent User="user"></UserComponent> *@
+            </ItemTemplate>
+        </MudAutocomplete>
 	</MudItem>
-	<MudItem Class="d-flex flex-row gap-1 py-3" xs="8">
+	<MudItem Class="d-flex flex-row gap-1" xs="8">
 		<div class="header-chat">
 			@foreach (var friend in friends)
 			{

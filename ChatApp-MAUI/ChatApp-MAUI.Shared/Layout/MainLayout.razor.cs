@@ -24,7 +24,6 @@ namespace ChatApp_MAUI.Shared.Layout
         protected bool _open = false, isLoading = false, isShow = false, isRegistration = false;
         protected bool _isToggling = false;
         protected MudTheme _theme = new();
-        protected bool _isDarkMode;
         protected AuthTokenModel? user;
         protected override async Task OnInitializedAsync()
         {
@@ -39,6 +38,11 @@ namespace ChatApp_MAUI.Shared.Layout
 
             await hubConnection.StartAsync();
             _notifierService.OnChanged += HandleChange;
+        }
+        protected void ToggleDarkMode()
+        {
+            GlobalClass.IsDarkMode = !GlobalClass.IsDarkMode;
+            _notifierService.NotifyChanged();
         }
         protected async Task<IEnumerable<AuthTokenModel>> GetUsers(string name, CancellationToken t)
         {

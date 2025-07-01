@@ -16,10 +16,21 @@ namespace ChatApp_MAUI.Shared.Pages
         [Inject] protected IFriendService _friendService { get; set; } = default!;
         [Inject] protected ILoginService _loginService { get; set; } = default!;
         [Inject] protected ICallBackService _callBackService { get; set; } = default!;
+        [Inject] protected LayoutNotifierService _notifierService { get; set; } = default!;
         protected List<FriendsModel> friends = new();
         protected override void OnInitialized()
         {
             _callBackService.RegisterCallback(this);
+            _notifierService.OnChanged += HandleChange;
+        }
+        private void HandleChange()
+        {
+            InvokeAsync(StateHasChanged);
+        }
+
+        public void Dispose()
+        {
+            _notifierService.OnChanged -= HandleChange;
         }
         public async Task OnShowFrieds()
         {

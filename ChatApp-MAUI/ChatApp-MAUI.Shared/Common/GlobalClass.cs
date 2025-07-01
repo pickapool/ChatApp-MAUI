@@ -11,5 +11,6 @@ namespace ChatApp_MAUI.Shared.Common
     {
         public static AuthTokenModel? User { get; set; } = new();
         public static string Token { get; set; } = string.Empty;
+        public static bool IsDarkMode;
     }
 }
