@@ -22,16 +22,17 @@ namespace WebAPI.Controllers
             _firestoreDb = firestore;
             _hubContext = hubContext;
         }
-        [AllowAnonymous]
-        [HttpGet]
+        [HttpPost]
         [Route("getfriends")]
-        public async Task<IActionResult> GetFriendsAsync([FromQuery] string uid)
+        public async Task<IActionResult> GetFriendsAsync([FromBody] string uid)
         {
             try
             {
+                var fromFilter = Filter.EqualTo("From", uid);
+                var toFilter = Filter.EqualTo("To", uid);
+
                 var query = _firestoreDb.Collection("Friends")
-                          .WhereEqualTo("From", uid)
-                          .WhereEqualTo("To", uid)
+                          .Where(Filter.Or(fromFilter, toFilter))
                           .WhereEqualTo("IsAccepted", true);
                 var snapshot = await query.GetSnapshotAsync();
                 var friendsList = snapshot.Documents

@@ -1,15 +1,16 @@
 ﻿@page "/"
 
+@inherits HomePageBase
+
 <PageTitle>Home Page</PageTitle>
 <MudGrid Spacing="1">
 	<MudItem xs="4">
 
 	</MudItem>
-	<MudItem xs="8">
+	<MudItem Class="d-flex flex-row gap-1" xs="8">
 		@foreach (var friend in friends)
 		{
-			
+			<FriendContainerComponent Friend="friend"></FriendContainerComponent>
 		}
 	</MudItem>
-
 </MudGrid>

@@ -6,16 +6,30 @@ using ChatApp_MAUI.Shared.Common;
 using ChatApp_MAUI.Shared.Models;
 using ChatApp_MAUI.Shared.Services.UserServices;
 using ChatApp_MAUI.Shared.Services.FriendServices;
+using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
+using ChatApp_MAUI.Shared.Services.CallBackServices;
 
 namespace ChatApp_MAUI.Shared.Pages
 {
-    public partial class HomePageBase : ComponentBase
+    public partial class HomePageBase : ComponentBase, ICallBackService
     {
         [Inject] protected IFriendService _friendService { get; set; } = default!;
-        List<FriendsModel> friends = new();
-        protected override async Task OnInitializedAsync()
+        [Inject] protected ILoginService _loginService { get; set; } = default!;
+        [Inject] protected ICallBackService _callBackService { get; set; } = default!;
+        protected List<FriendsModel> friends = new();
+        protected override void OnInitialized()
+        {
+            _callBackService.RegisterCallback(this);
+        }
+        public async Task OnShowFrieds()
         {
             friends = await _friendService.GetFriends(GlobalClass.User.Uid, GlobalClass.Token);
+            StateHasChanged();
+        }
+
+        public void RegisterCallback(ICallBackService listener)
+        {
+            _callBackService = listener;
         }
     }
 }
