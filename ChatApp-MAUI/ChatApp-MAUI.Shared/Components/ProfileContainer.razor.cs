@@ -3,6 +3,7 @@ using ChatApp_MAUI.AuthenticationProvider;
 using ChatApp_MAUI.Shared.Common;
 using ChatApp_MAUI.Shared.Models;
 using ChatApp_MAUI.Shared.Services;
+using ChatApp_MAUI.Shared.Services.CallBackServices.ChatRoomCallback;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -20,6 +21,7 @@ namespace ChatApp_MAUI.Shared.Components
         [Inject] protected ILocalStorageService _localStorage { get; set; } = default!;
         [Inject] protected ILoginService _loginService { get; set; } = default!;
         [Inject] protected ICallBackService _callBackService { get; set; } = default!;
+        [Inject] protected IChatRoomCallbackService _chatRoomCallbackService { get; set; } = default!;
         [Inject] protected NavigationManager _navigationManager { get; set; } = default!;
         [Inject] protected AuthenticationStateProvider _authenticationStateProvider { get; set; } = default!;
         [Inject] protected LayoutNotifierService _notifierService { get; set; } = default!;
@@ -42,6 +44,7 @@ namespace ChatApp_MAUI.Shared.Components
             _notifierService.OnChanged += HandleChange;
             isLoading = false;
             await _callBackService.OnShowFrieds();
+            await _chatRoomCallbackService.OnShowChatRoom();
         }
         private void HandleChange()
         {

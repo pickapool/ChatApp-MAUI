@@ -38,10 +38,7 @@
 		</div>
 	</MudItem>
 	<MudItem Class="d-flex flex-column gap-4 pa-2 overflow-hidden" xs="12" sm="5" md="5" lg="3">
-		@for (int i = 0; i < 9 ; i++)
-		{
-			<ChatRoomSkeleton></ChatRoomSkeleton>
-		}
+		<ChatRoomComponent></ChatRoomComponent>
 	</MudItem>
 	<MudItem Class="d-flex flex-row gap-1 pa-2" xs="12" sm="7" md="7" lg="9">
 		<ConversationComponent></ConversationComponent>

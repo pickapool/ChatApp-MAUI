@@ -24,6 +24,7 @@ using ChatApp_MAUI.Shared.Services.FriendServices;
 using Services.CallBackServices.LoadFriendsCallback;
 using ChatApp_MAUI.Shared.Services.CallBackServices.ConversationsCallback;
 using ChatApp_MAUI.Shared.Services.MessageServices;
+using ChatApp_MAUI.Shared.Services.CallBackServices.ChatRoomCallback;
 namespace ChatApp_MAUI;
 
 public static class MauiProgram
@@ -58,6 +59,7 @@ public static class MauiProgram
         builder.Services.AddScoped<ICallBackService, CallBackService>();
         builder.Services.AddScoped<IConversationCallback, ConversationCallback>();
         builder.Services.AddScoped<IMessageService, MessageService>();
+        builder.Services.AddScoped<IChatRoomCallbackService, ChatRoomCallbackService>();
 
         builder.Services.AddAuthorizationCore();
         builder.Services.AddCascadingAuthenticationState();

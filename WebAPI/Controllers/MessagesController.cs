@@ -25,22 +25,34 @@ namespace WebAPI.Controllers
         {
             try
             {
-                var document = await _firestoreDb.Collection("ChatRooms").GetSnapshotAsync();
-
-                if (document.Any())
+                var query = _firestoreDb.Collection("ChatRooms")
+                        .WhereArrayContains("members", param.Uid);
+                var snapshot = await query.GetSnapshotAsync();
+                List<ChatRoomModel> chats = new();
+                foreach (var doc in snapshot.Documents)
                 {
+                    ChatRoomModel chatRoomModel = doc.ConvertTo<ChatRoomModel>();
+                    var chatRoomRef = _firestoreDb.Collection("ChatRooms").Document(doc.Id);
+                    var chatRoomSnapshot = await chatRoomRef.GetSnapshotAsync();
+                    var messagesSnapshot = await chatRoomRef
+                        .Collection("Messages")
+                        .OrderByDescending("CreatedAt")
+                        .Limit(1)
+                        .GetSnapshotAsync();
 
-
-                    var query = _firestoreDb.Collection("ChatRooms")
-                    .WhereArrayContainsAny("Members", new[] { param.Uid, param.SenderUid });
-
-                    var snapshot = await query.GetSnapshotAsync();
-                    var chatRooms = snapshot.Documents
-                        .Select(doc => doc.ConvertTo<ChatRoomModel>())
-                        .ToList();
-                    return Ok(chatRooms);
+                    var messages = messagesSnapshot.Documents
+                        .Select(doc =>
+                        {
+                            var msg = doc.ConvertTo<MessageModel>();
+                            msg.Id = doc.Id;
+                            return msg;
+                        }).FirstOrDefault();
+                    chatRoomModel.Messages ??= new();
+                    messages ??= new();
+                    chatRoomModel.Messages.Add(messages);
+                    chats.Add(chatRoomModel);
                 }
-                return Ok(new List<ChatRoomModel>());
+                return Ok(chats);
             }
             catch (Exception ex)
             {

@@ -1,0 +1,18 @@
+﻿@inherits ChatRoomComponentBase
+
+@if (IsLoading)
+{
+	@for (int i = 0; i < 9; i++)
+	{
+		<ChatRoomSkeleton></ChatRoomSkeleton>
+	}
+} else {
+	<Virtualize Context="room" Items="chatRooms" ItemSize="9">
+		<EmptyContent>
+			<span>Start a conversation</span>
+		</EmptyContent>
+		<ChildContent>
+			<ChatRoomUserComponent ChatRoom="room"></ChatRoomUserComponent>
+		</ChildContent>
+	</Virtualize>
+}

@@ -25,7 +25,7 @@ namespace ChatApp_MAUI.Shared.Components
         private string chatRoomId = string.Empty;
         protected override void OnInitialized()
         {
-            _conversationCallback.RegisterCallBack(this);;
+            _conversationCallback.RegisterCallBack(this);
         }
         public async Task OnShowConversation(AuthTokenModel user)
         {
@@ -46,6 +46,7 @@ namespace ChatApp_MAUI.Shared.Components
         }
         private void GroupMessages()
         {
+            groupMessages.Clear();
             foreach (var msg in messages)
             {
                 if (!groupMessages.Any())

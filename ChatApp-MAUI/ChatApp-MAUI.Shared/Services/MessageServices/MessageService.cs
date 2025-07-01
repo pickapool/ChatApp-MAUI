@@ -31,7 +31,7 @@ namespace ChatApp_MAUI.Shared.Services.MessageServices
         public async Task<List<ChatRoomModel>> GetChatRooms(FilterParameterModel param)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", param.Token.Trim('"'));
-            var response = await _httpClient.PostAsJsonAsync("api/message/getconversation", param);
+            var response = await _httpClient.PostAsJsonAsync("api/message/getchatroom", param);
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 var error = response.Content.ReadAsStringAsync().Result;

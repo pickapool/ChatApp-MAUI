@@ -1,0 +1,19 @@
+﻿@inherits ChatRoomUserComponentBase
+
+@if (IsLoading) {
+	<ChatRoomSkeleton></ChatRoomSkeleton>
+} else
+{
+	<MudButton Class="text-start d-flex justify-content-start">
+		<div class="d-flex flex-row gap-2">
+			<MudAvatar Size="Size.Medium"> 
+				<MudImage Src="@(String.IsNullOrEmpty(GlobalClass.User?.PhotoUrl) ? PhotoHelper._defaultPhoto : GlobalClass.User.PhotoUrl)"></MudImage>
+			</MudAvatar>
+			<div class="d-flex flex-column">
+				<MudText Typo="Typo.subtitle2">@User?.DisplayName</MudText>
+				<MudText Typo="Typo.caption">@((ChatRoom?.Messages?.First() ?? new()).Text ?? "No Message")</MudText>
+			</div>
+		</div>
+	</MudButton>
+	
+}

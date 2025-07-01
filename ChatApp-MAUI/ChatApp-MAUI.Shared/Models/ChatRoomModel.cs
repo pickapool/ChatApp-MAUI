@@ -9,7 +9,7 @@ namespace ChatApp_MAUI.Shared.Models
         public string? Id { get; set; }
         [FirestoreProperty]
         public List<string>? members { get; set; }
-        [FirestoreProperty]
+        [FirestoreProperty("messages")]
         public List<MessageModel>? Messages { get; set; }
     }
 }

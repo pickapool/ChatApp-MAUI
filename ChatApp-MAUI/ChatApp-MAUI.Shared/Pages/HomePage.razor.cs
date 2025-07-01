@@ -8,6 +8,7 @@ using ChatApp_MAUI.Shared.Services.UserServices;
 using ChatApp_MAUI.Shared.Services.FriendServices;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
 using Services.CallBackServices.LoadFriendsCallback;
+using ChatApp_MAUI.Shared.Services.MessageServices;
 
 namespace ChatApp_MAUI.Shared.Pages
 {
@@ -16,11 +17,14 @@ namespace ChatApp_MAUI.Shared.Pages
         [Inject] protected IFriendService _friendService { get; set; } = default!;
         [Inject] protected ILoginService _loginService { get; set; } = default!;
         [Inject] protected ICallBackService _callBackService { get; set; } = default!;
+        [Inject] protected IMessageService _messageService { get; set; } = default!;
         [Inject] protected LayoutNotifierService _notifierService { get; set; } = default!;
+        
         protected List<FriendsModel> friends = new();
         protected int loaderCount = 20;
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            
             _callBackService.RegisterCallback(this);
             _notifierService.OnChanged += HandleChange;
         }
