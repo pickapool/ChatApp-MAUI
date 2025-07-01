@@ -105,7 +105,7 @@ namespace WebAPI.Controllers
         {
             try
             {
-                var query = _firestoreDb.Collection("ChatRooms");
+                var query = _firestoreDb.Collection("ChatRooms").WhereArrayContains("members", param.Uid);
 
                 var snapshot = await query.GetSnapshotAsync();
 
