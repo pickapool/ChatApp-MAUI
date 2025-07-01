@@ -3,7 +3,7 @@
 @inherits HomePageBase
 
 <PageTitle>Home Page</PageTitle>
-<MudGrid Spacing="1">
+<MudGrid Spacing="0">
 	@* Style="height: calc(100vh - 60px);" *@
 	<MudItem Class="overflow-auto pa-2" xs="12" sm="5" md="5" lg="3">
 		<MudAutocomplete Class="@($"{(GlobalClass.IsDarkMode ? "app-search-dark" : "app-search")}")"
@@ -23,7 +23,7 @@
 	</MudItem>
 	@* Style="height: calc(100vh - 60px)" *@
 	<MudItem Class="d-flex flex-row gap-1" xs="12" sm="7" md="7" lg="9">
-		<div class="hide-scrollbar d-flex flex-row overflow-auto" style="max-height: 80px;">
+		<div class="hide-scrollbar d-flex flex-row overflow-auto" style="max-height: 90px;">
 			@if (friends.Count <= 0)
 			{
 				for(int i =0 ; i < loaderCount; i++)
@@ -37,12 +37,13 @@
 			}
 		</div>
 	</MudItem>
-	<MudItem Class="d-flex flex-column gap-4 pa-2" xs="12" sm="5" md="5" lg="3">
-		
-			@for (int i = 0; i < loaderCount; i++)
-			{
-				<ConversationSkeleton></ConversationSkeleton>
-			}
-		
+	<MudItem Class="d-flex flex-column gap-4 pa-2 overflow-hidden" xs="12" sm="5" md="5" lg="3">
+		@for (int i = 0; i < loaderCount; i++)
+		{
+			<ConversationSkeleton></ConversationSkeleton>
+		}
+	</MudItem>
+	<MudItem Class="d-flex flex-row gap-1 pa-2" xs="12" sm="7" md="7" lg="9">
+		<ConversationComponent></ConversationComponent>
 	</MudItem>
 </MudGrid>

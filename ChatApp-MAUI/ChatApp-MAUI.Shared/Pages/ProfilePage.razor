@@ -6,7 +6,7 @@
 <MudContainer Class="d-flex justify-content-center my-4" Style="height: calc(100vh - 100px); max-width: unset !important">
 	<MudItem xs="12" sm="8" md="6" lg="4" xl="3">
 		<MudPaper Elevation="1" Class="d-flex flex-column px-2 py-4 gap-2 align-items-center">
-			<MudAvatar Size="Size.Large" Class="position-relative" Style="border : 1px solid #d3d3d3;">
+			<MudAvatar Size="Size.Large" Class="profile position-relative" Style="border : 1px solid #d3d3d3;">
 				<MudImage Src="@(String.IsNullOrEmpty(GlobalClass.User?.PhotoUrl) ? PhotoHelper._defaultPhoto : GlobalClass.User.PhotoUrl)">
 				</MudImage>
 				@if (isUploading)

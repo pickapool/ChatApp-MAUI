@@ -21,7 +21,8 @@ using ChatApp_MAUI.Shared.Services.CameraServices;
 using ChatApp_MAUI.Shared.Services.UserServices;
 using ChatApp_MAUI.Shared.Services.INotificationServices;
 using ChatApp_MAUI.Shared.Services.FriendServices;
-using ChatApp_MAUI.Shared.Services.CallBackServices;
+using Services.CallBackServices.LoadFriendsCallback;
+using ChatApp_MAUI.Shared.Services.CallBackServices.ConversationsCallback;
 namespace ChatApp_MAUI;
 
 public static class MauiProgram
@@ -54,6 +55,7 @@ public static class MauiProgram
         builder.Services.AddScoped<IUserService, UserService>();
         builder.Services.AddScoped<IFriendService, FriendService>();
         builder.Services.AddScoped<ICallBackService, CallBackService>();
+        builder.Services.AddScoped<IConversationCallback, ConversationCallback>();
 
         builder.Services.AddAuthorizationCore();
         builder.Services.AddCascadingAuthenticationState();

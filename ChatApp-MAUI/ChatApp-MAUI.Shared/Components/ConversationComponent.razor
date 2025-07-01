@@ -1,0 +1,128 @@
+﻿@inherits ConversationComponentBase
+
+<MudPaper Class="d-flex flex-column pa-3"  Elevation="1" Height="calc(100vh - 170px)" Width="100vw">
+	<MudItem Class="d-flex flex-row">
+		<div class="d-flex flex-row gap-2">
+			<MudAvatar Size="Size.Large" Style="border: 2px solid blue;">
+				<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User.PhotoUrl)"></MudImage>
+			</MudAvatar>
+			<div class="d-flex flex-column">
+				<MudText Typo="Typo.subtitle2">@User?.DisplayName</MudText>
+				<MudText Typo="Typo.subtitle2"><i>@User?.Email</i></MudText>
+			</div>
+		</div>
+		<MudSpacer></MudSpacer>
+		<MudMenu Icon="@Icons.Material.Filled.MoreVert" AnchorOrigin="Origin.TopLeft">
+			<MudMenuItem Icon="@Icons.Material.Filled.Delete" Label="Delete Conversation" />
+		</MudMenu>
+	</MudItem>
+	<hr />
+	<MudItem Class="hide-scrollbar overflow-auto pa-2 flex-grow-1">
+		<MudChat ChatPosition="ChatBubblePosition.Start">
+			<MudAvatar>OK</MudAvatar>
+			<MudChatBubble>
+				It was said that you would, destroy the Sith, not join them.
+			</MudChatBubble>
+			<MudChatBubble>
+				It was you who would bring balance to the Force
+			</MudChatBubble>
+		</MudChat>
+		<MudChat ChatPosition="ChatBubblePosition.End">
+			<MudAvatar>
+				<MudImage Src="@PhotoHelper._defaultPhoto" />
+			</MudAvatar>
+			<MudChatBubble>
+				Not leave it in Darkness
+			</MudChatBubble>
+		</MudChat>
+		<MudChat ChatPosition="ChatBubblePosition.Start">
+			<MudAvatar>OK</MudAvatar>
+			<MudChatBubble>
+				It was said that you would, destroy the Sith, not join them.
+			</MudChatBubble>
+			<MudChatBubble>
+				It was you who would bring balance to the Force
+			</MudChatBubble>
+		</MudChat>
+		<MudChat ChatPosition="ChatBubblePosition.End">
+			<MudAvatar>
+				<MudImage Src="@PhotoHelper._defaultPhoto" />
+			</MudAvatar>
+			<MudChatBubble>
+				Not leave it in Darkness
+			</MudChatBubble>
+		</MudChat>
+		<MudChat ChatPosition="ChatBubblePosition.Start">
+			<MudAvatar>OK</MudAvatar>
+			<MudChatBubble>
+				It was said that you would, destroy the Sith, not join them.
+			</MudChatBubble>
+			<MudChatBubble>
+				It was you who would bring balance to the Force
+			</MudChatBubble>
+		</MudChat>
+		<MudChat ChatPosition="ChatBubblePosition.End">
+			<MudAvatar>
+				<MudImage Src="@PhotoHelper._defaultPhoto" />
+			</MudAvatar>
+			<MudChatBubble>
+				Not leave it in Darkness
+			</MudChatBubble>
+		</MudChat>
+		<MudChat ChatPosition="ChatBubblePosition.Start">
+			<MudAvatar>OK</MudAvatar>
+			<MudChatBubble>
+				It was said that you would, destroy the Sith, not join them.
+			</MudChatBubble>
+			<MudChatBubble>
+				It was you who would bring balance to the Force
+			</MudChatBubble>
+		</MudChat>
+		<MudChat ChatPosition="ChatBubblePosition.End">
+			<MudAvatar>
+				<MudImage Src="@PhotoHelper._defaultPhoto" />
+			</MudAvatar>
+			<MudChatBubble>
+				Not leave it in Darkness
+			</MudChatBubble>
+		</MudChat>
+		<MudChat ChatPosition="ChatBubblePosition.Start">
+			<MudAvatar>OK</MudAvatar>
+			<MudChatBubble>
+				It was said that you would, destroy the Sith, not join them.
+			</MudChatBubble>
+			<MudChatBubble>
+				It was you who would bring balance to the Force
+			</MudChatBubble>
+		</MudChat>
+		<MudChat ChatPosition="ChatBubblePosition.End">
+			<MudAvatar>
+				<MudImage Src="@PhotoHelper._defaultPhoto" />
+			</MudAvatar>
+			<MudChatBubble>
+				Not leave it in Darkness
+			</MudChatBubble>
+		</MudChat>
+		<MudChat ChatPosition="ChatBubblePosition.Start">
+			<MudAvatar>OK</MudAvatar>
+			<MudChatBubble>
+				It was said that you would, destroy the Sith, not join them.
+			</MudChatBubble>
+			<MudChatBubble>
+				It was you who would bring balance to the Force
+			</MudChatBubble>
+		</MudChat>
+		<MudChat ChatPosition="ChatBubblePosition.End">
+			<MudAvatar>
+				<MudImage Src="@PhotoHelper._defaultPhoto" />
+			</MudAvatar>
+			<MudChatBubble>
+				Not leave it in Darkness
+			</MudChatBubble>
+		</MudChat>
+	</MudItem>
+	<hr />
+	<MudItem>
+		text here
+	</MudItem>
+</MudPaper>

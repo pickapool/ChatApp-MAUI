@@ -1,7 +1,9 @@
 ﻿using ChatApp_MAUI.Shared.Common;
 using ChatApp_MAUI.Shared.Models;
+using ChatApp_MAUI.Shared.Services.CallBackServices.ConversationsCallback;
 using ChatApp_MAUI.Shared.Services.UserServices;
 using Microsoft.AspNetCore.Components;
+using Services.CallBackServices.LoadFriendsCallback;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,7 @@ namespace ChatApp_MAUI.Shared.Components
     {
         [Parameter] public FriendsModel? Friend { get; set; }
         [Inject] protected IUserService _userService { get; set; } = default!;
+        [Inject] protected IConversationCallback _conversationCallback { get; set; } = default!;
         protected AuthTokenModel? User;
         protected override async Task OnInitializedAsync()
         {
@@ -33,6 +36,10 @@ namespace ChatApp_MAUI.Shared.Components
             }
             StateHasChanged();
 
+        }
+        protected async Task GetConversation()
+        {
+            await _conversationCallback.OnShowConversation(User);
         }
     }
 }

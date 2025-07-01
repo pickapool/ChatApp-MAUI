@@ -7,7 +7,7 @@ using ChatApp_MAUI.Shared.Models;
 using ChatApp_MAUI.Shared.Services.UserServices;
 using ChatApp_MAUI.Shared.Services.FriendServices;
 using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
-using ChatApp_MAUI.Shared.Services.CallBackServices;
+using Services.CallBackServices.LoadFriendsCallback;
 
 namespace ChatApp_MAUI.Shared.Pages
 {

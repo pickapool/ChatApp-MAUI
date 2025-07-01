@@ -2,10 +2,10 @@
 
 @if (User != null)
 {
-	<MudButton style="min-width: 70px;">
+	<MudButton OnClick="GetConversation" style="min-width: 70px;">
 		<div class="d-flex flex-column justify-content-center align-items-center">
 			<MudBadge Color="Color.Default" Overlap="true" Bordered="true">
-				<MudAvatar Size="Size.Medium" Style="border: 2px solid blue;">
+				<MudAvatar Size="Size.Large" Style="border: 2px solid blue;">
 					<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User.PhotoUrl)"></MudImage>
 				</MudAvatar>
 			</MudBadge>

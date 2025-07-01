@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatApp_MAUI.Shared.Services.CallBackServices
+namespace Services.CallBackServices.LoadFriendsCallback
 {
     public interface ICallBackService
     {
