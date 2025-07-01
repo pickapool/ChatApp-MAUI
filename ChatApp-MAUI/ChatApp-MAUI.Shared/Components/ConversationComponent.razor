@@ -72,18 +72,20 @@
 		<hr />
 		<MudItem>
 			<div class="d-flex flex-row">
-				<MudTextField Class="flex-grow-1" 
-				@bind-Value="messageText" 
-				Placeholder="Type a message..." 
-				Variant="Variant.Text"></MudTextField>
-				@if (IsSending)
-				{
-					<MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate></MudProgressCircular>
-				}
-				else
-				{
-					<MudIconButton OnClick="SendMessage" Icon="@Icons.Material.Filled.Send" Size="Size.Medium" Color="Color.Primary"></MudIconButton>
-				}
+				<MudTextField Class="flex-grow-1"
+					@ref="textField"
+							  OnKeyUp="HandleKeyUp"
+					@bind-Value="messageText" 
+					Placeholder="Type a message..." 
+					Variant="Variant.Text"></MudTextField>
+					@if (IsSending)
+					{
+						<MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate></MudProgressCircular>
+					}
+					else
+					{
+						<MudIconButton OnClick="SendMessage" Icon="@Icons.Material.Filled.Send" Size="Size.Medium" Color="Color.Primary"></MudIconButton>
+					}
 			</div>
 		</MudItem>
 	}

@@ -4,9 +4,11 @@ using ChatApp_MAUI.Shared.Services.CallBackServices.ConversationsCallback;
 using ChatApp_MAUI.Shared.Services.INotificationServices;
 using ChatApp_MAUI.Shared.Services.MessageServices;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.JSInterop;
+using MudBlazor;
 
 namespace ChatApp_MAUI.Shared.Components
 {
@@ -24,6 +26,7 @@ namespace ChatApp_MAUI.Shared.Components
         protected bool IsLoading = false, IsSending = false;
         protected string messageText { get; set; } = string.Empty;
         private string chatRoomId = string.Empty;
+        protected MudTextField<string> textField;
         protected override async Task OnInitializedAsync()
         {
             var hubConnection = NotificationService.GetConnection($"{_configuration["BaseAPI:Url"]}/NotificationHub");
@@ -45,7 +48,7 @@ namespace ChatApp_MAUI.Shared.Components
         }
         public async Task OnShowConversation(AuthTokenModel user)
         {
-            
+
             IsLoading = true;
             await InvokeAsync(StateHasChanged);
             User = user;
@@ -93,6 +96,7 @@ namespace ChatApp_MAUI.Shared.Components
             await InvokeAsync(StateHasChanged);
             await Task.Delay(500);
             await _jsRuntime.InvokeVoidAsync("scrollToBottom");
+            await textField.FocusAsync();
         }
         public void RegisterCallBack(IConversationCallback callback)
         {
@@ -100,19 +104,34 @@ namespace ChatApp_MAUI.Shared.Components
         }
         protected async Task SendMessage()
         {
-            IsSending = true;
-            MessageModel message = new();
-            message.Text = messageText;
-            message.From = _appStateService.User?.Uid;
-            message.To = User?.Uid;
-            message.Type = Enums.MessageType.Text;
-            message.CreatedAt = DateTime.UtcNow;
-            message.ChatRoomId = chatRoomId;
-            await _messageService.AddMessage(message, _appStateService.Token);
-
-            messageText = string.Empty;
-            IsSending = false;
+            await InvokeAsync(StateHasChanged);
+            if (String.IsNullOrEmpty(messageText))
+            {
+                await textField.FocusAsync();
+                return;
+            }
+            else
+            {
+                IsSending = true;
+                MessageModel message = new();
+                message.Text = messageText;
+                message.From = _appStateService.User?.Uid;
+                message.To = User?.Uid;
+                message.Type = Enums.MessageType.Text;
+                message.CreatedAt = DateTime.UtcNow;
+                message.ChatRoomId = chatRoomId;
+                await _messageService.AddMessage(message, _appStateService.Token);
+                IsSending = false;
+            }
+            await textField.Clear();
+            await textField.FocusAsync();
         }
-
+        protected async Task HandleKeyUp(KeyboardEventArgs e)
+        {
+            if (e.Key == "Enter" && !IsSending)
+            {
+                await SendMessage();
+            }
+        }
     }
 }
