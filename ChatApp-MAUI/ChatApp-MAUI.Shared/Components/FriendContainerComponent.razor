@@ -1,8 +1,12 @@
 ﻿@inherits FriendContainerComponentBase
 
-<div class="d-flex flex-column justify-content-center gap-1 align-items-center">
-	<MudAvatar Size="Size.Medium">
-		<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User.PhotoUrl)"></MudImage>
-	</MudAvatar>
-	<MudText Typo="Typo.caption">@User?.DisplayName</MudText>
-</div>
+<MudButton>
+	<div class="d-flex flex-column justify-content-center gap-1 align-items-center">
+		<MudAvatar Size="Size.Medium">
+			<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User.PhotoUrl)"></MudImage>
+		</MudAvatar>
+		<MudText Class="text-center" Typo="Typo.caption">
+			@(User?.DisplayName?.Length > 6 ? User?.DisplayName?.Substring(0,7).ToString() + "..." : User?.DisplayName?.Substring(0,7))
+		</MudText>
+	</div>
+</MudButton>
