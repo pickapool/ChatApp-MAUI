@@ -28,8 +28,11 @@ namespace ChatApp_MAUI.Shared.Components
             var hubConnection = NotificationService.GetConnection($"{_configuration["BaseAPI:Url"]}/NotificationHub");
             hubConnection.On<MessageModel>("NotifyMessage", async (model) =>
             {
-                if ((GlobalClass.User.Uid == model.To || GlobalClass.User.Uid == model.From) &&
-                    (model.From == User.Uid || model.To == User.Uid))
+                var myUid = GlobalClass.User.Uid;
+                var openChatUid = User.Uid;
+
+                if ((myUid == model.To || myUid == model.From) &&
+                    (model.From == openChatUid || model.To == openChatUid))
                 {
                     messages.Add(model);
                     await InvokeAsync(GroupMessages);
@@ -87,7 +90,7 @@ namespace ChatApp_MAUI.Shared.Components
                 }
             }
             IsLoading = false;
-            StateHasChanged();
+            await InvokeAsync(StateHasChanged);
             await Task.Delay(100);
             await _jsRuntime.InvokeVoidAsync("scrollToBottom");
         }
