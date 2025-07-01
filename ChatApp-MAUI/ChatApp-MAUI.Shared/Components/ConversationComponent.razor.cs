@@ -91,7 +91,7 @@ namespace ChatApp_MAUI.Shared.Components
             }
             IsLoading = false;
             await InvokeAsync(StateHasChanged);
-            await Task.Delay(100);
+            await Task.Delay(1000);
             await _jsRuntime.InvokeVoidAsync("scrollToBottom");
         }
         public void RegisterCallBack(IConversationCallback callback)
