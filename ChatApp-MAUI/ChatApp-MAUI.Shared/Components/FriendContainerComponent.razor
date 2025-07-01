@@ -2,7 +2,7 @@
 
 <MudButton>
 	<div class="d-flex flex-column justify-content-center gap-1 align-items-center">
-		<MudAvatar Size="Size.Medium">
+		<MudAvatar Size="Size.Medium" Style="border: 2px solid blue;">
 			<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User.PhotoUrl)"></MudImage>
 		</MudAvatar>
 		<MudText Class="text-center" Typo="Typo.caption">

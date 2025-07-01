@@ -3,14 +3,19 @@
 @inherits HomePageBase
 
 <PageTitle>Home Page</PageTitle>
-<MudGrid Spacing="1">
-	<MudItem xs="4">
+<MudGrid Spacing="1" Style="height: calc(100vh - 60px);">
+	<MudItem xs="4" Style="border-right: 1px solid #cacaca">
 
 	</MudItem>
 	<MudItem Class="d-flex flex-row gap-1 py-3" xs="8">
-		@foreach (var friend in friends)
-		{
-			<FriendContainerComponent Friend="friend"></FriendContainerComponent>
-		}
+		<div class="header-chat">
+			@foreach (var friend in friends)
+			{
+				<FriendContainerComponent Friend="friend"></FriendContainerComponent>
+			}
+		</div>
+		<div class="chat-box">
+
+		</div>
 	</MudItem>
 </MudGrid>
