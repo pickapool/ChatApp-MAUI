@@ -27,6 +27,11 @@ namespace ChatApp_MAUI.Shared.Pages
             
             _callBackService.RegisterCallback(this);
             _notifierService.OnChanged += HandleChange;
+            if(_appStateService.User.Uid != null)
+            {
+                friends = await _friendService.GetFriends(_appStateService.User.Uid, _appStateService.Token);
+            }
+            StateHasChanged();
         }
         private void HandleChange()
         {

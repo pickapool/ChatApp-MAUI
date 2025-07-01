@@ -3,6 +3,7 @@ using ChatApp_MAUI.Shared.Models;
 using ChatApp_MAUI.Shared.Services.CallBackServices.ChatRoomCallback;
 using ChatApp_MAUI.Shared.Services.MessageServices;
 using Microsoft.AspNetCore.Components;
+using System.Threading.Tasks;
 namespace ChatApp_MAUI.Shared.Components
 {
     public partial class ChatRoomComponentBase : ComponentBase, IChatRoomCallbackService
@@ -12,11 +13,15 @@ namespace ChatApp_MAUI.Shared.Components
         [Inject] protected AppStateService _appStateService { get; set; } = default!;
         protected List<ChatRoomModel> chatRooms = new();
         protected bool IsLoading;
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
             _chatRoomCallbackService.RegisterCallback(this);
             StateHasChanged();
+            if (_appStateService.User.Uid != null)
+            {
+                await OnShowChatRoom();
+            }
         }
         public async Task OnShowChatRoom()
         {
