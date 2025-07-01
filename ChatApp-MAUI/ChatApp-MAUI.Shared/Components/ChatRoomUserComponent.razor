@@ -7,11 +7,11 @@
 	<MudButton OnClick="ShowConversation" Class="text-start d-flex justify-content-start">
 		<div class="d-flex flex-row gap-2">
 			<MudAvatar Size="Size.Medium"> 
-				<MudImage Src="@(String.IsNullOrEmpty(GlobalClass.User?.PhotoUrl) ? PhotoHelper._defaultPhoto : GlobalClass.User.PhotoUrl)"></MudImage>
+				<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User.PhotoUrl)"></MudImage>
 			</MudAvatar>
 			<div class="d-flex flex-column">
 				<MudText Typo="Typo.subtitle2">@User?.DisplayName</MudText>
-				<MudText Typo="Typo.caption">@((ChatRoom?.Messages?.First() ?? new()).Text ?? "No Message")</MudText>
+				<MudText Typo="Typo.caption">@((ChatRoom?.Messages?.Last() ?? new()).Text ?? "No Message")</MudText>
 			</div>
 		</div>
 	</MudButton>
