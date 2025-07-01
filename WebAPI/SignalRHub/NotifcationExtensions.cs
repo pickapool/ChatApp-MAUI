@@ -9,5 +9,9 @@ namespace WebAPI.SignalRHub
         {
             await hubContext.Clients.All.SendAsync("NotifyFriendRequest", model);
         }
+        public static async Task NotifyMessageAsync(this IHubContext<NotificationHub> hubContext, MessageModel model)
+        {
+            await hubContext.Clients.All.SendAsync("NotifyMessage", model);
+        }
     }
 }

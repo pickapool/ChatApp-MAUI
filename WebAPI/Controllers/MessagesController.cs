@@ -4,6 +4,8 @@ using Google.Cloud.Firestore;
 using Google.Cloud.Firestore.V1;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using WebAPI.SignalRHub;
 
 namespace WebAPI.Controllers
 {
@@ -14,10 +16,12 @@ namespace WebAPI.Controllers
     {
         private readonly FirestoreDb _firestoreDb;
         private readonly IConfiguration _configuration;
-        public MessagesController(IConfiguration config, FirestoreDb firestore)
+        readonly IHubContext<NotificationHub> _hubContext;
+        public MessagesController(IConfiguration config, FirestoreDb firestore, IHubContext<NotificationHub> hubContext)
         {
             _configuration = config;
             _firestoreDb = firestore;
+            _hubContext = hubContext;
         }
         [HttpPost]
         [Route("getchatroom")]
@@ -154,7 +158,7 @@ namespace WebAPI.Controllers
 
             await docRef.Collection("Messages").Document(messageId).SetAsync(message);
 
-
+            await NotificationExtensions.NotifyMessageAsync(_hubContext, message);
             return Ok();
         }
     }

@@ -1,15 +1,11 @@
 ﻿using ChatApp_MAUI.Shared.Common;
 using ChatApp_MAUI.Shared.Models;
 using ChatApp_MAUI.Shared.Services.CallBackServices.ConversationsCallback;
+using ChatApp_MAUI.Shared.Services.INotificationServices;
 using ChatApp_MAUI.Shared.Services.MessageServices;
 using Microsoft.AspNetCore.Components;
-using Services.CallBackServices.LoadFriendsCallback;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.Extensions.Configuration;
 
 namespace ChatApp_MAUI.Shared.Components
 {
@@ -18,13 +14,27 @@ namespace ChatApp_MAUI.Shared.Components
         [Parameter] public AuthTokenModel? User { get; set; }
         [Inject] protected IConversationCallback _conversationCallback { get; set; } = default!;
         [Inject] protected IMessageService _messageService { get; set; } = default!;
+        [Inject] protected IConfiguration _configuration { get; set; } = default!;
+
         protected List<MessageModel> messages = new();
         protected List<MessageGroup> groupMessages = new();
-        protected bool IsLoading = false;
+        protected bool IsLoading = false, IsSending = false;
         protected string messageText { get; set; } = string.Empty;
         private string chatRoomId = string.Empty;
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
+            var hubConnection = NotificationService.GetConnection($"{_configuration["BaseAPI:Url"]}/NotificationHub");
+            hubConnection.On<MessageModel>("NotifyMessage", model =>
+            {
+                if (model.To == User.Uid)
+                {
+                    messages.Add(model);
+                    GroupMessages();
+                    StateHasChanged();
+                }
+            });
+
+            await hubConnection.StartAsync();
             _conversationCallback.RegisterCallBack(this);
         }
         public async Task OnShowConversation(AuthTokenModel user)
@@ -81,7 +91,7 @@ namespace ChatApp_MAUI.Shared.Components
         }
         protected async Task SendMessage()
         {
-
+            IsSending = true;
             MessageModel message = new();
             message.Text = messageText;
             message.From = GlobalClass.User?.Uid;
@@ -92,6 +102,7 @@ namespace ChatApp_MAUI.Shared.Components
             await _messageService.AddMessage(message, GlobalClass.Token);
 
             messageText = string.Empty;
+            IsSending = false;
         }
 
     }
