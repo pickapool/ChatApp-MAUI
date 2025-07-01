@@ -19,6 +19,7 @@ namespace ChatApp_MAUI.Shared.Components
         [Inject] protected IMessageService _messageService { get; set; } = default!;
         List<MessageModel> messages = new();
         protected bool IsLoading = false;
+        protected string messageText { get; set; } = string.Empty;
         protected override void OnInitialized()
         {
             _conversationCallback.RegisterCallBack(this);;
@@ -43,6 +44,19 @@ namespace ChatApp_MAUI.Shared.Components
         public void RegisterCallBack(IConversationCallback callback)
         {
             callback = this;
+        }
+        protected async Task SendMessage()
+        {
+            MessageModel message = new();
+            message.Text = messageText;
+            message.From = GlobalClass.User?.Uid;
+            message.To = User?.Uid;
+            message.Type = Enums.MessageType.Text;
+            message.CreatedAt = DateTime.UtcNow;
+
+            await _messageService.AddMessage(message, GlobalClass.Token);
+
+            messageText = string.Empty;
         }
 
     }

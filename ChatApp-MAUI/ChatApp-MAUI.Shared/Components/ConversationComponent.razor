@@ -50,7 +50,13 @@
 		</MudItem>
 		<hr />
 		<MudItem>
-			text here
+			<div class="d-flex flex-row">
+				<MudTextField Class="flex-grow-1" 
+						@bind-Value="messageText" 
+						Placeholder="Type a message..." 
+						Variant="Variant.Text"></MudTextField>
+				<MudIconButton OnClick="SendMessage" Icon="@Icons.Material.Filled.Send" Size="Size.Medium" Color="Color.Primary"></MudIconButton>
+			</div>
 		</MudItem>
 	}
 </MudPaper>

@@ -10,5 +10,7 @@ namespace ChatApp_MAUI.Shared.Services.MessageServices
     public interface IMessageService
     {
         Task<List<MessageModel>> GetMessages(FilterParameterModel param);
+        Task<List<ChatRoomModel>> GetChatRooms(FilterParameterModel param);
+        Task AddMessage(MessageModel param, string token);
     }
 }

@@ -28,5 +28,27 @@ namespace ChatApp_MAUI.Shared.Services.MessageServices
             }
             return await response.Content.ReadFromJsonAsync<List<MessageModel>>();
         }
+        public async Task<List<ChatRoomModel>> GetChatRooms(FilterParameterModel param)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", param.Token.Trim('"'));
+            var response = await _httpClient.PostAsJsonAsync("api/message/getconversation", param);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var error = response.Content.ReadAsStringAsync().Result;
+                throw new Exception(error);
+            }
+            return await response.Content.ReadFromJsonAsync<List<ChatRoomModel>>();
+        }
+
+        public async Task AddMessage(MessageModel param, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim('"'));
+            var response = await _httpClient.PostAsJsonAsync("api/message/addmessage", param);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var error = response.Content.ReadAsStringAsync().Result;
+                throw new Exception(error);
+            }
+        }
     }
 }
