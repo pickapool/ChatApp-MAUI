@@ -27,20 +27,27 @@ namespace ChatApp_MAUI.Shared.Common
             var deserializeSettings = new JsonSerializerSettings { ObjectCreationHandling = ObjectCreationHandling.Replace };
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(source), deserializeSettings);
         }
-        public static SKBitmap CropCenterSquare(SKBitmap bitmap)
+        public static string GetTimeAgo(DateTime? dateTime)
         {
-            int size = Math.Min(bitmap.Width, bitmap.Height);
-            int x = (bitmap.Width - size) / 2;
-            int y = (bitmap.Height - size) / 2;
+            if (dateTime == null)
+                return "Unknown time";
 
-            // Create a new SKBitmap to hold the cropped subset  
-            SKBitmap croppedBitmap = new SKBitmap(size, size);
+            var timeSpan = DateTime.UtcNow - dateTime.Value.ToUniversalTime();
 
-            // Extract the subset using the correct method signature  
-            bitmap.ExtractSubset(croppedBitmap, new SKRectI(x, y, x + size, y + size));
+            if (timeSpan.TotalMinutes < 1)
+                return "Just now";
+            if (timeSpan.TotalMinutes < 60)
+                return $"{(int)timeSpan.TotalMinutes} minute{(timeSpan.TotalMinutes >= 2 ? "s" : "")} ago";
+            if (timeSpan.TotalHours < 24)
+                return $"{(int)timeSpan.TotalHours} hour{(timeSpan.TotalHours >= 2 ? "s" : "")} ago";
+            if (timeSpan.TotalDays < 30)
+                return $"{(int)timeSpan.TotalDays} day{(timeSpan.TotalDays >= 2 ? "s" : "")} ago";
+            if (timeSpan.TotalDays < 365)
+                return $"{(int)(timeSpan.TotalDays / 30)} month{(timeSpan.TotalDays >= 60 ? "s" : "")} ago";
 
-            return croppedBitmap;
+            return $"{(int)(timeSpan.TotalDays / 365)} year{(timeSpan.TotalDays >= 730 ? "s" : "")} ago";
         }
+
     }
 }
 

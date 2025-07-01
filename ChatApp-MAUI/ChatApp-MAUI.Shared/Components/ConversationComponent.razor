@@ -36,10 +36,12 @@
 					<ChildContent>
 						@if (message.SenderId == _appStateService.User.Uid)
 						{
+
 							<MudChat ChatPosition="ChatBubblePosition.End">
 								<MudAvatar>
 									<MudImage Src="@(String.IsNullOrEmpty(_appStateService.User.PhotoUrl) ? PhotoHelper._defaultPhoto: _appStateService.User?.PhotoUrl )" />
 								</MudAvatar>
+								<MudChatHeader Name="" Time="@Extensions.GetTimeAgo(message.Messages.FirstOrDefault().CreatedAt)"></MudChatHeader>
 								@foreach(var message in message.Messages)
 								{
 									<MudChatBubble>
@@ -53,6 +55,7 @@
 								<MudAvatar>
 									<MudImage Src="@(String.IsNullOrEmpty(User.PhotoUrl) ? PhotoHelper._defaultPhoto: User?.PhotoUrl )" />
 								</MudAvatar>
+								<MudChatHeader Name="" Time="@Extensions.GetTimeAgo(message.Messages.FirstOrDefault().CreatedAt)"></MudChatHeader>
 								@foreach (var message in message.Messages)
 								{
 									<MudChatBubble>
