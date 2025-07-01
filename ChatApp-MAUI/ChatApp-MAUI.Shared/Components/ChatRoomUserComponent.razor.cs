@@ -1,5 +1,6 @@
 ﻿using ChatApp_MAUI.Shared.Common;
 using ChatApp_MAUI.Shared.Models;
+using ChatApp_MAUI.Shared.Services.CallBackServices.ConversationsCallback;
 using ChatApp_MAUI.Shared.Services.UserServices;
 using Microsoft.AspNetCore.Components;
 using MudBlazor.Interfaces;
@@ -9,6 +10,7 @@ namespace ChatApp_MAUI.Shared.Components
     {
         [Parameter] public ChatRoomModel? ChatRoom { get; set; }
         [Inject] private IUserService _userService { get; set; } = default!;
+        [Inject] protected IConversationCallback _conversationCallback { get; set; } = default!;
         protected AuthTokenModel? User;
         protected bool IsLoading = true;
         protected override async Task OnInitializedAsync()
@@ -22,6 +24,10 @@ namespace ChatApp_MAUI.Shared.Components
             User = await _userService.GetUserAccount(param);
             IsLoading = false;
             StateHasChanged();
+        }
+        protected async Task ShowConversation()
+        {
+           await _conversationCallback.OnShowConversation(User);
         }
     }
 }
