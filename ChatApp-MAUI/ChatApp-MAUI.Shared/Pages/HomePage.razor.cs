@@ -18,6 +18,7 @@ namespace ChatApp_MAUI.Shared.Pages
         [Inject] protected ICallBackService _callBackService { get; set; } = default!;
         [Inject] protected LayoutNotifierService _notifierService { get; set; } = default!;
         protected List<FriendsModel> friends = new();
+        protected int loaderCount = 20;
         protected override void OnInitialized()
         {
             _callBackService.RegisterCallback(this);

@@ -1,17 +1,23 @@
 ﻿@inherits FriendContainerComponentBase
 
-<MudButton style="min-width: 70px;">
-	<div class="d-flex flex-column justify-content-center align-items-center">
-		<MudBadge Color="Color.Default" Overlap="true" Bordered="true">
-			<MudAvatar Size="Size.Medium" Style="border: 2px solid blue;">
-				<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User.PhotoUrl)"></MudImage>
-			</MudAvatar>
-		</MudBadge>
-		<MudText Class="text-center" Typo="Typo.caption">
-			@(User?.DisplayName?.Length > 6 ? User?.DisplayName?.Substring(0,7).ToString() + "..." : User?.DisplayName?.Substring(0,7))
-		</MudText>
-	</div>
-</MudButton>
+@if (User != null)
+{
+	<MudButton style="min-width: 70px;">
+		<div class="d-flex flex-column justify-content-center align-items-center">
+			<MudBadge Color="Color.Default" Overlap="true" Bordered="true">
+				<MudAvatar Size="Size.Medium" Style="border: 2px solid blue;">
+					<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User.PhotoUrl)"></MudImage>
+				</MudAvatar>
+			</MudBadge>
+			<MudText Class="text-center" Typo="Typo.caption">
+				@(User?.DisplayName?.Length > 6 ? User?.DisplayName?.Substring(0, 7).ToString() + "..." : User?.DisplayName?.Substring(0, 7))
+			</MudText>
+		</div>
+	</MudButton>
+} else
+{
+	<FriendsSkeleton></FriendsSkeleton>
+}
 <style>
 	.mud-badge.mud-badge-top.right.mud-badge-overlap {
 		height: 14px !important;

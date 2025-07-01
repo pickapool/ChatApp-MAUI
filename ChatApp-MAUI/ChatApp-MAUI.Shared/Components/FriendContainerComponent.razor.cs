@@ -14,7 +14,7 @@ namespace ChatApp_MAUI.Shared.Components
     {
         [Parameter] public FriendsModel? Friend { get; set; }
         [Inject] protected IUserService _userService { get; set; } = default!;
-        protected AuthTokenModel User = new();
+        protected AuthTokenModel? User;
         protected override async Task OnInitializedAsync()
         {
             FilterParameterModel param = new();
@@ -31,6 +31,7 @@ namespace ChatApp_MAUI.Shared.Components
                 param.Uid = Friend?.To;
                 User = await _userService.GetUserAccount(param);
             }
+            StateHasChanged();
 
         }
     }

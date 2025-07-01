@@ -5,43 +5,44 @@
 <PageTitle>Home Page</PageTitle>
 <MudGrid Spacing="1">
 	@* Style="height: calc(100vh - 60px);" *@
-	<MudItem Class="overflow-auto pa-2" xs="12" sm="4" md="4" Style="border-right: 1px solid #cacaca">
-        <MudAutocomplete Class="@($"{(GlobalClass.IsDarkMode ? "app-search-dark" : "app-search")}")"
-				T="MessageModel"
-				Context="user"
-				Placeholder="Search Conversation"   
-				OpenIcon="@Icons.Material.Filled.Search"
-				Variant="Variant.Outlined"
-				DebounceInterval="500"
-				MinCharacters="1"
-				Margin="Margin.Dense"
-				ToStringFunc="(e) => null">
-            <ItemTemplate>
-                @* <UserComponent User="user"></UserComponent> *@
-            </ItemTemplate>
-        </MudAutocomplete>
+	<MudItem Class="overflow-auto pa-2" xs="12" sm="5" md="5" lg="3">
+		<MudAutocomplete Class="@($"{(GlobalClass.IsDarkMode ? "app-search-dark" : "app-search")}")"
+		T="MessageModel"
+		Context="user"
+		Placeholder="Search Conversation"   
+		OpenIcon="@Icons.Material.Filled.Search"
+		Variant="Variant.Outlined"
+		DebounceInterval="500"
+		MinCharacters="1"
+		Margin="Margin.Dense"
+		ToStringFunc="(e) => null">
+			<ItemTemplate>
+				@* <UserComponent User="user"></UserComponent> *@
+			</ItemTemplate>
+		</MudAutocomplete>
 	</MudItem>
-	<MudItem Class="d-flex flex-row gap-1" xs="12" sm="8" md="8">
-		<div class="hide-scrollbar d-flex flex-row overflow-auto">
-			<MudVirtualize Context="friend" T="FriendsModel" Items="friends">
-				<FriendContainerComponent Friend="friend"></FriendContainerComponent>
-			</MudVirtualize>
+	@* Style="height: calc(100vh - 60px)" *@
+	<MudItem Class="d-flex flex-row gap-1" xs="12" sm="7" md="7" lg="9">
+		<div class="hide-scrollbar d-flex flex-row overflow-auto" style="max-height: 80px;">
+			@if (friends.Count <= 0)
+			{
+				for(int i =0 ; i < loaderCount; i++)
+				{
+					<FriendsSkeleton></FriendsSkeleton>
+				}
+			} else {
+				<MudVirtualize Context="friend" T="FriendsModel" Items="friends">
+					<FriendContainerComponent Friend="friend"></FriendContainerComponent>
+				</MudVirtualize>
+			}
 		</div>
-		<div class="chat-box">
-
-		</div>
+	</MudItem>
+	<MudItem Class="d-flex flex-column gap-4 pa-2" xs="12" sm="5" md="5" lg="3">
+		
+			@for (int i = 0; i < loaderCount; i++)
+			{
+				<ConversationSkeleton></ConversationSkeleton>
+			}
+		
 	</MudItem>
 </MudGrid>
-<style>
-	.hide-scrollbar {
-		overflow-x: auto;
-		overflow-y: hidden;
-		white-space: nowrap;
-		scrollbar-width: none; /* Firefox */
-		-ms-overflow-style: none; /* Internet Explorer 10+ */
-	}
-
-	.hide-scrollbar::-webkit-scrollbar {
-		display: none; /* Chrome, Safari, Opera */
-	}
-</style>

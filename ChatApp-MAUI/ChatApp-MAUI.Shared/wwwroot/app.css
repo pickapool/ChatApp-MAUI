@@ -87,3 +87,17 @@ hr:not([size]) {
 .app-search .mud-input:after {
     border-bottom: 2px solid white !important;
 }
+.hide-scrollbar {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+.mud-layout {
+    overflow: hidden;
+}
