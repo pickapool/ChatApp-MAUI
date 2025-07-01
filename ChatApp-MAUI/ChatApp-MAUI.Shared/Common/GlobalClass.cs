@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ChatApp_MAUI.Shared.Common
 {
-    public class GlobalClass
+    public class AppStateService
     {
-        public static AuthTokenModel? User { get; set; } = new();
-        public static string Token { get; set; } = string.Empty;
-        public static bool IsDarkMode;
+        public AuthTokenModel? User { get; set; } = new();
+        public string Token { get; set; } = string.Empty;
+        public bool IsDarkMode;
     }
 }

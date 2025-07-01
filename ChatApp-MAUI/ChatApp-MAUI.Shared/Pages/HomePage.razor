@@ -6,7 +6,7 @@
 <MudGrid Spacing="0">
 	@* Style="height: calc(100vh - 60px);" *@
 	<MudItem Class="overflow-auto pa-2" xs="12" sm="5" md="5" lg="3">
-		<MudAutocomplete Class="@($"{(GlobalClass.IsDarkMode ? "app-search-dark" : "app-search")}")"
+		<MudAutocomplete Class="@($"{(_appStateService.IsDarkMode ? "app-search-dark" : "app-search")}")"
 		T="MessageModel"
 		Context="user"
 		Placeholder="Search Conversation"   

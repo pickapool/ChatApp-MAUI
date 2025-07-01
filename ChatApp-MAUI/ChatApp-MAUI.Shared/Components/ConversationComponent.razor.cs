@@ -17,6 +17,7 @@ namespace ChatApp_MAUI.Shared.Components
         [Inject] protected IMessageService _messageService { get; set; } = default!;
         [Inject] protected IConfiguration _configuration { get; set; } = default!;
         [Inject] protected IJSRuntime _jsRuntime { get; set; } = default!;
+        [Inject] protected AppStateService _appStateService { get; set; } = default!;
 
         protected List<MessageModel> messages = new();
         protected List<MessageGroup> groupMessages = new();
@@ -28,7 +29,7 @@ namespace ChatApp_MAUI.Shared.Components
             var hubConnection = NotificationService.GetConnection($"{_configuration["BaseAPI:Url"]}/NotificationHub");
             hubConnection.On<MessageModel>("NotifyMessage", async (model) =>
             {
-                var myUid = GlobalClass.User.Uid;
+                var myUid = _appStateService.User.Uid;
                 var openChatUid = User.Uid;
 
                 if ((myUid == model.To || myUid == model.From) &&
@@ -49,8 +50,8 @@ namespace ChatApp_MAUI.Shared.Components
             StateHasChanged();
             User = user;
             FilterParameterModel param = new();
-            param.Token = GlobalClass.Token;
-            param.Uid = GlobalClass.User?.Uid;
+            param.Token = _appStateService.Token;
+            param.Uid = _appStateService.User?.Uid;
             param.SenderUid = user.Uid;
             chatRoomId = await _messageService.GetChatRoomId(param);
             param.ChatRoomId = chatRoomId;
@@ -103,12 +104,12 @@ namespace ChatApp_MAUI.Shared.Components
             IsSending = true;
             MessageModel message = new();
             message.Text = messageText;
-            message.From = GlobalClass.User?.Uid;
+            message.From = _appStateService.User?.Uid;
             message.To = User?.Uid;
             message.Type = Enums.MessageType.Text;
             message.CreatedAt = DateTime.UtcNow;
             message.ChatRoomId = chatRoomId;
-            await _messageService.AddMessage(message, GlobalClass.Token);
+            await _messageService.AddMessage(message, _appStateService.Token);
 
             messageText = string.Empty;
             IsSending = false;

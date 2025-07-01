@@ -11,16 +11,17 @@ namespace ChatApp_MAUI.Shared.Components
         [Parameter] public ChatRoomModel? ChatRoom { get; set; }
         [Inject] private IUserService _userService { get; set; } = default!;
         [Inject] protected IConversationCallback _conversationCallback { get; set; } = default!;
+        [Inject] protected AppStateService _appStateService { get; set; } = default!;
         protected AuthTokenModel? User;
         protected bool IsLoading = true;
         protected override async Task OnInitializedAsync()
         {
             IsLoading = true;
-            string uid = ChatRoom.members.FirstOrDefault(e => e != GlobalClass.User?.Uid)?? string.Empty;
+            string uid = ChatRoom.members.FirstOrDefault(e => e != _appStateService.User?.Uid)?? string.Empty;
             FilterParameterModel param = new();
             param.IsUid = true;
             param.Uid = uid;
-            param.Token = GlobalClass.Token;
+            param.Token = _appStateService.Token;
             User = await _userService.GetUserAccount(param);
             IsLoading = false;
             StateHasChanged();

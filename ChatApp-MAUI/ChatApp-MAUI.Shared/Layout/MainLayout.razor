@@ -1,6 +1,6 @@
 ﻿@inherits  MainLayoutBase
 
-<MudThemeProvider @bind-IsDarkMode="@GlobalClass.IsDarkMode" Theme="_theme" />
+<MudThemeProvider @bind-IsDarkMode="@_appStateService.IsDarkMode" Theme="_theme" />
 <MudPopoverProvider />
 
 @* Needed for dialogs *@
@@ -19,7 +19,7 @@
                 <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" Style="margin-left: 1px !important;"
                 ref="reference" />
                 <MudSpacer />
-                <MudAutocomplete Class="@($"{(GlobalClass.IsDarkMode ? "app-search-dark" : "app-search")}")"
+                <MudAutocomplete Class="@($"{(_appStateService.IsDarkMode ? "app-search-dark" : "app-search")}")"
                     Context="user"
                     Placeholder="Search Users"
                     @bind-Value="user" 
@@ -43,7 +43,7 @@
                 </MudAutocomplete>
                 <MudIconButton OnClick="ToggleDarkMode"
                     Size="Size.Large"
-                    Icon="@(GlobalClass.IsDarkMode ? Icons.Material.Filled.DarkMode : Icons.Material.Filled.WbSunny)"
+                               Icon="@(_appStateService.IsDarkMode ? Icons.Material.Filled.DarkMode : Icons.Material.Filled.WbSunny)"
                     Class="">
                 </MudIconButton>
                 <ProfileContainer></ProfileContainer>
@@ -58,7 +58,7 @@
                     <MudNavLink Match="NavLinkMatch.All">Community</MudNavLink>
                 </MudNavMenu>
             </MudDrawer>
-            <MudMainContent Class='@($"pt-16 height100vh {(GlobalClass.IsDarkMode ? "" : "bg-alice")}")'>
+            <MudMainContent Class='@($"pt-16 height100vh {(_appStateService.IsDarkMode ? "" : "bg-alice")}")'>
                 @Body
             </MudMainContent>
         </MudLayout>

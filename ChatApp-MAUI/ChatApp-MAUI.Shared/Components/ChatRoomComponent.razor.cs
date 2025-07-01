@@ -9,6 +9,7 @@ namespace ChatApp_MAUI.Shared.Components
     {
         [Inject] protected IChatRoomCallbackService _chatRoomCallbackService { get; set; } = default!;
         [Inject] protected IMessageService _messageService { get; set; } = default!;
+        [Inject] protected AppStateService _appStateService { get; set; } = default!;
         protected List<ChatRoomModel> chatRooms = new();
         protected bool IsLoading;
         protected override void OnInitialized()
@@ -22,8 +23,8 @@ namespace ChatApp_MAUI.Shared.Components
             IsLoading = true;
             StateHasChanged();
             FilterParameterModel param = new();
-            param.Token = GlobalClass.Token;
-            param.Uid = GlobalClass.User?.Uid;
+            param.Token = _appStateService.Token;
+            param.Uid = _appStateService.User?.Uid;
             chatRooms = await _messageService.GetChatRooms(param);
             IsLoading = false;
             StateHasChanged();

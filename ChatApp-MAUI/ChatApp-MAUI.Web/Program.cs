@@ -23,6 +23,7 @@ using Services.CallBackServices.LoadFriendsCallback;
 using ChatApp_MAUI.Shared.Services.CallBackServices.ConversationsCallback;
 using ChatApp_MAUI.Shared.Services.MessageServices;
 using ChatApp_MAUI.Shared.Services.CallBackServices.ChatRoomCallback;
+using ChatApp_MAUI.Shared.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +54,8 @@ builder.Services.AddScoped<ICallBackService, CallBackService>();
 builder.Services.AddScoped<IConversationCallback, ConversationCallback>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IChatRoomCallbackService, ChatRoomCallbackService>();
+builder.Services.AddSingleton<AppStateService>();
+
 builder.Services.AddMudServices();
 builder.Services.AddBlazoredLocalStorage();
 

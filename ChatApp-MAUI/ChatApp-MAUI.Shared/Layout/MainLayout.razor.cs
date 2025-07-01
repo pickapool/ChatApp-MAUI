@@ -18,6 +18,7 @@ namespace ChatApp_MAUI.Shared.Layout
         [Inject] protected IUserService _userService { get; set; } = default!;
         [Inject] protected ISnackbar _snackBar { get; set; } = default!;
         [Inject] protected IConfiguration _configuration { get; set; } = default!;
+        [Inject] protected AppStateService _appStateService { get; set; } = default!;
 
         protected ElementReference reference;
         protected string email = string.Empty, password = string.Empty;
@@ -30,7 +31,7 @@ namespace ChatApp_MAUI.Shared.Layout
             var hubConnection = NotificationService.GetConnection($"{_configuration["BaseAPI:Url"]}/NotificationHub");
             hubConnection.On<FriendsModel>("NotifyFriendRequest", model =>
             {
-                if (model.To == GlobalClass.User.Uid)
+                if (model.To == _appStateService.User.Uid)
                 {
                     SnackBarHelper.ShowFriendRequestNotification(_snackBar, model);
                 }
@@ -41,7 +42,7 @@ namespace ChatApp_MAUI.Shared.Layout
         }
         protected void ToggleDarkMode()
         {
-            GlobalClass.IsDarkMode = !GlobalClass.IsDarkMode;
+            _appStateService.IsDarkMode = !_appStateService.IsDarkMode;
             _notifierService.NotifyChanged();
         }
         protected async Task<IEnumerable<AuthTokenModel>> GetUsers(string name, CancellationToken t)
@@ -51,8 +52,8 @@ namespace ChatApp_MAUI.Shared.Layout
             FilterParameterModel param = new();
             param.IsName = true;
             param.Name = name;
-            param.Token = GlobalClass.Token;
-            param.Uid = GlobalClass.User.Uid;
+            param.Token = _appStateService.Token;
+            param.Uid = _appStateService.User.Uid;
 
             return await _userService.SearchUsers(param);
         }

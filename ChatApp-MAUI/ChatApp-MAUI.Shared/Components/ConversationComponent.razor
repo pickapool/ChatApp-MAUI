@@ -34,11 +34,11 @@
 						<span>Start a conversation</span>
 					</EmptyContent>
 					<ChildContent>
-						@if(message.SenderId == GlobalClass.User.Uid)
+						@if (message.SenderId == _appStateService.User.Uid)
 						{
 							<MudChat ChatPosition="ChatBubblePosition.End">
 								<MudAvatar>
-									<MudImage Src="@(String.IsNullOrEmpty(GlobalClass.User.PhotoUrl) ? PhotoHelper._defaultPhoto: GlobalClass.User?.PhotoUrl )" />
+									<MudImage Src="@(String.IsNullOrEmpty(_appStateService.User.PhotoUrl) ? PhotoHelper._defaultPhoto: _appStateService.User?.PhotoUrl )" />
 								</MudAvatar>
 								@foreach(var message in message.Messages)
 								{

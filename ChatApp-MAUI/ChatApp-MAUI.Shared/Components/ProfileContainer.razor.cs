@@ -25,7 +25,7 @@ namespace ChatApp_MAUI.Shared.Components
         [Inject] protected NavigationManager _navigationManager { get; set; } = default!;
         [Inject] protected AuthenticationStateProvider _authenticationStateProvider { get; set; } = default!;
         [Inject] protected LayoutNotifierService _notifierService { get; set; } = default!;
-        
+        [Inject] protected AppStateService _appStateService { get; set; } = default!;
 
         protected bool _open;
         protected void ToggleOpen() => _open = !_open;
@@ -33,14 +33,14 @@ namespace ChatApp_MAUI.Shared.Components
         protected override async Task OnInitializedAsync()
         {
             isLoading = true;
-            GlobalClass.Token = await _localStorage.GetItemAsStringAsync("token")?? string.Empty;
-            if (string.IsNullOrEmpty(GlobalClass.Token))
+            _appStateService.Token = await _localStorage.GetItemAsStringAsync("token")?? string.Empty;
+            if (string.IsNullOrEmpty(_appStateService.Token))
             {
                 _navigationManager.NavigateTo("/", true);
                 return;
             }
-            GlobalClass.User = await _loginService.GetUserRecord(GlobalClass.Token);
-            GlobalClass.User ??= new();
+            _appStateService.User = await _loginService.GetUserRecord(_appStateService.Token);
+            _appStateService.User ??= new();
             _notifierService.OnChanged += HandleChange;
             isLoading = false;
             await _callBackService.OnShowFrieds();

@@ -28,6 +28,7 @@ namespace ChatApp_MAUI.Shared.Pages
         [Inject] protected IDialogService _dialogService { get; set; } = default!;
         [Inject] protected INavigationService _navigationService { get; set; } = default!;
         [Inject] protected IFormFactor _formFactor { get; set; } = default!;
+        [Inject] protected AppStateService _appStateService { get; set; } = default!;
 
         protected IBrowserFile? selectedFile;
         protected bool isUploading = false, isLoading = false;
@@ -37,7 +38,7 @@ namespace ChatApp_MAUI.Shared.Pages
         private string platform => _formFactor.GetPlatform();
         protected override void OnInitialized()
         {
-            if(!String.IsNullOrEmpty(GlobalClass.User.PhoneNumber))
+            if(!String.IsNullOrEmpty(_appStateService.User.PhoneNumber))
             {
                 FormatCodeAndPhone();
             }
@@ -59,9 +60,9 @@ namespace ChatApp_MAUI.Shared.Pages
         {
             await selectedFile.OpenReadStream(209715200).CopyToAsync(stream);
             stream.Position = 0;
-            var url = await _firebaseStorageService.UploadPhoto(stream, GlobalClass.User.Uid, "ProfilePicture");
-            GlobalClass.User.PhotoUrl = url;
-            await _loginService.UpdatePhoto(GlobalClass.Token, GlobalClass.User);
+            var url = await _firebaseStorageService.UploadPhoto(stream, _appStateService.User.Uid, "ProfilePicture");
+            _appStateService.User.PhotoUrl = url;
+            await _loginService.UpdatePhoto(_appStateService.Token, _appStateService.User);
             isUploading = false;
             Extensions.ShowSnackbar("Profile picture has been uploaded", Variant.Filled, _snackBar, Severity.Success);
             _notifierService.NotifyChanged();
@@ -69,7 +70,7 @@ namespace ChatApp_MAUI.Shared.Pages
         }
         protected async Task GetVerificationEmailLink()
         {
-            var response = await _loginService.GetVerificationLink(GlobalClass.Token, GlobalClass.User.Email);
+            var response = await _loginService.GetVerificationLink(_appStateService.Token, _appStateService.User.Email);
             await _jsRuntime.InvokeVoidAsync("open", response, "_blank");
         }
         protected async Task UpdateProfile()
@@ -77,14 +78,14 @@ namespace ChatApp_MAUI.Shared.Pages
             isLoading = true;
             try
             {
-                if (!ccValidator.Validate(GlobalClass.User.PhoneNumber).IsValid)
+                if (!ccValidator.Validate(_appStateService.User.PhoneNumber).IsValid)
                 {
                     Extensions.ShowSnackbar("Please enter a valid phone number", Variant.Filled, _snackBar, Severity.Error);
                     return;
                 }
-                AuthTokenModel record = GlobalClass.User.Clone();
+                AuthTokenModel record = _appStateService.User.Clone();
                 record.PhoneNumber = String.Format("+{0}{1}", code, record.PhoneNumber);
-                await _loginService.UpdateProfile(GlobalClass.Token, record);
+                await _loginService.UpdateProfile(_appStateService.Token, record);
                 Extensions.ShowSnackbar("Profile successfully saved.", Variant.Filled, _snackBar, Severity.Success);
             } catch( Exception ee )
             {
@@ -96,8 +97,8 @@ namespace ChatApp_MAUI.Shared.Pages
         }
         private void FormatCodeAndPhone()
         {
-            code = GlobalClass.User.PhoneNumber.Clone().ToString()?.Substring(1, 2) ?? string.Empty;
-            GlobalClass.User.PhoneNumber = GlobalClass.User.PhoneNumber.Remove(0, 3);
+            code = _appStateService.User.PhoneNumber.Clone().ToString()?.Substring(1, 2) ?? string.Empty;
+            _appStateService.User.PhoneNumber = _appStateService.User.PhoneNumber.Remove(0, 3);
         }
         protected async Task OpenCameraDialog()
         {
@@ -124,9 +125,9 @@ namespace ChatApp_MAUI.Shared.Pages
             {
                 isUploading = true;
                 StateHasChanged();
-                var url = await _firebaseStorageService.UploadPhoto(stream, GlobalClass.User.Uid, "ProfilePicture");
-                GlobalClass.User.PhotoUrl = url;
-                //await _loginService.UpdatePhoto(GlobalClass.Token, GlobalClass.User);
+                var url = await _firebaseStorageService.UploadPhoto(stream, _appStateService.User.Uid, "ProfilePicture");
+                _appStateService.User.PhotoUrl = url;
+
                 isUploading = false;
                 Extensions.ShowSnackbar("Profile picture has been uploaded", Variant.Filled, _snackBar, Severity.Success);
                 _notifierService.NotifyChanged();

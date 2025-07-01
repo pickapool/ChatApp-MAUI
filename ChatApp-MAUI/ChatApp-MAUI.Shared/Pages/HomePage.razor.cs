@@ -19,7 +19,7 @@ namespace ChatApp_MAUI.Shared.Pages
         [Inject] protected ICallBackService _callBackService { get; set; } = default!;
         [Inject] protected IMessageService _messageService { get; set; } = default!;
         [Inject] protected LayoutNotifierService _notifierService { get; set; } = default!;
-        
+        [Inject] protected AppStateService _appStateService { get; set; } = default!;
         protected List<FriendsModel> friends = new();
         protected int loaderCount = 20;
         protected override async Task OnInitializedAsync()
@@ -39,7 +39,7 @@ namespace ChatApp_MAUI.Shared.Pages
         }
         public async Task OnShowFrieds()
         {
-            friends = await _friendService.GetFriends(GlobalClass.User.Uid, GlobalClass.Token);
+            friends = await _friendService.GetFriends(_appStateService.User.Uid, _appStateService.Token);
             StateHasChanged();
         }
 

@@ -17,6 +17,7 @@ namespace ChatApp_MAUI.Shared.Components
         [Inject] protected IUserService _userService { get; set; } = default!;
         [Inject] protected IFriendService _friendService { get; set; } = default!;
         [Inject] protected ISnackbar _snackBar { get; set; } = default!;
+        [Inject] protected AppStateService _appStateService { get; set; } = default!;
         [Parameter] public FriendsModel? FriendRequestModel { get; set; }
         protected AuthTokenModel? User { get; set; }
         protected override async Task OnInitializedAsync()
@@ -24,7 +25,7 @@ namespace ChatApp_MAUI.Shared.Components
             FilterParameterModel param = new();
             param.IsUid = true;
             param.Uid = FriendRequestModel.From;
-            param.Token = GlobalClass.Token;
+            param.Token = _appStateService.Token;
             User = await _userService.GetUserAccount(param);
             StateHasChanged();
         }
@@ -35,7 +36,7 @@ namespace ChatApp_MAUI.Shared.Components
 
         protected async Task AcceptFriendRequest()
         {
-            await _friendService.AccepFriendRequest(FriendRequestModel, GlobalClass.Token);
+            await _friendService.AccepFriendRequest(FriendRequestModel, _appStateService.Token);
             _snackBar.Clear();
         }
     }

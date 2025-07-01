@@ -11,16 +11,17 @@ namespace ChatApp_MAUI.Shared.Components
     {
         [Inject] protected ISnackbar _snackBar { get; set; } = default!;
         [Inject] protected IUserService _userService { get; set; } = default!;
+        [Inject] protected AppStateService _appStateService { get; set; } = default!;
         [Parameter] public AuthTokenModel? User { get; set; }
         protected async Task SendFriendRequest(AuthTokenModel user)
         {
             FriendsModel friend = new();
-            friend.From = GlobalClass.User?.Uid;
+            friend.From = _appStateService.User?.Uid;
             friend.To = user.Uid;
             friend.IsAccepted = false;
             try
             {
-                var reponse = await _userService.SendFriendRequest(friend, GlobalClass.Token);
+                var reponse = await _userService.SendFriendRequest(friend, _appStateService.Token);
                 Extensions.ShowSnackbar(reponse, Variant.Filled, _snackBar, Severity.Success);
             }
             catch (Exception ex)
