@@ -29,23 +29,40 @@
 			}
 			else
 			{
-				<MudChat ChatPosition="ChatBubblePosition.Start">
-					<MudAvatar>OK</MudAvatar>
-				<MudChatBubble>
-					It was said that you would, destroy the Sith, not join them.
-				</MudChatBubble>
-				<MudChatBubble>
-					It was you who would bring balance to the Force
-				</MudChatBubble>
-				</MudChat>
-				<MudChat ChatPosition="ChatBubblePosition.End">
-					<MudAvatar>
-						<MudImage Src="@PhotoHelper._defaultPhoto" />
-					</MudAvatar>
-					<MudChatBubble>
-						Not leave it in Darkness
-					</MudChatBubble>
-				</MudChat>
+				<Virtualize Context="message" ItemSize="10" Items="groupMessages">
+					<EmptyContent>
+						<span>Start a conversation</span>
+					</EmptyContent>
+					<ChildContent>
+						@if(message.SenderId == GlobalClass.User.Uid)
+						{
+							<MudChat ChatPosition="ChatBubblePosition.End">
+								<MudAvatar>
+									<MudImage Src="@(String.IsNullOrEmpty(GlobalClass.User.PhotoUrl) ? PhotoHelper._defaultPhoto: GlobalClass.User?.PhotoUrl )" />
+								</MudAvatar>
+								@foreach(var message in message.Messages)
+								{
+									<MudChatBubble>
+										@message.Text
+									</MudChatBubble>
+								}
+							</MudChat>
+						} else
+						{
+							<MudChat ChatPosition="ChatBubblePosition.Start">
+								<MudAvatar>
+									<MudImage Src="@(String.IsNullOrEmpty(User.PhotoUrl) ? PhotoHelper._defaultPhoto: User?.PhotoUrl )" />
+								</MudAvatar>
+								@foreach (var message in message.Messages)
+								{
+									<MudChatBubble>
+										@message.Text
+									</MudChatBubble>
+								}
+							</MudChat>
+						}
+					</ChildContent>
+				</Virtualize>
 			}
 		</MudItem>
 		<hr />

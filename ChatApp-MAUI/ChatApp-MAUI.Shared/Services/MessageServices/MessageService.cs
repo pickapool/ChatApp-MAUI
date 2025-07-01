@@ -50,5 +50,16 @@ namespace ChatApp_MAUI.Shared.Services.MessageServices
                 throw new Exception(error);
             }
         }
+        public async Task<string> GetChatRoomId(FilterParameterModel param)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", param.Token.Trim('"'));
+            var response = await _httpClient.PostAsJsonAsync("api/message/getchatroomid", param);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var error = response.Content.ReadAsStringAsync().Result;
+                throw new Exception(error);
+            }
+            return await response.Content.ReadAsStringAsync();
+        }
     }
 }

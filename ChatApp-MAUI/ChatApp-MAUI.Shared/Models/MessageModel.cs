@@ -18,5 +18,7 @@ namespace ChatApp_MAUI.Shared.Models
         public Enums.MessageType Type { get; set; }
         [FirestoreProperty]
         public DateTime? CreatedAt { get; set; }
+        [FirestoreProperty]
+        public string? ChatRoomId { get; set; }
     }
 }

@@ -14,5 +14,6 @@ namespace ChatApp_MAUI.Shared.Models
         public bool IsUid { get; set; }
         public string? Uid { get; set; }
         public string? SenderUid { get; set; }
+        public string? ChatRoomId { get; set; }
     }
 }
