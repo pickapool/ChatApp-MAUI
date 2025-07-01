@@ -11,5 +11,6 @@ namespace ChatApp_MAUI.Shared.Services.FriendServices
     {
 
         Task AccepFriendRequest(FriendsModel model, string token);
+        Task<List<FriendsModel>> GetFriends(string uid, string token);
     }
 }

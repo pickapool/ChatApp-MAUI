@@ -27,5 +27,17 @@ namespace ChatApp_MAUI.Shared.Services.FriendServices
                 throw new Exception(error);
             }
         }
+
+        public async Task<List<FriendsModel>> GetFriends(string uid, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim('"'));
+            var response = await _httpClient.PostAsJsonAsync("api/friends/getfriends", uid);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var error = response.Content.ReadAsStringAsync().Result;
+                throw new Exception(error);
+            }
+            return await response.Content.ReadFromJsonAsync<List<FriendsModel>>();
+        }
     }
 }
