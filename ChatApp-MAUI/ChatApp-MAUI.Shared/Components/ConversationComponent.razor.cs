@@ -47,7 +47,7 @@ namespace ChatApp_MAUI.Shared.Components
         {
             
             IsLoading = true;
-            StateHasChanged();
+            await InvokeAsync(StateHasChanged);
             User = user;
             FilterParameterModel param = new();
             param.Token = _appStateService.Token;
@@ -56,9 +56,8 @@ namespace ChatApp_MAUI.Shared.Components
             chatRoomId = await _messageService.GetChatRoomId(param);
             param.ChatRoomId = chatRoomId;
             messages = await _messageService.GetMessages(param);
-            await GroupMessages();
-            
-            
+            await InvokeAsync(GroupMessages);
+
         }
         private async Task GroupMessages()
         {
