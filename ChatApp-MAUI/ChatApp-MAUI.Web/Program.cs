@@ -54,7 +54,7 @@ builder.Services.AddScoped<ICallBackService, CallBackService>();
 builder.Services.AddScoped<IConversationCallback, ConversationCallback>();
 builder.Services.AddScoped<IMessageService, MessageService>();
 builder.Services.AddScoped<IChatRoomCallbackService, ChatRoomCallbackService>();
-builder.Services.AddSingleton<AppStateService>();
+builder.Services.AddScoped<AppStateService>();
 
 builder.Services.AddMudServices();
 builder.Services.AddBlazoredLocalStorage();

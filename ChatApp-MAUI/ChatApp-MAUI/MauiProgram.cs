@@ -61,7 +61,7 @@ public static class MauiProgram
         builder.Services.AddScoped<IConversationCallback, ConversationCallback>();
         builder.Services.AddScoped<IMessageService, MessageService>();
         builder.Services.AddScoped<IChatRoomCallbackService, ChatRoomCallbackService>();
-        builder.Services.AddSingleton<AppStateService>();
+        builder.Services.AddScoped<AppStateService>();
 
         builder.Services.AddAuthorizationCore();
         builder.Services.AddCascadingAuthenticationState();
