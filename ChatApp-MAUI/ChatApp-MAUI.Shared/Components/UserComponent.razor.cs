@@ -1,6 +1,7 @@
-﻿using ChatApp_MAUI.Shared.Common;
-using ChatApp_MAUI.Domain.Entities;
-using ChatApp_MAUI.Shared.Services.UserServices;
+﻿using ChatApp_MAUI.Domain.Entities;
+using ChatApp_MAUI.Infrastructure;
+using ChatApp_MAUI.Infrastructure.Services.UserServices;
+using ChatApp_MAUI.Shared.Common;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using Extensions = ChatApp_MAUI.Shared.Common.Extensions;
@@ -22,11 +23,11 @@ namespace ChatApp_MAUI.Shared.Components
             try
             {
                 var reponse = await _userService.SendFriendRequest(friend, _appStateService.Token);
-                Extensions.ShowSnackbar(reponse, Variant.Filled, _snackBar, Severity.Success);
+                SnackBarHelper.ShowSnackbar(reponse, Variant.Filled, _snackBar, Severity.Success);
             }
             catch (Exception ex)
             {
-                Extensions.ShowSnackbar(ex.Message, Variant.Filled, _snackBar, Severity.Error);
+                SnackBarHelper.ShowSnackbar(ex.Message, Variant.Filled, _snackBar, Severity.Error);
             }
         }
     }

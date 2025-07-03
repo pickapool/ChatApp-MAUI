@@ -1,9 +1,8 @@
-﻿using ChatApp_MAUI.Shared.Common;
-using ChatApp_MAUI.Domain.Entities;
-using ChatApp_MAUI.Shared.Services.CallBackServices.ConversationsCallback;
-using ChatApp_MAUI.Shared.Services.UserServices;
+﻿using ChatApp_MAUI.Domain.Entities;
+using ChatApp_MAUI.Infrastructure;
+using ChatApp_MAUI.Infrastructure.Services.CallBackServices.ConversationsCallback;
+using ChatApp_MAUI.Infrastructure.Services.UserServices;
 using Microsoft.AspNetCore.Components;
-using MudBlazor.Interfaces;
 namespace ChatApp_MAUI.Shared.Components
 {
     public partial class ChatRoomUserComponentBase : ComponentBase

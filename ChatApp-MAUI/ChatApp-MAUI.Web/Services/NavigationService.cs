@@ -1,8 +1,5 @@
-﻿using ChatApp_MAUI.Shared.Services.CameraServices;
-using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
-using ChatApp_MAUI.Shared.Services.FirebaseStorageServices;
-using ChatApp_MAUI.Shared.Services.NavigationServices;
-using CommunityToolkit.Maui.Core;
+﻿using ChatApp_MAUI.Infrastructure.Services.CameraServices;
+using ChatApp_MAUI.Infrastructure.Services.NavigationServices;
 
 namespace ChatApp_MAUI.Services
 {

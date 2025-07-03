@@ -1,8 +1,8 @@
-﻿using ChatApp_MAUI.Shared.Services.NavigationServices;
-using ChatApp_MAUI.Shared.Services;
+﻿using ChatApp_MAUI.Infrastructure.Services;
+using ChatApp_MAUI.Infrastructure.Services.CameraServices;
+using ChatApp_MAUI.Infrastructure.Services.NavigationServices;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using ChatApp_MAUI.Shared.Services.CameraServices;
 
 namespace ChatApp_MAUI.Shared.Dialogs
 {

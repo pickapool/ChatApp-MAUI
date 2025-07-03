@@ -1,16 +1,17 @@
-using ChatApp_MAUI.Shared.Services;
+using ChatApp_MAUI.Infrastructure.Services;
 
-namespace ChatApp_MAUI.Web.Services;
-
-public class FormFactor : IFormFactor
+namespace ChatApp_MAUI.Web.Services
 {
-    public string GetFormFactor()
+    public class FormFactor : IFormFactor
     {
-        return "Web";
-    }
+        public string GetFormFactor()
+        {
+            return "Web";
+        }
 
-    public string GetPlatform()
-    {
-        return Environment.OSVersion.ToString();
+        public string GetPlatform()
+        {
+            return Environment.OSVersion.ToString();
+        }
     }
 }

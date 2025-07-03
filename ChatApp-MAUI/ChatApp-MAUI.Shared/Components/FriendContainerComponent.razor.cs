@@ -1,14 +1,8 @@
-﻿using ChatApp_MAUI.Shared.Common;
-using ChatApp_MAUI.Domain.Entities;
-using ChatApp_MAUI.Shared.Services.CallBackServices.ConversationsCallback;
-using ChatApp_MAUI.Shared.Services.UserServices;
+﻿using ChatApp_MAUI.Domain.Entities;
+using ChatApp_MAUI.Infrastructure;
+using ChatApp_MAUI.Infrastructure.Services.CallBackServices.ConversationsCallback;
+using ChatApp_MAUI.Infrastructure.Services.UserServices;
 using Microsoft.AspNetCore.Components;
-using Services.CallBackServices.LoadFriendsCallback;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatApp_MAUI.Shared.Components
 {
