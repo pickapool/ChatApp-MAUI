@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatApp_MAUI.Shared.Models
+namespace ChatApp_MAUI.Domain.Entities
 {
     public record class AccountModel
     {

@@ -1,5 +1,5 @@
 ﻿using Blazored.LocalStorage;
-using ChatApp_MAUI.Shared.Models;
+using ChatApp_MAUI.Domain.Entities;
 using FirebaseAdmin.Auth;
 using System.Net.Http.Json;
 using Extensions = ChatApp_MAUI.Shared.Common.Extensions;

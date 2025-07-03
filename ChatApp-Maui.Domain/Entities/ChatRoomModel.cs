@@ -1,6 +1,6 @@
 ﻿using Google.Cloud.Firestore;
 
-namespace ChatApp_MAUI.Shared.Models
+namespace ChatApp_MAUI.Domain.Entities
 {
     [FirestoreData]
     public class ChatRoomModel

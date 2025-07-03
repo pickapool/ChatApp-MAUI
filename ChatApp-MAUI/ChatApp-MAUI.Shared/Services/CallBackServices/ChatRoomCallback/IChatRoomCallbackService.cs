@@ -1,4 +1,4 @@
-﻿using ChatApp_MAUI.Shared.Models;
+﻿using ChatApp_MAUI.Domain.Entities;
 namespace ChatApp_MAUI.Shared.Services.CallBackServices.ChatRoomCallback
 {
     public interface IChatRoomCallbackService

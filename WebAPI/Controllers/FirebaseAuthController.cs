@@ -1,4 +1,4 @@
-﻿using ChatApp_MAUI.Shared.Models;
+﻿using ChatApp_MAUI.Domain.Entities;
 using Firebase.Auth;
 using FirebaseAdmin.Auth;
 using MediatR;

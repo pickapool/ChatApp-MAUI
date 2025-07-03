@@ -1,7 +1,7 @@
-﻿using ChatApp_MAUI.Shared.Common;
+﻿using ChatApp_MAUI.Domain.Common;
 using Google.Cloud.Firestore;
 
-namespace ChatApp_MAUI.Shared.Models
+namespace ChatApp_MAUI.Domain.Entities
 {
     [FirestoreData]
     public class MessageModel

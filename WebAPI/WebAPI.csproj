@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ChatApp-Maui.Domain\ChatApp-MAUI.Domain.csproj" />
     <ProjectReference Include="..\ChatApp-MAUI\ChatApp-MAUI.Shared\ChatApp-MAUI.Shared.csproj" />
   </ItemGroup>
 

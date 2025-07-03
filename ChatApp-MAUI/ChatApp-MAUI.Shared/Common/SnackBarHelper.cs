@@ -1,5 +1,5 @@
 ﻿using ChatApp_MAUI.Shared.Components;
-using ChatApp_MAUI.Shared.Models;
+using ChatApp_MAUI.Domain.Entities;
 using MudBlazor;
 namespace ChatApp_MAUI.Shared.Common
 {

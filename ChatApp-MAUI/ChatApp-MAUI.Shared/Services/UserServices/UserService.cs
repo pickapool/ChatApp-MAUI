@@ -1,5 +1,5 @@
 ﻿using ChatApp_MAUI.Shared.Common;
-using ChatApp_MAUI.Shared.Models;
+using ChatApp_MAUI.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

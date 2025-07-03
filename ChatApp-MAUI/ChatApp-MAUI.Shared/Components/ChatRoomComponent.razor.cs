@@ -1,5 +1,5 @@
 ﻿using ChatApp_MAUI.Shared.Common;
-using ChatApp_MAUI.Shared.Models;
+using ChatApp_MAUI.Domain.Entities;
 using ChatApp_MAUI.Shared.Services.CallBackServices.ChatRoomCallback;
 using ChatApp_MAUI.Shared.Services.MessageServices;
 using Microsoft.AspNetCore.Components;

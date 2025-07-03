@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatApp_MAUI.Shared.Common
+namespace ChatApp_MAUI.Domain.Common
 {
     public class Enums
     {

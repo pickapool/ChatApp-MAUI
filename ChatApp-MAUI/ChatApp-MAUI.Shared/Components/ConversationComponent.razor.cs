@@ -1,5 +1,5 @@
 ﻿using ChatApp_MAUI.Shared.Common;
-using ChatApp_MAUI.Shared.Models;
+using ChatApp_MAUI.Domain.Entities;
 using ChatApp_MAUI.Shared.Services.CallBackServices.ConversationsCallback;
 using ChatApp_MAUI.Shared.Services.INotificationServices;
 using ChatApp_MAUI.Shared.Services.MessageServices;
@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.JSInterop;
 using MudBlazor;
+using ChatApp_MAUI.Domain.Common;
 
 namespace ChatApp_MAUI.Shared.Components
 {

@@ -46,4 +46,8 @@
     <MauiCss Include="wwwroot\css\ProfilePage.css" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\ChatApp-Maui.Domain\ChatApp-MAUI.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

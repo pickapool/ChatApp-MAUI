@@ -1,5 +1,5 @@
 ﻿using ChatApp_MAUI.Shared.Common;
-using ChatApp_MAUI.Shared.Models;
+using ChatApp_MAUI.Domain.Entities;
 using ChatApp_MAUI.Shared.Services.FriendServices;
 using ChatApp_MAUI.Shared.Services.UserServices;
 using Microsoft.AspNetCore.Components;

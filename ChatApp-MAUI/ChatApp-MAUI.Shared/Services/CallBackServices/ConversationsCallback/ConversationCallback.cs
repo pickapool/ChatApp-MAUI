@@ -1,4 +1,4 @@
-﻿using ChatApp_MAUI.Shared.Models;
+﻿using ChatApp_MAUI.Domain.Entities;
 using Services.CallBackServices.LoadFriendsCallback;
 using System;
 using System.Collections.Generic;
