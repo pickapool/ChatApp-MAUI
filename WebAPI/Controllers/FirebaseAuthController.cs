@@ -1,8 +1,11 @@
 ﻿using ChatApp_MAUI.Shared.Models;
 using Firebase.Auth;
 using FirebaseAdmin.Auth;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Commands.AuthenticationCommands.RegisterCommands;
+using static Google.Rpc.Context.AttributeContext.Types;
 
 namespace WebAPI.Controllers
 {
@@ -12,24 +15,20 @@ namespace WebAPI.Controllers
     public class FirebaseAuthController : ControllerBase
     {
         private readonly FirebaseAuthClient _firebaseAuthClient;
-        public FirebaseAuthController(FirebaseAuthClient firebaseAuthClient)
+        private readonly ISender _sender;
+        public FirebaseAuthController(FirebaseAuthClient firebaseAuthClient, ISender sender)
         {
             _firebaseAuthClient = firebaseAuthClient;
+            _sender = sender;
         }
         [AllowAnonymous]
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> RegisterAsync([FromBody]UserRecordArgs args)
+        public async Task<IActionResult> RegisterAsync([FromBody] RegisterCommand command)
         {
             try
-            {   
-                var userArg = new UserRecordArgs
-                {
-                    Email = args.Email,
-                    Password = args.Password,
-                    DisplayName = args.DisplayName,
-                };
-                var userRecord = await FirebaseAuth.DefaultInstance.CreateUserAsync(userArg);
+            {
+                var userRecord = await _sender.Send(command);
                 return Ok(userRecord);
             }
             catch (Exception ex)

@@ -21,7 +21,8 @@ namespace ChatApp_MAUI.Shared.Services.RegistrationServices
             }
             try
             {
-                var response = await _httpClient.PostAsJsonAsync("api/auth/register", args);
+                var requestBody = new { AuthTokenModel = args };
+                var response = await _httpClient.PostAsJsonAsync("api/auth/register", requestBody);
                 if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     var error = await response.Content.ReadAsStringAsync();

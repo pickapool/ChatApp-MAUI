@@ -35,6 +35,8 @@ namespace ChatApp_MAUI.Shared.Models
         [JsonPropertyName("phoneNumber")]
         [MinLength(10)]
         public string? PhoneNumber { get; set; }
+        [JsonPropertyName("password")]
+        public string? Password { get; set; }
 
     }
 }

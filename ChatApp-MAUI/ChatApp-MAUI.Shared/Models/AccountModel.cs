@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ChatApp_MAUI.Shared.Models
 {
-    public class AccountModel
+    public record class AccountModel
     {
         public AccountModel()
         {
