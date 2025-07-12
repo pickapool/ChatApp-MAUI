@@ -88,13 +88,15 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.6" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.6" />
-    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.80" />
+    <PackageReference Include="Microsoft.Maui.Controls" Version="9.0.81" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="9.0.80" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.6" />
     <PackageReference Include="MudBlazor" Version="8.8.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ChatApp-Maui.Domain\ChatApp-MAUI.Domain.csproj" />
+    <ProjectReference Include="..\..\ChatApp-MAUI.Infrastructure\ChatApp-MAUI.Infrastructure.csproj" />
     <ProjectReference Include="..\ChatApp-MAUI.Shared\ChatApp-MAUI.Shared.csproj" />
     <GoogleServicesJson Include="firebaseconfig.json" />
   </ItemGroup>

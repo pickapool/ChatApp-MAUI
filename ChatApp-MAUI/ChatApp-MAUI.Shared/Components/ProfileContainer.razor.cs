@@ -1,18 +1,12 @@
 ﻿using Blazored.LocalStorage;
 using ChatApp_MAUI.AuthenticationProvider;
-using ChatApp_MAUI.Shared.Common;
-using ChatApp_MAUI.Shared.Models;
-using ChatApp_MAUI.Shared.Services;
-using ChatApp_MAUI.Shared.Services.CallBackServices.ChatRoomCallback;
-using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
+using ChatApp_MAUI.Infrastructure;
+using ChatApp_MAUI.Infrastructure.CallBackServices.LoadFriendsCallback;
+using ChatApp_MAUI.Infrastructure.Services;
+using ChatApp_MAUI.Infrastructure.Services.CallBackServices.ChatRoomCallback;
+using ChatApp_MAUI.Infrastructure.Services.CustomAuthenticationServices;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Services.CallBackServices.LoadFriendsCallback;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatApp_MAUI.Shared.Components
 {

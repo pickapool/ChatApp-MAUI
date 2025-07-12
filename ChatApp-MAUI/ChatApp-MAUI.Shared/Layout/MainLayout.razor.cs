@@ -1,14 +1,13 @@
 ﻿using ChatApp_MAUI.Shared.Common;
-using ChatApp_MAUI.Shared.Models;
-using ChatApp_MAUI.Shared.Services;
-using ChatApp_MAUI.Shared.Services.INotificationServices;
-using ChatApp_MAUI.Shared.Services.UserServices;
+using ChatApp_MAUI.Domain.Entities;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.Extensions.Configuration;
 using MudBlazor;
-using Newtonsoft.Json;
-using Extensions = ChatApp_MAUI.Shared.Common.Extensions;
+using ChatApp_MAUI.Infrastructure.Services;
+using ChatApp_MAUI.Infrastructure.Services.UserServices;
+using ChatApp_MAUI.Infrastructure;
+using ChatApp_MAUI.Infrastructure.Services.INotificationServices;
 
 namespace ChatApp_MAUI.Shared.Layout
 {

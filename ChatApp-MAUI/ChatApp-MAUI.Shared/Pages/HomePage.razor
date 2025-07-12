@@ -3,7 +3,7 @@
 @inherits HomePageBase
 
 <PageTitle>Home Page</PageTitle>
-<MudGrid Spacing="0">
+<MudGrid Spacing="0" Style="height: 100%;">
 	@* Style="height: calc(100vh - 60px);" *@
 	<MudItem Class="overflow-auto pa-2" xs="12" sm="5" md="5" lg="3">
 		<MudAutocomplete Class="@($"{(_appStateService.IsDarkMode ? "app-search-dark" : "app-search")}")"
@@ -37,10 +37,10 @@
 			}
 		</div>
 	</MudItem>
-	<MudItem Class="d-flex flex-column gap-4 pa-2 overflow-hidden" xs="12" sm="5" md="5" lg="3">
+	<MudItem Class="flex-column gap-4 chat-room overflow-auto hide-scrollbar" xs="12" sm="4" md="5" lg="3">
 		<ChatRoomComponent></ChatRoomComponent>
 	</MudItem>
-	<MudItem Class="d-flex flex-row gap-1 pa-2" xs="12" sm="7" md="7" lg="9">
+	<MudItem Class="flex-row gap-1 pa-2 conversation" xs="12" sm="8" md="7" lg="9">
 		<ConversationComponent></ConversationComponent>
 	</MudItem>
 </MudGrid>
