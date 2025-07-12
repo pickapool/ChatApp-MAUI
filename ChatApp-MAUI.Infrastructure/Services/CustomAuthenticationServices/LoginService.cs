@@ -26,7 +26,7 @@ namespace ChatApp_MAUI.Infrastructure.Services.CustomAuthenticationServices
         public async Task<AuthTokenModel> GetUserRecord(string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim('"'));
-            var response = await _httpClient.PostAsJsonAsync("api/auth/getuser", token);
+            var response = await _httpClient.PostAsJsonAsync("api/auth/getuser", token.Trim('"'));
             if (response.StatusCode != System.Net.HttpStatusCode.OK)
             {
                 var error = await response.Content.ReadAsStringAsync();
