@@ -1,7 +1,8 @@
 ﻿using Blazored.LocalStorage;
 using ChatApp_MAUI.AuthenticationProvider;
-using ChatApp_MAUI.Shared.Services;
-using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
+using ChatApp_MAUI.Infrastructure.Services;
+using ChatApp_MAUI.Infrastructure.Services.CustomAuthenticationServices;
+using ChatApp_MAUI.Shared.Common;
 using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -55,7 +56,7 @@ namespace ChatApp_MAUI.Shared.Components
             {
                 if (String.IsNullOrEmpty(email) || String.IsNullOrEmpty(password))
                 {
-                    Extensions.ShowSnackbar("All fields are required", Variant.Filled, _snackBar, Severity.Error);
+                    SnackBarHelper.ShowSnackbar("All fields are required", Variant.Filled, _snackBar, Severity.Error);
                     return;
                 }
                 var uid = await _loginService.Authenticate(account);
@@ -65,9 +66,9 @@ namespace ChatApp_MAUI.Shared.Components
                 password = string.Empty;
             } catch (Exception ex) {
                 if (ex.Message.ToLower().Contains("invalid"))
-                    Extensions.ShowSnackbar("Invalid email or password", Variant.Filled, _snackBar, Severity.Error);
+                    SnackBarHelper.ShowSnackbar("Invalid email or password", Variant.Filled, _snackBar, Severity.Error);
                 else
-                    Extensions.ShowSnackbar(ex.Message, Variant.Filled, _snackBar, Severity.Error);
+                    SnackBarHelper.ShowSnackbar(ex.Message, Variant.Filled, _snackBar, Severity.Error);
             } finally {
                 isLoading = false;
             }

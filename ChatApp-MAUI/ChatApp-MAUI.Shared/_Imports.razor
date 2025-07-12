@@ -12,23 +12,10 @@
 @using MudBlazor
 @using Microsoft.AspNetCore.Components.Authorization
 @using ChatApp_MAUI.Shared.Common
-@using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices
-@using ChatApp_MAUI.Shared.Services.RegistrationServices
-@using ChatApp_MAUI.Shared.Models
+@using ChatApp_MAUI.Domain.Entities
 @using ChatApp_MAUI.AuthenticationProvider
 @using ChatApp_MAUI.Shared.Components
 @using Microsoft.AspNetCore.Authorization
 @using ChatApp_MAUI.Shared.Pages
 @using BlazorCameraStreamer
-@using ChatApp_MAUI.Shared.Services
-@using ChatApp_MAUI.Shared.Services.NavigationServices
 @using ChatApp_MAUI.Shared.SkeletonComponents
-
-@inject AuthenticationStateProvider _authenticationStateProvider
-@inject ISnackbar _snackBar
-@inject IRegistrationService _registrationService
-@inject ILocalStorageService _localStorage
-@inject ILoginService _loginService
-@inject NavigationManager _navigationManager
-@inject IFormFactor _formFactor
-@inject INavigationService _navigationService

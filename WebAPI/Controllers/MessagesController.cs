@@ -1,4 +1,4 @@
-﻿using ChatApp_MAUI.Shared.Models;
+﻿using ChatApp_MAUI.Domain.Entities;
 using FirebaseAdmin.Messaging;
 using Google.Cloud.Firestore;
 using Google.Cloud.Firestore.V1;

@@ -1,12 +1,6 @@
 ﻿using ChatApp_MAUI.Shared.Common;
 using ChatApp_MAUI.Shared.Dialogs;
-using ChatApp_MAUI.Shared.Models;
-using ChatApp_MAUI.Shared.Services;
-using ChatApp_MAUI.Shared.Services.CameraServices;
-using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
-using ChatApp_MAUI.Shared.Services.FirebaseStorageServices;
-using ChatApp_MAUI.Shared.Services.NavigationServices;
-using ChatApp_MAUI.Shared.Services.UserServices;
+using ChatApp_MAUI.Domain.Entities;
 using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
@@ -15,6 +9,12 @@ using MudBlazor;
 using SkiaSharp;
 using Extensions = ChatApp_MAUI.Shared.Common.Extensions;
 using Severity = MudBlazor.Severity;
+using ChatApp_MAUI.Infrastructure.Services.CustomAuthenticationServices;
+using ChatApp_MAUI.Infrastructure.Services.FirebaseStorageServices;
+using ChatApp_MAUI.Infrastructure.Services;
+using ChatApp_MAUI.Infrastructure.Services.NavigationServices;
+using ChatApp_MAUI.Infrastructure;
+using ChatApp_MAUI.Infrastructure.Services.CameraServices;
 
 namespace ChatApp_MAUI.Shared.Pages
 {
@@ -64,7 +64,7 @@ namespace ChatApp_MAUI.Shared.Pages
             _appStateService.User.PhotoUrl = url;
             await _loginService.UpdatePhoto(_appStateService.Token, _appStateService.User);
             isUploading = false;
-            Extensions.ShowSnackbar("Profile picture has been uploaded", Variant.Filled, _snackBar, Severity.Success);
+            SnackBarHelper.ShowSnackbar("Profile picture has been uploaded", Variant.Filled, _snackBar, Severity.Success);
             _notifierService.NotifyChanged();
             StateHasChanged();
         }
@@ -80,16 +80,16 @@ namespace ChatApp_MAUI.Shared.Pages
             {
                 if (!ccValidator.Validate(_appStateService.User.PhoneNumber).IsValid)
                 {
-                    Extensions.ShowSnackbar("Please enter a valid phone number", Variant.Filled, _snackBar, Severity.Error);
+                    SnackBarHelper.ShowSnackbar("Please enter a valid phone number", Variant.Filled, _snackBar, Severity.Error);
                     return;
                 }
                 AuthTokenModel record = _appStateService.User.Clone();
                 record.PhoneNumber = String.Format("+{0}{1}", code, record.PhoneNumber);
                 await _loginService.UpdateProfile(_appStateService.Token, record);
-                Extensions.ShowSnackbar("Profile successfully saved.", Variant.Filled, _snackBar, Severity.Success);
+                SnackBarHelper.ShowSnackbar("Profile successfully saved.", Variant.Filled, _snackBar, Severity.Success);
             } catch( Exception ee )
             {
-                Extensions.ShowSnackbar(ee.Message, Variant.Filled, _snackBar, Severity.Error);
+                SnackBarHelper.ShowSnackbar(ee.Message, Variant.Filled, _snackBar, Severity.Error);
             } finally
             {
                 isLoading = false;
@@ -129,7 +129,7 @@ namespace ChatApp_MAUI.Shared.Pages
                 _appStateService.User.PhotoUrl = url;
 
                 isUploading = false;
-                Extensions.ShowSnackbar("Profile picture has been uploaded", Variant.Filled, _snackBar, Severity.Success);
+                SnackBarHelper.ShowSnackbar("Profile picture has been uploaded", Variant.Filled, _snackBar, Severity.Success);
                 _notifierService.NotifyChanged();
                 StateHasChanged();
             });

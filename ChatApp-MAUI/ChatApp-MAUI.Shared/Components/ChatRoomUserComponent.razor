@@ -4,7 +4,7 @@
 	<ChatRoomSkeleton></ChatRoomSkeleton>
 } else
 {
-	<MudButton OnClick="ShowConversation" Class="text-start d-flex justify-content-start">
+	<MudButton OnClick="ShowConversation" Class="text-start d-flex justify-content-start flex-shrink-0">
 		<div class="d-flex flex-row gap-2">
 			<MudAvatar Size="Size.Medium"> 
 				<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User.PhotoUrl)"></MudImage>

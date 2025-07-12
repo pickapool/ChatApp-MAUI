@@ -1,4 +1,5 @@
-﻿using ChatApp_MAUI.Shared.Services.RegistrationServices;
+﻿using ChatApp_MAUI.Infrastructure.Services.RegistrationServices;
+using ChatApp_MAUI.Shared.Common;
 using FirebaseAdmin.Auth;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
@@ -30,25 +31,25 @@ namespace ChatApp_MAUI.Shared.Pages
 
                 if (String.IsNullOrEmpty(userRecord.Email) || String.IsNullOrEmpty(userRecord.Password) || String.IsNullOrEmpty(confirmPassword))
                 {
-                    Extensions.ShowSnackbar("All fields are required.", Variant.Filled, _snackBar, Severity.Error);
+                    SnackBarHelper.ShowSnackbar("All fields are required.", Variant.Filled, _snackBar, Severity.Error);
                     return;
                 }
                 if (userRecord.Password != confirmPassword)
                 {
-                    Extensions.ShowSnackbar("Passwords do not match.", Variant.Filled, _snackBar, Severity.Error);
+                    SnackBarHelper.ShowSnackbar("Passwords do not match.", Variant.Filled, _snackBar, Severity.Error);
                     return;
                 }
                 if (passwordValidation != null)
                 {
-                    Extensions.ShowSnackbar(passwordValidation, Variant.Filled, _snackBar, Severity.Error);
+                    SnackBarHelper.ShowSnackbar(passwordValidation, Variant.Filled, _snackBar, Severity.Error);
                     return;
                 }
                 await _registrationService.RegisterAsync(userRecord);
-                Extensions.ShowSnackbar("Account created successfully, please login to continue.", Variant.Filled, _snackBar, Severity.Success);
+                SnackBarHelper.ShowSnackbar("Account created successfully, please login to continue.", Variant.Filled, _snackBar, Severity.Success);
                 await GoToSignIn();
             } catch (Exception ee) {
 
-                Extensions.ShowSnackbar(ee.Message, Variant.Filled, _snackBar, Severity.Error);
+                SnackBarHelper.ShowSnackbar(ee.Message, Variant.Filled, _snackBar, Severity.Error);
             } finally {
                 isLoading = false;
             }

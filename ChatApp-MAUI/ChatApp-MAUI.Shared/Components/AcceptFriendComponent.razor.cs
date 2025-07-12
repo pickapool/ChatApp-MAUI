@@ -1,14 +1,9 @@
-﻿using ChatApp_MAUI.Shared.Common;
-using ChatApp_MAUI.Shared.Models;
-using ChatApp_MAUI.Shared.Services.FriendServices;
-using ChatApp_MAUI.Shared.Services.UserServices;
+﻿using ChatApp_MAUI.Domain.Entities;
+using ChatApp_MAUI.Infrastructure;
+using ChatApp_MAUI.Infrastructure.Services.FriendServices;
+using ChatApp_MAUI.Infrastructure.Services.UserServices;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatApp_MAUI.Shared.Components
 {

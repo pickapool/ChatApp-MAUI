@@ -1,14 +1,11 @@
-﻿using ChatApp_MAUI.Shared.Services.NavigationServices;
-using ChatApp_MAUI.Shared.Services;
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
-using ChatApp_MAUI.Shared.Common;
-using ChatApp_MAUI.Shared.Models;
-using ChatApp_MAUI.Shared.Services.UserServices;
-using ChatApp_MAUI.Shared.Services.FriendServices;
-using ChatApp_MAUI.Shared.Services.CustomAuthenticationServices;
-using Services.CallBackServices.LoadFriendsCallback;
-using ChatApp_MAUI.Shared.Services.MessageServices;
+﻿using Microsoft.AspNetCore.Components;
+using ChatApp_MAUI.Domain.Entities;
+using ChatApp_MAUI.Infrastructure.Services.FriendServices;
+using ChatApp_MAUI.Infrastructure.Services.CustomAuthenticationServices;
+using ChatApp_MAUI.Infrastructure.CallBackServices.LoadFriendsCallback;
+using ChatApp_MAUI.Infrastructure.Services.MessageServices;
+using ChatApp_MAUI.Infrastructure.Services;
+using ChatApp_MAUI.Infrastructure;
 
 namespace ChatApp_MAUI.Shared.Pages
 {

@@ -9,7 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp-MAUI.Shared", "Chat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp-MAUI.Web", "ChatApp-MAUI\ChatApp-MAUI.Web\ChatApp-MAUI.Web.csproj", "{9C840AA8-1BC7-45B9-BB42-68B51E5E5596}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI", "WebAPI\WebAPI.csproj", "{0F94124B-F63C-471E-A4B8-C9154368A336}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp-MAUI.WebAPI", "WebAPI\ChatApp-MAUI.WebAPI.csproj", "{0F94124B-F63C-471E-A4B8-C9154368A336}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp-MAUI.Domain", "ChatApp-Maui.Domain\ChatApp-MAUI.Domain.csproj", "{72CF221A-2938-4273-9BA3-ABB95103C431}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatApp-MAUI.Infrastructure", "ChatApp-MAUI.Infrastructure\ChatApp-MAUI.Infrastructure.csproj", "{5E6B17B7-0908-4733-A35E-101FEE6DC1CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -34,6 +38,14 @@ Global
 		{0F94124B-F63C-471E-A4B8-C9154368A336}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F94124B-F63C-471E-A4B8-C9154368A336}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F94124B-F63C-471E-A4B8-C9154368A336}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72CF221A-2938-4273-9BA3-ABB95103C431}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72CF221A-2938-4273-9BA3-ABB95103C431}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72CF221A-2938-4273-9BA3-ABB95103C431}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72CF221A-2938-4273-9BA3-ABB95103C431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E6B17B7-0908-4733-A35E-101FEE6DC1CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E6B17B7-0908-4733-A35E-101FEE6DC1CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E6B17B7-0908-4733-A35E-101FEE6DC1CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E6B17B7-0908-4733-A35E-101FEE6DC1CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

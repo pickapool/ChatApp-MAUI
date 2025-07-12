@@ -1,7 +1,5 @@
 ﻿using BlazorCameraStreamer;
-using ChatApp_MAUI.Shared.Services;
 using Microsoft.AspNetCore.Components;
-using System.Drawing;
 
 namespace ChatApp_MAUI.Shared.Components
 {
