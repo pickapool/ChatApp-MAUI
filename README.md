@@ -1,4 +1,4 @@
-Welcome to the Chat Maui Website – a web-based chat application built using .NET MAUI and hosted on Azure.
+Welcome to the Chat Maui Website – a web-based chat application built using .NET MAUI Hybrid Blazor and WepApp and hosted on Azure.
 
 Live Site: https://chat-maui-website.azurewebsites.net/
 
