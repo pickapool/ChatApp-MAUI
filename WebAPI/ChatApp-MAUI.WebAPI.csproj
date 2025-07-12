@@ -7,6 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="firebaseconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="firebaseconfig.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FirebaseAdmin" Version="3.2.0" />
     <PackageReference Include="FirebaseAuthentication.net" Version="4.1.0" />
     <PackageReference Include="Google.Cloud.Firestore" Version="3.10.0" />
