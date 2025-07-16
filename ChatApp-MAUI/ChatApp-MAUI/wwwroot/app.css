@@ -105,13 +105,13 @@ hr:not([size]) {
 .mud-layout {
     overflow: hidden;
 }
-@media screen and (max-width: 600px) {
+/*@media screen and (max-width: 600px) {
     .conversation {
         display: none !important;
     }
     .chat-room {
         height: calc(100vh - 230px);
-    }
+    }*/
 }
 .chat-room, .conversation {
     display: flex;

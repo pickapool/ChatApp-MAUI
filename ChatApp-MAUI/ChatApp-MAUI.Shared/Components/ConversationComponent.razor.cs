@@ -16,6 +16,9 @@ namespace ChatApp_MAUI.Shared.Components
     public partial class ConversationComponentBase : ComponentBase, IConversationCallback
     {
         [Parameter] public AuthTokenModel? User { get; set; }
+        [Parameter] public bool IsLowerSize { get; set; }
+        [Parameter] public EventCallback OnClose { get; set; }
+        [Parameter] public EventCallback OnMessageSent { get; set; }
         [Inject] protected IConversationCallback _conversationCallback { get; set; } = default!;
         [Inject] protected IMessageService _messageService { get; set; } = default!;
         [Inject] protected IConfiguration _configuration { get; set; } = default!;
@@ -28,8 +31,12 @@ namespace ChatApp_MAUI.Shared.Components
         protected string messageText { get; set; } = string.Empty;
         private string chatRoomId = string.Empty;
         protected MudTextField<string> textField;
+        private bool firstRender = true;
+        protected string Height = string.Empty;
         protected override async Task OnInitializedAsync()
         {
+            if(IsLowerSize)
+                Height = "calc(100vh - 235px)";
             var hubConnection = NotificationService.GetConnection($"{_configuration["BaseAPI:Url"]}/NotificationHub");
             hubConnection.On<MessageModel>("NotifyMessage", async (model) =>
             {
@@ -45,7 +52,11 @@ namespace ChatApp_MAUI.Shared.Components
             });
 
             await hubConnection.StartAsync();
-            _conversationCallback.RegisterCallBack(this);
+            if (_conversationCallback is ConversationCallback callback)
+            {
+                callback.RegisterCallBack(this);
+            }
+            //_conversationCallback.RegisterCallBack(this);
         }
         public async Task OnShowConversation(AuthTokenModel user)
         {
@@ -94,6 +105,13 @@ namespace ChatApp_MAUI.Shared.Components
                 }
             }
             IsLoading = false;
+            if (!IsLowerSize)
+                Height = "calc(100vh - 170px)";
+            else if (IsLowerSize && firstRender)
+                Height = "calc(100vh - 235px)";
+            else
+                Height = "100%";
+            firstRender = false;
             await InvokeAsync(StateHasChanged);
             await Task.Delay(500);
             await _jsRuntime.InvokeVoidAsync("scrollToBottom");
@@ -105,7 +123,6 @@ namespace ChatApp_MAUI.Shared.Components
         }
         protected async Task SendMessage()
         {
-            await InvokeAsync(StateHasChanged);
             if (String.IsNullOrEmpty(messageText))
             {
                 await textField.FocusAsync();
@@ -126,6 +143,7 @@ namespace ChatApp_MAUI.Shared.Components
             }
             await textField.Clear();
             await textField.FocusAsync();
+            await OnMessageSent.InvokeAsync();
         }
         protected async Task HandleKeyUp(KeyboardEventArgs e)
         {
@@ -133,6 +151,10 @@ namespace ChatApp_MAUI.Shared.Components
             {
                 await SendMessage();
             }
+        }
+        protected async Task Close()
+        {
+            await OnClose.InvokeAsync();
         }
     }
 }
