@@ -20,8 +20,4 @@
     <ProjectReference Include="..\ChatApp-MAUI.Shared\ChatApp-MAUI.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\" />
-  </ItemGroup>
-
 </Project>

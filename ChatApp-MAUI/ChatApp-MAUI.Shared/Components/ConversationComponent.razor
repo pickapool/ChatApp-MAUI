@@ -1,12 +1,16 @@
 ﻿@inherits ConversationComponentBase
 
-<MudPaper Class="d-flex flex-column pa-3"  Elevation="1" Height="calc(100vh - 170px)" Width="100vw">
+<MudPaper Class="d-flex flex-column pa-3"  Elevation="1" Height="@Height" Width="100vw">
 	@if (User == null)
 	{
 		<MudText Class="text-center" Typo="Typo.h6">Select a conversation</MudText>
 		<hr />
 	} else {
 		<MudItem Class="d-flex flex-row">
+			@if (IsLowerSize)
+			{
+				<MudIconButton Icon="@Icons.Material.Filled.ArrowBack" Size="Size.Medium" OnClick="Close"></MudIconButton>
+			}
 			<div class="d-flex flex-row gap-2">
 				<MudAvatar Size="Size.Large" Style="border: 2px solid blue;">
 					<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User.PhotoUrl)"></MudImage>

@@ -4,16 +4,20 @@ namespace ChatApp_MAUI.Infrastructure.Services.CallBackServices.ConversationsCal
 {
     public class ConversationCallback : IConversationCallback
     {
-        private IConversationCallback? _listener;
+        private readonly List<IConversationCallback> _listeners = new();
+
         public async Task OnShowConversation(AuthTokenModel user)
         {
-            if (_listener != null)
-                await _listener.OnShowConversation(user);
+            foreach (var listener in _listeners)
+            {
+                await listener.OnShowConversation(user);
+            }
         }
 
         public void RegisterCallBack(IConversationCallback callback)
         {
-            _listener = callback;
+            if (!_listeners.Contains(callback))
+                _listeners.Add(callback);
         }
         
     }
