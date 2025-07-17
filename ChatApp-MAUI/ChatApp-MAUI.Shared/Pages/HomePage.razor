@@ -39,14 +39,15 @@
 	</MudItem>
 	<MudItem Class="position-relative overflow-hidden" xs="12">
 		<MudGrid Spacing="0">
-			<MudItem Class=@($"flex-column gap-4 chat-room overflow-auto hide-scrollbar") xs="12" sm="4" md="5" lg="3">
+			<MudItem Class=@($"flex-column gap-4 chat-room overflow-auto hide-scrollbar {(showConversation == true && WindowWidth <= 600 ? "d-none" : "")}") xs="12" sm="4" md="5" lg="3">
 				<ChatRoomComponent></ChatRoomComponent>
 			</MudItem>
-			<MudItem Class=@($"flex-row gap-1 pa-2 conversation {(showConversation == true ? "" : "d-none")} {(showConversation == true && WindowWidth <= 600 ? "position-absolute right-0 top-0 left-0 bottom-0" : "")}") xs="12" sm="8" md="7" lg="9">
-				<ConversationComponent 
-					OnClose="CloseConversation" 
-					OnMessageSent="MessageSent" 
-					IsLowerSize="@(WindowWidth <= 600)"></ConversationComponent>
+			<MudItem Class=@($"flex-row gap-1 pa-2 conversation {(showConversation == true ? "" : "d-none")}") xs="12" sm="8" md="7" lg="9">
+				@if (WindowWidth > 0) {
+					<ConversationComponent 
+						OnClose="CloseConversation" 
+						IsLowerSize="@(WindowWidth <= 600)"></ConversationComponent>
+				}
 			</MudItem>
 		</MudGrid>
 	</MudItem>

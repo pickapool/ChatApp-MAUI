@@ -35,8 +35,6 @@ namespace ChatApp_MAUI.Shared.Components
         protected string Height = string.Empty;
         protected override async Task OnInitializedAsync()
         {
-            if(IsLowerSize)
-                Height = "calc(100vh - 235px)";
             var hubConnection = NotificationService.GetConnection($"{_configuration["BaseAPI:Url"]}/NotificationHub");
             hubConnection.On<MessageModel>("NotifyMessage", async (model) =>
             {
@@ -105,13 +103,6 @@ namespace ChatApp_MAUI.Shared.Components
                 }
             }
             IsLoading = false;
-            if (!IsLowerSize)
-                Height = "calc(100vh - 170px)";
-            else if (IsLowerSize && firstRender)
-                Height = "calc(100vh - 235px)";
-            else
-                Height = "100%";
-            firstRender = false;
             await InvokeAsync(StateHasChanged);
             await Task.Delay(500);
             await _jsRuntime.InvokeVoidAsync("scrollToBottom");

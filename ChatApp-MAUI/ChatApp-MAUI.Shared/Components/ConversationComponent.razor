@@ -1,6 +1,6 @@
 ﻿@inherits ConversationComponentBase
 
-<MudPaper Class="d-flex flex-column pa-3"  Elevation="1" Height="@Height" Width="100vw">
+<MudPaper Class="d-flex flex-column pa-3" Elevation="1" Height=@($"{(IsLowerSize ? "calc(100vh - 235px)" : "calc(100vh - 170px)")}") Width="100vw">
 	@if (User == null)
 	{
 		<MudText Class="text-center" Typo="Typo.h6">Select a conversation</MudText>
@@ -33,45 +33,41 @@
 			}
 			else
 			{
-				<Virtualize Context="message" ItemSize="2" Items="groupMessages" >
-					<EmptyContent>
-						<span>Start a conversation</span>
-					</EmptyContent>
-					<ChildContent>
-						@if (message.SenderId == _appStateService.User.Uid)
-						{
+				@foreach(var message in groupMessages) {
+					@if (message.SenderId == _appStateService.User.Uid)
+					{
 
-							<MudChat ChatPosition="ChatBubblePosition.End">
-								<MudAvatar>
-									<MudImage Src="@(String.IsNullOrEmpty(_appStateService.User.PhotoUrl) ? PhotoHelper._defaultPhoto: _appStateService.User?.PhotoUrl )" />
-								</MudAvatar>
-								<MudChatHeader Name="" Time="@Extensions.GetTimeAgo(message.Messages.FirstOrDefault().CreatedAt)"></MudChatHeader>
-								@foreach(var message in message.Messages)
-								{
-									<MudChatBubble>
-										@message.Text
-									</MudChatBubble>
-								}
-							</MudChat>
-						} else
-						{
-							<MudChat ChatPosition="ChatBubblePosition.Start">
-								<MudAvatar>
-									<MudImage Src="@(String.IsNullOrEmpty(User.PhotoUrl) ? PhotoHelper._defaultPhoto: User?.PhotoUrl )" />
-								</MudAvatar>
-								<MudChatHeader Name="" Time="@Extensions.GetTimeAgo(message.Messages.FirstOrDefault().CreatedAt)"></MudChatHeader>
-								@foreach (var message in message.Messages)
-								{
-									<MudChatBubble>
-										@message.Text
-									</MudChatBubble>
-								}
-							</MudChat>
-						}
-					</ChildContent>
-				</Virtualize>
+						<MudChat ChatPosition="ChatBubblePosition.End">
+							<MudAvatar>
+								<MudImage Src="@(String.IsNullOrEmpty(_appStateService.User.PhotoUrl) ? PhotoHelper._defaultPhoto: _appStateService.User?.PhotoUrl )" />
+							</MudAvatar>
+							<MudChatHeader Name="" Time="@Extensions.GetTimeAgo(message.Messages.FirstOrDefault().CreatedAt)"></MudChatHeader>
+							@foreach(var message in message.Messages)
+							{
+								<MudChatBubble>
+									@message.Text
+								</MudChatBubble>
+							}
+						</MudChat>
+					} else
+					{
+						<MudChat ChatPosition="ChatBubblePosition.Start">
+							<MudAvatar>
+								<MudImage Src="@(String.IsNullOrEmpty(User.PhotoUrl) ? PhotoHelper._defaultPhoto: User?.PhotoUrl )" />
+							</MudAvatar>
+							<MudChatHeader Name="" Time="@Extensions.GetTimeAgo(message.Messages.FirstOrDefault().CreatedAt)"></MudChatHeader>
+							@foreach (var message in message.Messages)
+							{
+								<MudChatBubble>
+									@message.Text
+								</MudChatBubble>
+							}
+						</MudChat>
+					}
+				}
+				<div id="conversation"></div>
 			}
-			<div id="conversation"></div>
+			
 		</MudItem>
 		<hr />
 		<MudItem>
