@@ -52,5 +52,16 @@ namespace ChatApp_MAUI.Infrastructure.Services.FriendServices
             }
             return await response.Content.ReadFromJsonAsync<IEnumerable<FriendsModel>>();
         }
+        public async Task DeleteFriendRequest(string documentKey, string token)
+        {
+            var request = new { documentID = documentKey };
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim('"'));
+            var response = await _httpClient.PostAsJsonAsync("api/friends/deletefriendrequest", request);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var error = response.Content.ReadAsStringAsync().Result;
+                throw new Exception(error);
+            }
+        }
     }
 }

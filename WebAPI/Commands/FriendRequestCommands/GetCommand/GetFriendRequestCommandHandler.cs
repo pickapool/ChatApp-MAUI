@@ -4,7 +4,7 @@ using FirebaseAdmin.Auth;
 using Google.Cloud.Firestore;
 using MediatR;
 
-namespace WebAPI.Commands.AuthenticationCommands.RegisterCommands
+namespace WebAPI.Commands.FriendRequestCommands.GetCommand
 {
     public class GetFriendRequestCommandHandler : IRequestHandler<GetFriendRequestCommand, IEnumerable<FriendsModel>>
     {

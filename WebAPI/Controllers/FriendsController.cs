@@ -4,7 +4,8 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using WebAPI.Commands.AuthenticationCommands.RegisterCommands;
+using WebAPI.Commands.FriendRequestCommands.DeletCommand;
+using WebAPI.Commands.FriendRequestCommands.GetCommand;
 using WebAPI.SignalRHub;
 
 namespace WebAPI.Controllers
@@ -135,6 +136,13 @@ namespace WebAPI.Controllers
         [HttpPost]
         [Route("getfriendrequests")]
         public async Task<IActionResult> GetFriendRequest([FromBody] GetFriendRequestCommand command)
+        {
+            var result = await _sender.Send(command);
+            return Ok(result);
+        }
+        [HttpPost]
+        [Route("deletefriendrequest")]
+        public async Task<IActionResult> DeleteFriendRequest([FromBody] DeleteFriendRequestCommand command)
         {
             var result = await _sender.Send(command);
             return Ok(result);

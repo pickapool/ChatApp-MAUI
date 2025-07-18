@@ -2,7 +2,7 @@
 using FirebaseAdmin.Auth;
 using MediatR;
 
-namespace WebAPI.Commands.AuthenticationCommands.RegisterCommands
+namespace WebAPI.Commands.FriendRequestCommands.GetCommand
 {
     public record class GetFriendRequestCommand(string uid) : IRequest<IEnumerable<FriendsModel>>;
 }

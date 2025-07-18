@@ -13,6 +13,7 @@ namespace ChatApp_MAUI.Shared.Components
         [Inject] protected IFriendService _friendService { get; set; } = default!;
         [Inject] protected ISnackbar _snackBar { get; set; } = default!;
         [Inject] protected AppStateService _appStateService { get; set; } = default!;
+        [Parameter] public EventCallback<FriendsModel> OnDeleteFriendRequest { get; set; }
         [Parameter] public FriendsModel? FriendRequestModel { get; set; }
         [Parameter] public bool ShowDeleteButton { get; set; }
         protected AuthTokenModel? User { get; set; }
@@ -34,10 +35,15 @@ namespace ChatApp_MAUI.Shared.Components
         {
             await _friendService.AccepFriendRequest(FriendRequestModel, _appStateService.Token);
             _snackBar.Clear();
+            if(ShowDeleteButton)
+            {
+                await OnDeleteFriendRequest.InvokeAsync(FriendRequestModel);
+            }
         }
         protected async Task DeleteFriendRequest()
         {
-            //await _friendService.Dele(FriendRequestModel, _appStateService.Token);
+            await _friendService.DeleteFriendRequest(FriendRequestModel.Id, _appStateService.Token);
+            await OnDeleteFriendRequest.InvokeAsync(FriendRequestModel);
         }
     }
 }

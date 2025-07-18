@@ -34,5 +34,10 @@ namespace ChatApp_MAUI.Shared.Pages
             friendRequests = result.ToList();
             StateHasChanged();
         }
+        protected void Remove(FriendsModel friendRequest)
+        {
+            friendRequests.Remove(friendRequest);
+            StateHasChanged();
+        }
     }
 }

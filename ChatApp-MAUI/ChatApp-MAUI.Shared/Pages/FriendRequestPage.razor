@@ -2,11 +2,13 @@
 
 @inherits FriendRequestPageBase
 
-<div class="d-flex align-items-center flex-column gap-2">
-	@foreach(var friend in friendRequests)
-	{
-		<div class="paper pa-2">
-			<AcceptFriendComponent FriendRequestModel="friend"></AcceptFriendComponent>
-		</div>
-	}
+<div class="d-flex justify-content-center gap-2 pa-2">
+	<MudItem class="d-flex flex-colum justify-content-center w-100" xs="12" sm="8" md="6" lg="4">
+		@foreach(var friend in friendRequests)
+		{
+			<MudItem class="paper shadow pa-5 w-100" xs="12">
+				<AcceptFriendComponent OnDeleteFriendRequest="(e) => Remove(e)" FriendRequestModel="friend" ShowDeleteButton></AcceptFriendComponent>
+			</MudItem>
+		}
+	</MudItem>
 </div>
