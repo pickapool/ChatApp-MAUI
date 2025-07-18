@@ -36,7 +36,7 @@ namespace ChatApp_MAUI.Shared.Pages
         }
         protected void Remove(FriendsModel friendRequest)
         {
-            friendRequests.Remove(friendRequest);
+            friendRequests.RemoveAll( e => e.From == friendRequest.From);
             StateHasChanged();
         }
     }
