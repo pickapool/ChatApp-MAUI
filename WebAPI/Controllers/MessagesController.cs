@@ -116,7 +116,7 @@ namespace WebAPI.Controllers
                         return members != null && members.Contains(param.SenderUid) && members.Contains(param.Uid);
                     });
 
-                if (chatRoomDoc == null && snapshot.Count <= 0)
+                if (chatRoomDoc == null)
                 {
                     var chatRoomId = Guid.NewGuid().ToString();
 
