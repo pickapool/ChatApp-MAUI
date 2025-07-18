@@ -23,7 +23,7 @@ namespace ChatApp_MAUI.Shared.Common
                 { "FriendRequestModel", model }
             };
 
-            snackbarService.Add<AcceptFriendComponent<FriendsModel>>(parameters, configure: config);
+            snackbarService.Add<AcceptFriendComponentGeneric<FriendsModel>>(parameters, configure: config);
 
         }
         public static void ShowSnackbar(string message, Variant variant, ISnackbar snackbar, Severity severity)

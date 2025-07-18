@@ -38,6 +38,19 @@ namespace ChatApp_MAUI.Infrastructure.Services.FriendServices
                 throw new Exception(error);
             }
             return await response.Content.ReadFromJsonAsync<List<FriendsModel>>();
+
+        }
+        public async Task<IEnumerable<FriendsModel>> GetFriendRequest(string uid, string token)
+        {
+            var request = new { uid = uid };
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Trim('"'));
+            var response = await _httpClient.PostAsJsonAsync("api/friends/getfriendrequests", request);
+            if (response.StatusCode != System.Net.HttpStatusCode.OK)
+            {
+                var error = response.Content.ReadAsStringAsync().Result;
+                throw new Exception(error);
+            }
+            return await response.Content.ReadFromJsonAsync<IEnumerable<FriendsModel>>();
         }
     }
 }

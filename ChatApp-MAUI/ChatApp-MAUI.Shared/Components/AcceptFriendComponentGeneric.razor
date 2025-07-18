@@ -1,13 +1,12 @@
-﻿@inherits AcceptFriendComponentBase
+﻿@inherits AcceptFriendGenericComponentBase
+
+@typeparam T
 
 <div class="d-flex flex-row align-items-center gap-1">
 	<MudAvatar Size="Size.Small">
 		<MudImage Src="@(String.IsNullOrEmpty(User?.PhotoUrl) ? PhotoHelper._defaultPhoto : User?.PhotoUrl)"></MudImage>
 	</MudAvatar>
-	@if (!ShowDeleteButton)
-	{
-		<MudText Typo="Typo.caption">@User?.DisplayName Sent you a friend request.</MudText>
-	}
+	<MudText Typo="Typo.caption">@User?.DisplayName Sent you a friend request.</MudText>
 	<MudIconButton OnClick="AcceptFriendRequest" Icon="@Icons.Material.Rounded.CheckCircle" Color="Color.Success" Size="Size.Small"></MudIconButton>
 	@if (ShowDeleteButton)
 	{

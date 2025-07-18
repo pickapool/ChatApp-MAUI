@@ -7,7 +7,7 @@ using MudBlazor;
 
 namespace ChatApp_MAUI.Shared.Components
 {
-    public partial class AcceptFriendComponentBase : ComponentBase
+    public partial class AcceptFriendGenericComponentBase : ComponentBase
     {
         [Inject] protected IUserService _userService { get; set; } = default!;
         [Inject] protected IFriendService _friendService { get; set; } = default!;

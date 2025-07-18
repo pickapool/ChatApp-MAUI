@@ -1,0 +1,12 @@
+﻿@page "/frientrequest"
+
+@inherits FriendRequestPageBase
+
+<div class="d-flex align-items-center flex-column gap-2">
+	@foreach(var friend in friendRequests)
+	{
+		<div class="paper pa-2">
+			<AcceptFriendComponent FriendRequestModel="friend"></AcceptFriendComponent>
+		</div>
+	}
+</div>

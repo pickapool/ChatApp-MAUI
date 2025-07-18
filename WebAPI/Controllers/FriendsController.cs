@@ -1,8 +1,10 @@
 ﻿using ChatApp_MAUI.Domain.Entities;
 using Google.Cloud.Firestore;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using WebAPI.Commands.AuthenticationCommands.RegisterCommands;
 using WebAPI.SignalRHub;
 
 namespace WebAPI.Controllers
@@ -15,12 +17,14 @@ namespace WebAPI.Controllers
         private readonly FirestoreDb _firestoreDb;
         private readonly IConfiguration _configuration;
         private readonly IHubContext<NotificationHub> _hubContext;
+        private readonly ISender _sender;
 
-        public FriendsController(IConfiguration config, FirestoreDb firestore, IHubContext<NotificationHub> hubContext)
+        public FriendsController(IConfiguration config, FirestoreDb firestore, IHubContext<NotificationHub> hubContext, ISender sender)
         {
             _configuration = config;
             _firestoreDb = firestore;
             _hubContext = hubContext;
+            _sender = sender;
         }
         [HttpPost]
         [Route("getfriends")]
@@ -127,6 +131,13 @@ namespace WebAPI.Controllers
             {
                 return BadRequest(new { Error = ex.Message });
             }
+        }
+        [HttpPost]
+        [Route("getfriendrequests")]
+        public async Task<IActionResult> GetFriendRequest([FromBody] GetFriendRequestCommand command)
+        {
+            var result = await _sender.Send(command);
+            return Ok(result);
         }
     }
 }

@@ -55,7 +55,7 @@
                 <MudNavMenu>
                     <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Message">Messages</MudNavLink>
                     <MudNavLink Href="/frientrequest" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.PersonAddAlt1">Friend Request</MudNavLink>
-                    <MudNavLink Match="NavLinkMatch.All">Community</MudNavLink>
+                    <MudNavLink Href="/notifications" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Notifications">Notification</MudNavLink>
                 </MudNavMenu>
             </MudDrawer>
             <MudMainContent Class='@($"pt-16 height100vh {(_appStateService.IsDarkMode ? "" : "bg-alice")}")'>
